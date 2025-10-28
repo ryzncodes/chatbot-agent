@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant U as User
+    participant FE as Frontend UI
+    participant API as FastAPI /chat
+    participant PL as Planner
+    participant MEM as Memory Store
+    participant TR as Tool Router
+    participant TL as Tool
+
+    U->>FE: Message
+    FE->>API: POST /chat { message }
+    API->>PL: Classify intent + slots
+    PL->>MEM: Fetch prior context
+    MEM-->>PL: Context snapshot
+    PL->>TR: Select tool (calculator/products/outlets)
+    TR->>TL: Invoke tool
+    TL-->>TR: Tool response or error
+    TR-->>PL: Result + status
+    PL->>MEM: Update memory state
+    PL->>API: Build reply payload
+    API-->>FE: Response + planner timeline
+    FE-->>U: Render message and indicators

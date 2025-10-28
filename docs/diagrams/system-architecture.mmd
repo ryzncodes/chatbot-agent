@@ -1,0 +1,15 @@
+graph TD
+    User[(User)] -->|Messages| Frontend[Frontend Chat UI]
+    Frontend -->|REST / WebSocket| Gateway[FastAPI Gateway]
+    Gateway --> Planner[Planner & Controller]
+    Planner --> Memory[(SQLite Memory Store)]
+    Planner -->|Route| ToolsRouter[Tool Router]
+    ToolsRouter --> Calc[/Calculator API/]
+    ToolsRouter --> Products[/Products RAG Service/]
+    ToolsRouter --> Outlets[/Outlets Text2SQL Service/]
+    Products --> Faiss[(FAISS Vector Store)]
+    Outlets --> OutletsDB[(Outlets SQLite DB)]
+    Gateway --> Metrics[/Metrics API/]
+    Metrics --> Observability[(Logs & Metrics DB)]
+    Planner --> Timeline[Planner Timeline & Telemetry]
+    Frontend <-.- Timeline

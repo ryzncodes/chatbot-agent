@@ -1,0 +1,29 @@
+# Global ignores
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+*.pyc
+
+# Node
+node_modules/
+dist/
+
+# Environment & local configs
+.env
+**/.env
+*.log
+
+# Databases & vector stores
+db/*.db
+db/**/*.index
+db/**/*.bin
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# IDE
+.idea/
+.vscode/
