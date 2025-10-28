@@ -48,12 +48,37 @@ class Settings(BaseSettings):
         """Return the full list of allowed CORS origins."""
 
         origins: list[str] = []
+
         if self.frontend_origin:
-            origins.append(str(self.frontend_origin))
+            origins.append(str(self.frontend_origin).rstrip("/"))
         else:
-            origins.append("http://localhost:5173")
-        origins.extend(str(origin) for origin in self.additional_origins)
-        return origins
+            origins.extend([
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+            ])
+
+        for origin in self.additional_origins:
+            origins.append(str(origin).rstrip("/"))
+
+        # Local development often swaps between localhost and 127.0.0.1, so ensure both variants are present
+        normalized = []
+        for origin in origins:
+            base = origin.rstrip("/")
+            normalized.append(base)
+            if base == "http://localhost:5173":
+                normalized.append("http://127.0.0.1:5173")
+            if base == "http://127.0.0.1:5173":
+                normalized.append("http://localhost:5173")
+
+        # Deduplicate while preserving order
+        seen: set[str] = set()
+        unique: list[str] = []
+        for origin in normalized:
+            if origin not in seen:
+                seen.add(origin)
+                unique.append(origin)
+
+        return unique
 
 
 @lru_cache(maxsize=1)

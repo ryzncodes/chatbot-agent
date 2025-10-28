@@ -60,7 +60,7 @@ async def health_check() -> dict[str, str]:
 
 
 def get_memory_store() -> SQLiteMemoryStore:
-"""Dependency injector for the memory store."""
+    """Dependency injector for the memory store."""
 
     return memory_store
 
