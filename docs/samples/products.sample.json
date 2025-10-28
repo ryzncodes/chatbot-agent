@@ -1,0 +1,14 @@
+[
+  {
+    "name": "ZUS Stainless Tumbler",
+    "description": "500ml insulated tumbler for hot or cold drinks",
+    "size": "500ml",
+    "tags": ["tumbler", "stainless", "drinkware"]
+  },
+  {
+    "name": "ZUS Ceramic Mug",
+    "description": "Classic ceramic mug with ZUS branding",
+    "size": "350ml",
+    "tags": ["mug", "ceramic"]
+  }
+]

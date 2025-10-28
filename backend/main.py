@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.api.tools import create_tools_router
 from backend.core.config import get_settings
 from backend.core.errors import unhandled_exception_handler
+from backend.core.logging import request_id_middleware
 from backend.core.metrics import MetricsCollector
 from backend.memory.models import MessageTurn
 from backend.memory.store import SQLiteMemoryStore
@@ -46,6 +47,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.middleware("http")(request_id_middleware)
 
 app.include_router(create_tools_router(calculator_tool, products_tool, outlets_tool))
 

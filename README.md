@@ -96,11 +96,12 @@ pnpm install
 
 ```bash
 cd scripts
-python ingest_products.py --input-file ../docs/samples/products.json
-python sync_outlets.py --input-file ../docs/samples/outlets.json --drop-existing
+python ingest_products.py --input-file ../docs/samples/products.sample.json
+python sync_outlets.py --input-file ../docs/samples/outlets.sample.json --drop-existing
 ```
 
-> The ingestion scripts currently expect local JSON exports. When network access is enabled,
+> The ingestion scripts currently expect local JSON exports. Sample files live in
+> `docs/samples/` — duplicate them and adjust contents as needed. When network access is enabled,
 > replace the `--input-file` argument with live fetchers.
 
 The ingestion commands populate:

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "ZUS Coffee SS 2",
+    "address": "123, Jalan SS 2/24, SS 2",
+    "city": "Petaling Jaya",
+    "state": "Selangor",
+    "postcode": "47300",
+    "latitude": 3.115,
+    "longitude": 101.623,
+    "opening_hours": "09:00 - 22:00",
+    "services": ["dine-in", "pickup"]
+  },
+  {
+    "name": "ZUS Coffee Damansara",
+    "address": "1, Jalan Damansara",
+    "city": "Kuala Lumpur",
+    "state": "Wilayah Persekutuan",
+    "postcode": "50490",
+    "latitude": 3.150,
+    "longitude": 101.668,
+    "opening_hours": "08:00 - 21:00",
+    "services": ["dine-in", "delivery"]
+  }
+]

@@ -27,3 +27,11 @@ def test_chat_responds_with_intent_and_action(tmp_path, monkeypatch):
     assert metrics_response.status_code == 200
     metrics_payload = metrics_response.json()
     assert metrics_payload["total_requests"] >= 1
+
+
+def test_chat_missing_content_returns_400():
+    response = client.post(
+        "/chat",
+        json={"conversation_id": "conv-err"},
+    )
+    assert response.status_code == 400
