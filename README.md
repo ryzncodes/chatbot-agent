@@ -100,9 +100,12 @@ python ingest_products.py --input-file ../docs/samples/products.sample.json
 python sync_outlets.py --input-file ../docs/samples/outlets.sample.json --drop-existing
 ```
 
-> The ingestion scripts currently expect local JSON exports. Sample files live in
-> `docs/samples/` — duplicate them and adjust contents as needed. When network access is enabled,
-> replace the `--input-file` argument with live fetchers.
+The product ingestion script tokenizes the catalogue, computes TF-IDF embeddings, and writes a
+FAISS index (`db/faiss/products.index`) plus metadata with vocabulary/IDF weights. The outlets sync
+script parameterizes SQL queries based on inferred locations and services.
+
+> Both scripts expect local JSON exports. Sample files live in `docs/samples/` — duplicate and adjust
+> them as needed, then rerun the scripts when you have updated data or live fetchers.
 
 The ingestion commands populate:
 
