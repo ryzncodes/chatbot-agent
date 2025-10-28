@@ -31,6 +31,7 @@ function ChatLayout() {
     setStatus,
     reset,
   } = useChatStore();
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -43,6 +44,7 @@ function ChatLayout() {
       if (!trimmed) return;
 
       setStatus("loading");
+      setIsTyping(true);
       const outgoing = {
         conversation_id: conversationId,
         role: "user" as const,
@@ -58,8 +60,10 @@ function ChatLayout() {
           conversation_id: conversationId,
           role: "assistant",
           content: response.message,
+          created_at: new Date().toISOString(),
         });
         setStatus("idle");
+        setIsTyping(false);
 
         if (response.action === "finish") {
           reset();
@@ -70,6 +74,7 @@ function ChatLayout() {
         const message = err instanceof Error ? err.message : "Unknown error";
         setStatus("error", message);
         setToolStatus("degraded");
+        setIsTyping(false);
       }
     },
     [appendMessage, conversationId, input, recordPlannerEvent, reset, setStatus]
@@ -174,6 +179,16 @@ function ChatLayout() {
               </div>
             );
           })}
+          {isTyping && (
+            <div className={`${styles.bubble} ${styles.bubbleBot}`}>
+              <div className={styles.typingIndicator}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div className={styles.bubbleMeta}>Assistant is typing…</div>
+            </div>
+          )}
         </div>
 
         <form className={styles.composer} onSubmit={handleSubmit}>
@@ -215,7 +230,11 @@ function ChatLayout() {
             ></span>
             <span className={styles.statusText}>{statusMessage}</span>
             {lastTool && (
-              <span className={`${styles.toolIndicator} ${toolStatus === "ok" ? "success" : "error"}`}>
+              <span
+                className={`${styles.toolIndicator} ${
+                  toolStatus === "ok" ? styles.toolIndicatorSuccess : styles.toolIndicatorError
+                }`}
+              >
                 ⚙️ {lastTool.replace("call_", "")}
               </span>
             )}
@@ -240,7 +259,9 @@ function ChatLayout() {
             return (
               <div
                 key={event.timestamp}
-                className={`${styles.timelineItem} ${event.toolSuccess ? "success" : "error"}`}
+                className={`${styles.timelineItem} ${
+                  event.toolSuccess ? styles.timelineItemSuccess : styles.timelineItemError
+                }`}
               >
                 <div className={styles.timelineMeta}>
                   {new Date(event.timestamp).toLocaleTimeString([], {
@@ -259,7 +280,11 @@ function ChatLayout() {
                   </div>
                 )}
                 {event.tool && (
-                  <div className={`${styles.toolIndicator} ${event.toolSuccess ? "success" : "error"}`}>
+                  <div
+                    className={`${styles.toolIndicator} ${
+                      event.toolSuccess ? styles.toolIndicatorSuccess : styles.toolIndicatorError
+                    }`}
+                  >
                     Tool: {event.tool.replace("call_", "")}
                   </div>
                 )}

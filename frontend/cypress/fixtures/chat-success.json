@@ -1,0 +1,15 @@
+{
+  "conversation_id": "conv-1",
+  "intent": "calculate",
+  "action": "call_calculator",
+  "confidence": 0.95,
+  "tool_success": true,
+  "message": "3",
+  "tool_data": {
+    "expression": "1 + 2",
+    "result": 3
+  },
+  "required_slots": {
+    "operation": true
+  }
+}

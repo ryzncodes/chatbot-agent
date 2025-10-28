@@ -211,6 +211,7 @@
   background: rgba(217, 83, 79, 0.12);
   color: var(--color-error);
   font-size: 0.9rem;
+  animation: slide-in 0.3s ease;
 }
 
 .toolIndicator {
@@ -224,12 +225,12 @@
   font-weight: 600;
 }
 
-.toolIndicator.success {
+.toolIndicatorSuccess {
   color: var(--color-success);
   background: rgba(60, 157, 95, 0.12);
 }
 
-.toolIndicator.error {
+.toolIndicatorError {
   color: var(--color-error);
   background: rgba(217, 83, 79, 0.12);
 }
@@ -239,13 +240,14 @@
   border-radius: var(--radius-md);
   background: rgba(87, 60, 46, 0.06);
   border-left: 4px solid var(--color-accent);
+  animation: fade-in-up 0.35s ease;
 }
 
-.timelineItem.success {
+.timelineItemSuccess {
   border-left-color: var(--color-success);
 }
 
-.timelineItem.error {
+.timelineItemError {
   border-left-color: var(--color-error);
 }
 
@@ -304,4 +306,65 @@
   padding: 0.25rem 0.6rem;
   background: rgba(87, 60, 46, 0.1);
   border-radius: 999px;
+}
+.typingIndicator {
+  display: inline-flex;
+  gap: 0.25rem;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(87, 60, 46, 0.12);
+  color: var(--color-accent);
+  font-size: 0.8rem;
+}
+
+.typingIndicator span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: typing 1s infinite;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typingIndicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
