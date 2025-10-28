@@ -42,7 +42,13 @@ export const useChatStore = create<ChatState>()(
       lastDecision: null,
       status: "idle",
       setConversationId: (id) => set({ conversationId: id }),
-      appendMessage: (message) => set({ messages: [...get().messages, message] }),
+      appendMessage: (message) =>
+        set((state) => {
+          const timestamped = message.created_at
+            ? message
+            : { ...message, created_at: new Date().toISOString() };
+          return { messages: [...state.messages, timestamped] };
+        }),
       recordPlannerEvent: (response) =>
         set((state) => ({
           timeline: [

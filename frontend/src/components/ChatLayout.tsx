@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import type { ChatMessage } from "../services/api";
 import { fetchMetrics, sendChatMessage } from "../services/api";
 import { useChatStore } from "../state/chatStore";
 
@@ -80,6 +81,22 @@ function ChatLayout() {
     return "Online";
   }, [status, error]);
 
+  const threads = useMemo<ChatMessage[][]>(() => {
+    const grouped: ChatMessage[][] = [];
+    let current: ChatMessage[] = [];
+    messages.forEach((msg) => {
+      current.push(msg);
+      if (msg.role === "assistant") {
+        grouped.push(current);
+        current = [];
+      }
+    });
+    if (current.length) {
+      grouped.push(current);
+    }
+    return grouped;
+  }, [messages]);
+
   useEffect(() => {
     const poll = async () => {
       try {
@@ -97,6 +114,7 @@ function ChatLayout() {
   const handleQuickCommand = (command: string) => {
     if (command === "/reset") {
       reset();
+      setInput("");
       return;
     }
     if (command === "/calc") {
@@ -138,10 +156,24 @@ function ChatLayout() {
         </header>
 
         <div className={styles.messageList}>
-          {messages.length === 0 && <p>Start the conversation by asking about products, outlets, or calculations.</p>}
-          {messages.map((msg) => (
-            <ChatBubble key={`${msg.conversation_id}-${msg.content}-${msg.role}-${Math.random()}`} message={msg} />
-          ))}
+          {threads.length === 0 && <p>Start the conversation by asking about products, outlets, or calculations.</p>}
+          {threads.map((threadMessages, index) => {
+            const turnNumber = index + 1;
+            const meta = timeline[index];
+            return (
+              <div key={`thread-${index}`} className={styles.thread}>
+                <div className={styles.threadHeader}>
+                  <span>Turn {turnNumber}</span>
+                  {meta && <span className={styles.intentBadge}>{meta.intent}</span>}
+                </div>
+                <div className={styles.threadMessages}>
+                  {threadMessages.map((msg, msgIndex) => (
+                    <ChatBubble key={`${msg.conversation_id}-${msg.created_at ?? msgIndex}`} message={msg} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         <form className={styles.composer} onSubmit={handleSubmit}>
