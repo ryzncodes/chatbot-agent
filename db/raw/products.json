@@ -1,0 +1,18 @@
+[
+  {
+    "sku": "ZUS-TMB-500",
+    "name": "ZUS Stainless Tumbler",
+    "description": "500ml insulated tumbler for hot or cold drinks",
+    "size": "500ml",
+    "tags": ["tumbler", "stainless", "drinkware"],
+    "price": "59.90"
+  },
+  {
+    "sku": "ZUS-MUG-350",
+    "name": "ZUS Ceramic Mug",
+    "description": "Classic ceramic mug with ZUS branding",
+    "size": "350ml",
+    "tags": ["mug", "ceramic"],
+    "price": "39.90"
+  }
+]

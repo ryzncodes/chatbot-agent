@@ -1,16 +1,22 @@
-"""Ingest ZUS drinkware catalogue into a FAISS index.
-
-This script is a placeholder scaffold. Provide a local JSON feed using
-`--input-file` until network access is available. The final implementation
-should fetch drinkware data, compute embeddings, and write to
-`db/faiss/products.index`.
-"""
+"""Ingest ZUS drinkware catalogue into a FAISS index using TF-IDF embeddings."""
 
 from __future__ import annotations
 
 import argparse
 import json
+import math
+import re
+from collections import Counter, defaultdict
 from pathlib import Path
+
+import faiss  # type: ignore
+import numpy as np
+
+
+DEFAULT_RAW_PATH = Path("../db/raw/products.json")
+DEFAULT_OUTPUT_DIR = Path("../db/faiss")
+METADATA_FILENAME = "products_metadata.json"
+INDEX_FILENAME = "products.index"
 
 
 def parse_args() -> argparse.Namespace:
@@ -18,12 +24,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input-file",
         type=Path,
+        default=DEFAULT_RAW_PATH,
         help="Path to local JSON file containing drinkware catalogue entries.",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("../db/faiss"),
+        default=DEFAULT_OUTPUT_DIR,
         help="Directory where the FAISS index and metadata will be stored.",
     )
     parser.add_argument(
@@ -31,12 +38,27 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Parse input but skip writing FAISS files (useful for validation).",
     )
+    parser.add_argument(
+        "--top-k",
+        type=int,
+        default=5,
+        help="Number of neighbours to precompute for evaluation (unused but kept for compatibility).",
+    )
     return parser.parse_args()
+
+
+TOKEN_PATTERN = re.compile(r"[a-z0-9]+")
+
+
+def tokenize(text: str) -> list[str]:
+    return TOKEN_PATTERN.findall(text.lower())
 
 
 def load_catalogue(path: Path) -> list[dict]:
     if not path or not path.exists():
-        raise FileNotFoundError("Provide --input-file pointing to a local drinkware JSON export")
+        raise FileNotFoundError(
+            f"Catalogue file not found at {path}. Supply --input-file pointing to a local JSON export."
+        )
 
     with path.open("r", encoding="utf-8") as handle:
         data = json.load(handle)
@@ -47,27 +69,92 @@ def load_catalogue(path: Path) -> list[dict]:
     return data
 
 
+def build_embeddings(products: list[dict]) -> tuple[np.ndarray, list[str], np.ndarray]:
+    vocabulary_counter: Counter[str] = Counter()
+    tokenized_products: list[list[str]] = []
+
+    for product in products:
+        text_segments = [
+            str(product.get("name", "")),
+            str(product.get("description", "")),
+            str(product.get("size", "")),
+            " ".join(product.get("tags", []) if isinstance(product.get("tags"), list) else []),
+        ]
+        tokens = tokenize(" ".join(text_segments))
+        if not tokens:
+            tokens = tokenize(str(product.get("name", "")))
+        tokenized_products.append(tokens)
+        vocabulary_counter.update(set(tokens))
+
+    vocabulary = sorted(vocabulary_counter.keys())
+    token_to_index = {token: idx for idx, token in enumerate(vocabulary)}
+
+    # Compute document frequency
+    doc_freq: defaultdict[str, int] = defaultdict(int)
+    for tokens in tokenized_products:
+        unique_tokens = set(tokens)
+        for token in unique_tokens:
+            doc_freq[token] += 1
+
+    total_docs = len(products)
+    idf = np.zeros(len(vocabulary), dtype=np.float32)
+    for token, idx in token_to_index.items():
+        idf[idx] = math.log((1 + total_docs) / (1 + doc_freq[token])) + 1.0
+
+    embeddings = np.zeros((total_docs, len(vocabulary)), dtype=np.float32)
+    for doc_idx, tokens in enumerate(tokenized_products):
+        if not tokens:
+            continue
+        token_counts = Counter(tokens)
+        for token, count in token_counts.items():
+            token_idx = token_to_index.get(token)
+            if token_idx is None:
+                continue
+            tf = count / len(tokens)
+            embeddings[doc_idx, token_idx] = tf * idf[token_idx]
+
+    faiss.normalize_L2(embeddings)
+    return embeddings, vocabulary, idf
+
+
+def write_index(embeddings: np.ndarray, output_path: Path) -> None:
+    dim = embeddings.shape[1]
+    index = faiss.IndexFlatIP(dim)
+    index.add(embeddings)
+    faiss.write_index(index, str(output_path))
+
+
+def write_metadata(products: list[dict], vocabulary: list[str], idf: np.ndarray, output_path: Path) -> None:
+    payload = {
+        "products": products,
+        "vocabulary": vocabulary,
+        "idf": idf.tolist(),
+    }
+    with output_path.open("w", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
+
+
 def main() -> None:
     args = parse_args()
     catalogue = load_catalogue(args.input_file)
 
-    print(f"Loaded {len(catalogue)} drinkware products")
+    print(f"Loaded {len(catalogue)} drinkware products from {args.input_file}")
+    embeddings, vocabulary, idf = build_embeddings(catalogue)
+    print(f"Vocabulary size: {len(vocabulary)}")
 
     if args.dry_run:
-        print("Dry-run enabled; skipping FAISS index creation")
+        print("Dry-run enabled; skipping FAISS write")
         return
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    metadata_path = args.output_dir / "products_metadata.json"
+    index_path = args.output_dir / INDEX_FILENAME
+    metadata_path = args.output_dir / METADATA_FILENAME
 
-    with metadata_path.open("w", encoding="utf-8") as handle:
-        json.dump(catalogue, handle, ensure_ascii=False, indent=2)
+    write_index(embeddings, index_path)
+    write_metadata(catalogue, vocabulary, idf, metadata_path)
 
-    # Placeholder for FAISS index creation. Actual implementation should compute embeddings
-    # and build an index saved to args.output_dir / "products.index".
-    placeholder_index = args.output_dir / "products.index"
-    placeholder_index.write_bytes(b"FAISS_INDEX_PLACEHOLDER")
-    print(f"Wrote placeholder FAISS index to {placeholder_index}")
+    print(f"Wrote index to {index_path}")
+    print(f"Wrote metadata to {metadata_path}")
 
 
 if __name__ == "__main__":
