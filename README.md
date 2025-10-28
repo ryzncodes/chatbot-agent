@@ -155,6 +155,8 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 | Conversation | `pytest tests/conversation` | Sequential memory and interruption handling. |
 | E2E | `npm run test:e2e` (Cypress) | Frontend chat, planner timeline, error banners, persistence. |
 
+> Tip: Use `CYPRESS_BASE_URL` or `VITE_API_URL` to point Cypress to your running backend when executing E2E tests locally.
+
 CI (GitHub Actions) runs all suites on pull requests and nightly schedules, publishing coverage and transcript artifacts.
 
 ## Deployment Notes
