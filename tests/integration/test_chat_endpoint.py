@@ -20,3 +20,5 @@ def test_chat_responds_with_intent_and_action(tmp_path, monkeypatch):
     payload = response.json()
     assert payload["intent"] == "calculate"
     assert payload["action"] == "call_calculator"
+    assert payload["tool_success"] is True
+    assert payload["message"] == "3"

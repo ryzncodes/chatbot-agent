@@ -9,3 +9,11 @@ def test_append_and_fetch(memory_store):
 
     assert len(turns) == 1
     assert turns[0].content == "Hello"
+
+
+def test_upsert_slots(memory_store):
+    memory_store.upsert_slots("conv-2", {"product_type": "tumbler"})
+
+    snapshot = memory_store.load_snapshot("conv-2")
+
+    assert snapshot.slots["product_type"] == "tumbler"

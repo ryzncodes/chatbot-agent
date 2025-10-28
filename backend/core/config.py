@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     faiss_index_path: Path = Field(
         default=Path("../db/faiss/products.index"), description="FAISS index file location."
     )
+    products_metadata_path: Path = Field(
+        default=Path("../db/faiss/products_metadata.json"),
+        description="Path to cached drinkware metadata for retrieval responses.",
+    )
 
     calculator_timeout_ms: int = Field(default=2000, ge=100, description="Calculator evaluation timeout.")
     log_level: str = Field(default="INFO", description="Application log level.")

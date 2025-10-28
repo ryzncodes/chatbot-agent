@@ -15,6 +15,9 @@ class ToolRouter:
     def __init__(self, tools: Mapping[PlannerAction, Tool]) -> None:
         self._tools = tools
 
+    def supports(self, action: PlannerAction) -> bool:
+        return action in self._tools
+
     async def dispatch(
         self,
         action: PlannerAction,
@@ -22,13 +25,7 @@ class ToolRouter:
         conversation: ConversationSnapshot,
         extras: dict | None = None,
     ) -> ToolResponse:
-        tool = self._tools.get(action)
-        if not tool:
-            return ToolResponse(
-                content="I don't have a tool for that yet.",
-                data={"action": action.value},
-                success=False,
-            )
+        tool = self._tools[action]
 
         context = ToolContext(turn=turn, conversation=conversation, extras=extras or {})
         return await tool.run(context)

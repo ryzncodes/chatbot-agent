@@ -35,6 +35,10 @@ class MemoryStore(ABC):
     def iter_conversations(self) -> Iterable[str]:
         """Iterate over known conversation identifiers."""
 
+    @abstractmethod
+    def upsert_slots(self, conversation_id: str, slots: SlotState) -> None:
+        """Persist slot state for a conversation."""
+
 
 class SQLiteMemoryStore(MemoryStore):
     """SQLite-backed memory store. Persistence logic to be implemented."""

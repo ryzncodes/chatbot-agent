@@ -17,7 +17,7 @@ class CalculatorTool(Tool):
     banned_sequences = {"__", "//", "**", "%", "abs", "pow", "sqrt"}
 
     async def run(self, context: ToolContext) -> ToolResponse:
-        expression = context.turn.content.strip()
+        expression = self._extract_expression(context.turn.content)
         sanitized = self._sanitize_expression(expression)
 
         try:
@@ -30,6 +30,12 @@ class CalculatorTool(Tool):
             )
 
         return ToolResponse(content=str(result), data={"expression": sanitized, "result": result})
+
+    def _extract_expression(self, message: str) -> str:
+        extracted = "".join(ch for ch in message if ch in self.allowed_chars)
+        if not extracted.strip():
+            raise ValueError("No arithmetic expression found")
+        return extracted.strip()
 
     def _sanitize_expression(self, expression: str) -> str:
         for char in expression:

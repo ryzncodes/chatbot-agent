@@ -7,6 +7,25 @@ from typing import Any
 from backend.planner.base import Planner
 from backend.planner.types import Intent, PlannerAction, PlannerContext, PlannerDecision
 
+PRODUCT_KEYWORDS = {
+    "tumbler",
+    "flask",
+    "mug",
+    "cup",
+    "bottle",
+    "merch",
+    "thermos",
+}
+
+LOCATION_ALIASES = {
+    "ss2": "SS 2",
+    "pj": "Petaling Jaya",
+    "petaling": "Petaling Jaya",
+    "kl": "Kuala Lumpur",
+    "kuala lumpur": "Kuala Lumpur",
+    "damansara": "Damansara",
+}
+
 
 class RuleBasedPlanner(Planner):
     """Lightweight intent classifier with deterministic slot requirements."""
@@ -17,7 +36,13 @@ class RuleBasedPlanner(Planner):
     def decide(self, context: PlannerContext) -> PlannerDecision:
         message = context.turn.content.lower()
         intent = self._classify_intent(message)
+        slot_updates = self._extract_slot_updates(intent, context)
         required_slots = self._derive_slots(intent, context)
+
+        # If planner just extracted a slot, treat it as satisfied locally.
+        for slot in slot_updates:
+            if slot in required_slots:
+                required_slots[slot] = True
 
         action = self._select_action(intent, required_slots)
         confidence = 0.65 if intent is Intent.UNKNOWN else 0.9
@@ -27,6 +52,7 @@ class RuleBasedPlanner(Planner):
             action=action,
             confidence=confidence,
             required_slots=required_slots,
+            slot_updates=slot_updates,
         )
 
     def _classify_intent(self, message: str) -> Intent:
@@ -43,20 +69,38 @@ class RuleBasedPlanner(Planner):
         return Intent.UNKNOWN
 
     def _derive_slots(self, intent: Intent, context: PlannerContext) -> dict[str, bool]:
-        slots_required: dict[str, bool] = {
-            "topic": intent in {Intent.PRODUCT_INFO, Intent.OUTLET_INFO},
-            "operation": intent is Intent.CALCULATE,
-            "location": intent is Intent.OUTLET_INFO,
-            "product_type": intent is Intent.PRODUCT_INFO,
-        }
+        slots_required: dict[str, bool] = {}
 
-        # Mark slots satisfied if already present in memory
-        for slot, required in slots_required.items():
-            if not required:
-                continue
-            slots_required[slot] = slot in context.conversation.slots
+        if intent is Intent.CALCULATE:
+            slots_required["operation"] = "operation" in context.conversation.slots
+        if intent is Intent.PRODUCT_INFO:
+            slots_required["product_type"] = "product_type" in context.conversation.slots
+        if intent is Intent.OUTLET_INFO:
+            slots_required["location"] = "location" in context.conversation.slots
 
         return slots_required
+
+    def _extract_slot_updates(self, intent: Intent, context: PlannerContext) -> dict[str, str]:
+        message = context.turn.content.lower()
+        tokens = [token.strip(",.!?") for token in message.split()]
+        updates: dict[str, str] = {}
+
+        if intent is Intent.CALCULATE:
+            updates["operation"] = context.turn.content.strip()
+
+        if intent is Intent.PRODUCT_INFO:
+            for token in tokens:
+                if token in PRODUCT_KEYWORDS:
+                    updates["product_type"] = token
+                    break
+
+        if intent is Intent.OUTLET_INFO:
+            for alias, location in LOCATION_ALIASES.items():
+                if alias in message:
+                    updates["location"] = location
+                    break
+
+        return updates
 
     def _select_action(self, intent: Intent, slots: dict[str, bool]) -> PlannerAction:
         if intent is Intent.CALCULATE and slots.get("operation", False):

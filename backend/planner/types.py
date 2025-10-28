@@ -48,4 +48,5 @@ class PlannerDecision:
     action: PlannerAction
     confidence: float
     required_slots: Mapping[str, bool]
+    slot_updates: dict[str, Any] = field(default_factory=dict)
     payload: dict[str, Any] = field(default_factory=dict)
