@@ -63,7 +63,8 @@ def ensure_schema(conn: sqlite3.Connection, drop_existing: bool) -> None:
             latitude REAL,
             longitude REAL,
             opening_hours TEXT,
-            services TEXT
+            services TEXT,
+            map_url TEXT
         )
         """
     )
@@ -75,8 +76,8 @@ def upsert_outlets(conn: sqlite3.Connection, outlets: list[dict]) -> int:
     for outlet in outlets:
         cursor.execute(
             """
-            INSERT INTO outlets (name, address, city, state, postcode, latitude, longitude, opening_hours, services)
-            VALUES (:name, :address, :city, :state, :postcode, :latitude, :longitude, :opening_hours, :services)
+            INSERT INTO outlets (name, address, city, state, postcode, latitude, longitude, opening_hours, services, map_url)
+            VALUES (:name, :address, :city, :state, :postcode, :latitude, :longitude, :opening_hours, :services, :map_url)
             """,
             {
                 "name": outlet.get("name"),
@@ -88,6 +89,7 @@ def upsert_outlets(conn: sqlite3.Connection, outlets: list[dict]) -> int:
                 "longitude": outlet.get("longitude"),
                 "opening_hours": outlet.get("opening_hours"),
                 "services": ", ".join(outlet.get("services", [])),
+                "map_url": outlet.get("map_url"),
             },
         )
         inserted += 1

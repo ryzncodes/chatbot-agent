@@ -125,6 +125,23 @@ script parameterizes SQL queries based on inferred locations and services.
 
 4. Restart the backend so `ProductsTool` reloads the new embeddings.
 
+### Refresh outlets database
+
+1. With network access, run:
+
+   ```bash
+   cd scripts
+   python scrape_zus_outlets.py --output ../docs/samples/outlets.sample.json
+   ```
+
+2. Sync the SQLite store locally:
+
+   ```bash
+   python sync_outlets.py --input-file ../docs/samples/outlets.sample.json --drop-existing
+   ```
+
+3. Restart the backend so `OutletsTool` sees the updated database.
+
 The ingestion commands populate:
 
 - `db/faiss/products.index` — FAISS vector store built from drinkware catalogue.
