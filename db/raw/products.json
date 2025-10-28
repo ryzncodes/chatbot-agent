@@ -1,18 +1,239 @@
 [
   {
-    "sku": "ZUS-TMB-500",
-    "name": "ZUS Stainless Tumbler",
-    "description": "500ml insulated tumbler for hot or cold drinks",
-    "size": "500ml",
-    "tags": ["tumbler", "stainless", "drinkware"],
-    "price": "59.90"
+    "sku": "ZS-TB-OG2-17-ZB-1s",
+    "name": "OG Cup 2.0 | 500ml",
+    "price": "79.00",
+    "description": "Sip and savour each and every note. What makes our OG Cup 2.0 so special? It’s leak proof, comes with a screw-on lid for that no mess experience, and a ceramic interior that better preserves flavours so you can savour every note of your drink. Now available in three colours: Thunder Blue, Space Black, and Lucky Pink.",
+    "size": "",
+    "tags": [
+      "['Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-og-cup-2-0-with-screw-on-lid"
   },
   {
-    "sku": "ZUS-MUG-350",
-    "name": "ZUS Ceramic Mug",
-    "description": "Classic ceramic mug with ZUS branding",
-    "size": "350ml",
-    "tags": ["mug", "ceramic"],
-    "price": "39.90"
+    "sku": "ZS-TB-ZS-AC-20-TB",
+    "name": "All-Can Tumbler | 600ml",
+    "price": "52.50",
+    "description": "Your companion through the day. Need a tumbler that’ll stick with you through a long office day or exhausting gym session? Calling All-Can Tumbler! With interchangeable lids—screw-on for your hot americano, flip-top for your iced sips—and a good 8 hours of perfectly preserved temperatures, this tumbler is perfect to take on-the-go. Whether you’re in the humid jungle or a freezing office, All-Can is with you through it all.",
+    "size": "",
+    "tags": [
+      "['merdeka deal'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-all-can-tumbler-600ml-20oz"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-SESH-1s",
+    "name": "All Day Cup Sundaze | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. Sunkissed skin, sandy beaches, and breezy shores—our Sundaze collection brings the seaside to you in three shades to inspire the serene beauty of the sea, the sand, and the stretch of space in between.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sundaze-collection"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-CB",
+    "name": "All Day Cup | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. This tumbler’s more than a way to sip on delicious drinks. With a leak proof, dual-purpose lid, your hot or iced drinks will be kept perfectly preserved for up to 16 hours so you can enjoy each sip like it’s the first. Pair your All Day Cup with gorgeous accessories for a colourful upgrade.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz"
+  },
+  {
+    "sku": "ZS-TB-ZS-FZ-CC-22-FW",
+    "name": "Frozee Cold Cup | 650ml",
+    "price": "55.00",
+    "description": "Embrace the chill. Whether you’re a frappe-lover or simply adore iced drinks, our Frozee Cold Cup will keep your drink cold for longer thanks to its double wall insulation. Not to mention, our straws are reusable and our lids are spill-proof—no messes allowed here.",
+    "size": "",
+    "tags": [
+      "['Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/frozee-cold-cup-650ml-22oz"
+  },
+  {
+    "sku": "ZS-CRM-MUG-OG-TB-16OZ-1s-V2",
+    "name": "OG Ceramic Mug | 470ml",
+    "price": "19.50",
+    "description": "Minimalist mug for delicious sips. Our OG Ceramic Mug makes those small moments all the more comfortable. High-quality ceramic blends effortlessly with an ergonomic handle for an easy grip—ensuring you get the ultimate cosy experience with style and practicality.",
+    "size": "",
+    "tags": [
+      "['Limited Edition'",
+      "'Mug']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-og-ceramic-mug-470ml"
+  },
+  {
+    "sku": "ZS-AD-17-BDY-LID-SF-B2",
+    "name": "All Day Cup Mountain | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. Maybe quietude and constancy are your mottos, or you feel at home amongst the fresh, clean air of higher altitudes. As steadfast as the tall trees, you’ve got a grounded confidence about you that speaks of surety, of someone who knows what they want and moves to achieve it.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-mountain-collection"
+  },
+  {
+    "sku": "ZS-AD-17-BDY-LID-MB-B2",
+    "name": "All Day Cup Aqua | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. When you’re the life of the party, you’ll find yourself gravitating towards experiences that can be shared with others. You’re like the endless water: expansive, an adventure waiting to unfold. You’re never in one place when there’s a whole world out there.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-aqua-collection"
+  },
+  {
+    "sku": "ZS-SS-HCM-BLK-1s",
+    "name": "Stainless Steel Mug | 420ml",
+    "price": "59.00",
+    "description": "Coffee smells better outdoors. Does it? I guess it's time to find out! Made for those who cherish the outdoors or simply just prefer sipping their coffee through a mug. Made from durable 304 stainless steel, features double-wall vacuum insulation to keep your drinks hot or cold up to 5 hours.No matter where your journey takes you—whether it’s a roadside coffee break to \"heal\" or a moment in the mountains surrounded by good company—we’re more than just a mug for great coffee. We’re the small comfort you can always count on, wherever the road may lead.",
+    "size": "",
+    "tags": [
+      "['Mug']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-stainless-steel-mug-420ml"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-CS-RSK-BTK-CMB3",
+    "name": "All Day Cup Corak (Tiga Sekawan Bundle) | 500ml",
+    "price": "100.40",
+    "description": "Your drinks All Day, everyday. Show your appreciation of our local arts with the Tiga Sekawan bundle in three variations, inspired by the vibrant culture and history of our country’s thirteen states. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve Corak Malaysia Reusable Straw Kit",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-tiga-sekawan-bundle"
+  },
+  {
+    "sku": "ZS-BAG-KPH-EMTO-DB-1s",
+    "name": "Denim Tote Bag",
+    "price": "19.40",
+    "description": "For all your (emotional) baggage needs. Introducing our Denim Tote Bag, made to handle all that drama—and more. Spacious and made of a thick denim material, our tote bag can comfortably hold your daily essentials thanks to its extra secure stitching. It also features a unique embroidered label on the back for a unique touch.",
+    "size": "",
+    "tags": [
+      "['Accessories']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-denim-tote-bag"
+  },
+  {
+    "sku": "ZS-MAG-CNY-FS-6s",
+    "name": "CNY Fridge Magnet - Full Set - 6's",
+    "price": "48.00",
+    "description": "Your fridge just got a whole lot more ONG. Get ready to celebrate Chinese New Year with ZUS Coffee! This season, we’re bringing you an exclusive chance to collect limited-edition magnets with a festive twist. ZUS Coin Introducing the ZUS Coin – your symbol of wealth, prosperity, and good fortune! Stick this magnet on your fridge this Chinese New Year and bring good vibes to your kitchen. With six unique designs, it’s more than just a magnet – it’s a festive touch that will remind you to embrace good fortune every day Stay Healthy, No Cap ZUS wishes you a year filled with good health, happiness, and plenty of great coffee! Featuring playful cracker engravings, this fridge magnet is a friendly reminder to keep your kitchen stocked with the essentials. Health is wealth – so let this magnet inspire you to nourish both body and soul! Vibes on Vibes May your year be as sweet as nian gao! This fridge magnet is here to bring all the good vibes. Let the festive energy of this magnet remind you to enjoy life’s little moments and spread happiness. Level Up, Fam Ascension is on the horizon! ZUS wishes you promotions, success, and all the career wins this year. This motivational fridge magnet is here to keep you focused on your goals. Whether you’re brewing your morning coffee or planning your next big move, let it remind you that success is always within reach. Smile On Always Laughter is the best medicine, and this fridge magnet brings it right to your kitchen. With its uplifting message, it’s a constant reminder to find joy in every moment. Every time you open the fridge, smile a little brighter, and let positivity fill your space. Big Wins, No Ls This year is all about winning! Keep this fridge magnet as a reminder that success is yours to claim. With its motivational message, it’s perfect for keeping you focused and energized to take on any challenge. Let it be your go-to source of inspiration in the kitchen – and more.",
+    "size": "",
+    "tags": [
+      "['Accessories'",
+      "'Limited Edition'",
+      "'Magnet']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/zus-cny-fridge-magnet-full-set-6s"
+  },
+  {
+    "sku": "ZS-NGP-BKS-500-BLU-1s",
+    "name": "ZUS Ngupi® Glass Food Container",
+    "price": "23.00",
+    "description": "Bring a dash of nostalgia to your kitchen with this NGUPI® container, dressed in charming kopitiam-inspired prints! Whether you're storing snacks or serving up leftovers, its tight-fitting lid locks in freshness.",
+    "size": "",
+    "tags": [
+      "['Accessories'",
+      "'Tech Gadget']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/ngupi-glass-food-container"
+  },
+  {
+    "sku": "ZS-AD-17-BDY-LID-LS-B2",
+    "name": "All Day Cup Sunset | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. Mature, intentional, and always present, you’re the definition of timeless grace and quiet strength. As golden as the rays that close the day, you’re in your element when things are balanced—whether it’s ambition and mental health or rest and results.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sunset-collection"
+  },
+  {
+    "sku": "ZS-AD-17-BDY-LID-SY-B2",
+    "name": "All Day Cup Sunrise | 500ml",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. You’re not just the caretaker of your group, you’re the one they turn to when times are tough. Like the soft rise of the sun, your rays of warmth are strong and steady, and you can always be counted on as someone who’s always there.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sunrise-collection"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-RIN-1s",
+    "name": "[Corak Malaysia] All Day Cup",
+    "price": "79.00",
+    "description": "Your drinks All Day, everyday. LAWANGAN Inspired by Lawangan, a traditional motif found on the ceremonial textile known as Siung Papar, this design pays tribute to the rich cultural heritage of the Murut and Lundayeh people. BUNGA RINDU Inspired by rich Peranakan heritage, Bunga Rindu captures the charm of traditional Nyonya pottery—renowned for its vibrant colors, floral motifs, and delicate craftsmanship. LABU SAYONG Labu Sayong is a traditional earthenware vessel used to store drinking water. Often adorned with delicate leaf motifs, Labu Sayong reflects themes of fertility, growth, and harmony with nature.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-all-day-edisi-kedua"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-CS-RIN-DSB2",
+    "name": "[Corak Malaysia] Dwi Sejoli",
+    "price": "112.00",
+    "description": "Make everyday a day to celebrate our heritage. Our Dwi Sejoli comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-dwi-sejoli"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-CS-BAN-RIN-TWB3",
+    "name": "[Corak Malaysia] Triloka Warisan",
+    "price": "141.00",
+    "description": "Make everyday a day to celebrate our heritage. Our Triloka Warisan comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve Corak Malaysia Bandana",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-triloka-warisan"
+  },
+  {
+    "sku": "ZS-TB-ZS-AD-17-BAN-RIN-DLB2",
+    "name": "[Corak Malaysia] Dwi Lestari",
+    "price": "112.00",
+    "description": "Make everyday a day to celebrate our heritage. Our Dwi Lestari comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Bandana",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-dwi-lestari"
+  },
+  {
+    "sku": "ZS-AD-17-BDY-LID-ZB-B2",
+    "name": "All Day Cup Classic | 500ml",
+    "price": "85.00",
+    "description": "A classic way to enjoy your drinks All Day, everyday. Inspired by the colours that make ZUS® so recognisable. From the silver of our coffee machines, the black of the freshest Americano, and the iconic blue of ZUS®, these are the classic colours every fan needs to show off their love. TrueCoat coating is only available for Space Black and ZUS® Blue.",
+    "size": "",
+    "tags": [
+      "['All Day'",
+      "'Tumbler']"
+    ],
+    "product_url": "https://shop.zuscoffee.com/products/all-day-cup-classic-500ml"
   }
 ]

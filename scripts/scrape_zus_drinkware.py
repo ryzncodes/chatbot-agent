@@ -19,13 +19,14 @@ import json
 import sys
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, List
 
 import requests
 from bs4 import BeautifulSoup
 
 
-DEFAULT_BASE_URL = "https://shop.zuscoffee.com/collections/drinkware"
+DEFAULT_COLLECTION = "drinkware"
+BASE_DOMAIN = "https://shop.zuscoffee.com"
 USER_AGENT = "Mozilla/5.0 (compatible; ZUSBot/1.0; +https://zuscoffee.com)"
 
 
@@ -43,9 +44,9 @@ class Product:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scrape ZUS drinkware catalogue")
     parser.add_argument(
-        "--base-url",
-        default=DEFAULT_BASE_URL,
-        help="Drinkware collection URL (defaults to the official shop).",
+        "--collection",
+        default=DEFAULT_COLLECTION,
+        help="Collection handle (defaults to 'drinkware').",
     )
     parser.add_argument(
         "--output",
@@ -53,16 +54,23 @@ def parse_args() -> argparse.Namespace:
         default=Path("products.json"),
         help="Destination JSON file for scraped catalogue.",
     )
-    parser.add_argument(
-        "--max-pages",
-        type=int,
-        default=5,
-        help="Maximum number of paginated collection pages to crawl.",
-    )
     return parser.parse_args()
 
 
-def fetch_page(url: str) -> BeautifulSoup:
+def fetch_json_page(collection: str, page: int) -> List[dict] | None:
+    url = f"{BASE_DOMAIN}/collections/{collection}/products.json?page={page}"
+    response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=15)
+    if response.status_code == 404:
+        return None
+    response.raise_for_status()
+    payload = response.json()
+    products = payload.get("products") if isinstance(payload, dict) else None
+    if not isinstance(products, list):
+        return None
+    return products
+
+
+def fetch_html(url: str) -> BeautifulSoup:
     response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=15)
     response.raise_for_status()
     return BeautifulSoup(response.text, "html.parser")
@@ -116,26 +124,76 @@ def product_from_ldjson(data: dict) -> Product:
     )
 
 
+def product_from_shopify_json(data: dict) -> Product:
+    name = str(data.get("title", "")).strip()
+    sku = str(data.get("variants", [{}])[0].get("sku", "") if data.get("variants") else "").strip()
+    description = BeautifulSoup(data.get("body_html", ""), "html.parser").get_text(" ", strip=True)
+    tags = [tag.strip() for tag in str(data.get("tags", "")).split(",") if tag.strip()]
+    price = ""
+    if data.get("variants"):
+        price = str(data["variants"][0].get("price", "")).strip()
+
+    options = data.get("options") or []
+    size = ""
+    for option in options:
+        if isinstance(option, dict) and option.get("name", "").lower() == "size":
+            values = option.get("values", [])
+            if values:
+                size = str(values[0]).strip()
+                break
+
+    url = data.get("handle")
+    product_url = f"{BASE_DOMAIN}/products/{url}" if url else ""
+
+    return Product(
+        sku=sku,
+        name=name,
+        price=price,
+        description=description,
+        size=size,
+        tags=tags or ["drinkware"],
+        product_url=product_url,
+    )
+
+
 def main() -> None:
     args = parse_args()
     all_products: list[Product] = []
 
-    for page in range(1, args.max_pages + 1):
-        url = args.base_url if page == 1 else f"{args.base_url}?page={page}"
+    # Try Shopify JSON API first
+    for page in range(1, 20):
         try:
-            soup = fetch_page(url)
+            json_products = fetch_json_page(args.collection, page)
         except requests.RequestException as exc:
-            print(f"Error fetching {url}: {exc}", file=sys.stderr)
+            print(f"Error fetching JSON page {page}: {exc}", file=sys.stderr)
             break
 
-        page_products = list(extract_products(soup))
-        if not page_products:
+        if not json_products:
             break
 
-        all_products.extend(page_products)
-        # Stop paginating if fewer than 5 products found (likely end of catalogue)
-        if len(page_products) < 5:
+        for product in json_products:
+            all_products.append(product_from_shopify_json(product))
+
+        if len(json_products) < 20:
             break
+
+    # Fallback to HTML scraping if JSON API returned nothing (e.g., disabled)
+    if not all_products:
+        for page in range(1, 6):
+            url = f"{BASE_DOMAIN}/collections/{args.collection}?page={page}" if page > 1 else f"{BASE_DOMAIN}/collections/{args.collection}"
+            try:
+                soup = fetch_html(url)
+            except requests.RequestException as exc:
+                print(f"Error fetching {url}: {exc}", file=sys.stderr)
+                break
+
+            page_products = list(extract_products(soup))
+            if not page_products:
+                break
+
+            all_products.extend(page_products)
+            if len(page_products) < 5:
+                break
 
     if not all_products:
         print("No products scraped. Check the selectors or base URL.", file=sys.stderr)
