@@ -1,0 +1,18 @@
+.hints {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(87, 60, 46, 0.08);
+  color: var(--color-accent);
+  align-self: flex-start;
+}
+
+.label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}

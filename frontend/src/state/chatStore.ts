@@ -9,6 +9,8 @@ type PlannerTimelineEvent = {
   action: string;
   message: string;
   toolSuccess: boolean;
+  tool: string | null;
+  requiredSlots: Record<string, boolean>;
 };
 
 type ChatState = {
@@ -16,6 +18,7 @@ type ChatState = {
   messages: ChatMessage[];
   slots: Record<string, string>;
   timeline: PlannerTimelineEvent[];
+  lastDecision: PlannerTimelineEvent | null;
   status: "idle" | "loading" | "error";
   error?: string;
   setConversationId: (id: string) => void;
@@ -36,6 +39,7 @@ export const useChatStore = create<ChatState>()(
       messages: [],
       slots: {},
       timeline: [],
+      lastDecision: null,
       status: "idle",
       setConversationId: (id) => set({ conversationId: id }),
       appendMessage: (message) => set({ messages: [...get().messages, message] }),
@@ -49,6 +53,8 @@ export const useChatStore = create<ChatState>()(
               action: response.action,
               message: response.message,
               toolSuccess: response.tool_success,
+              tool: response.action.startsWith("call_") ? response.action : null,
+              requiredSlots: response.required_slots,
             },
           ],
           slots: {
@@ -56,6 +62,15 @@ export const useChatStore = create<ChatState>()(
             ...Object.fromEntries(
               Object.entries(response.required_slots).filter(([, satisfied]) => satisfied)
             ),
+          },
+          lastDecision: {
+            timestamp: new Date().toISOString(),
+            intent: response.intent,
+            action: response.action,
+            message: response.message,
+            toolSuccess: response.tool_success,
+            tool: response.action.startsWith("call_") ? response.action : null,
+            requiredSlots: response.required_slots,
           },
         })),
       setStatus: (status, error) => set({ status, error }),
@@ -65,6 +80,7 @@ export const useChatStore = create<ChatState>()(
           messages: [],
           slots: {},
           timeline: [],
+          lastDecision: null,
           status: "idle",
           error: undefined,
         }),

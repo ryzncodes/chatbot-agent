@@ -147,14 +147,62 @@
   display: flex;
   gap: 0.5rem;
   font-size: 0.85rem;
+  align-items: center;
 }
 
-.statusBar span.loading {
-  color: var(--color-accent);
+.statusDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.statusBar span.error {
+.statusText {
+  font-weight: 500;
+}
+
+.statusOk {
+  background: var(--color-success);
+}
+
+.statusLoading {
+  background: var(--color-accent);
+}
+
+.statusError {
+  background: var(--color-error);
+}
+
+.errorBanner {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  background: rgba(217, 83, 79, 0.12);
   color: var(--color-error);
+  font-size: 0.9rem;
+}
+
+.toolIndicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(87, 60, 46, 0.08);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.toolIndicator.success {
+  color: var(--color-success);
+  background: rgba(60, 157, 95, 0.12);
+}
+
+.toolIndicator.error {
+  color: var(--color-error);
+  background: rgba(217, 83, 79, 0.12);
 }
 
 .timelineItem {
@@ -204,6 +252,21 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.timelineStatus {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.availabilityOk {
+  color: var(--color-success);
+}
+
+.availabilityDegraded {
+  color: var(--color-error);
 }
 
 .badge {

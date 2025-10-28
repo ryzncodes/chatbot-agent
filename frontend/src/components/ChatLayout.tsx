@@ -1,21 +1,28 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { sendChatMessage } from "../services/api";
+import { fetchMetrics, sendChatMessage } from "../services/api";
 import { useChatStore } from "../state/chatStore";
 
 import styles from "./ChatLayout.module.css";
+import AutocompleteHints from "./AutocompleteHints";
 
 const QUICK_COMMANDS = ["/calc", "/products", "/outlets", "/reset"];
+
+type ToolAvailability = "ok" | "degraded";
 
 function ChatLayout() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const [input, setInput] = useState("");
+  const [toolStatus, setToolStatus] = useState<ToolAvailability>("ok");
+  const [lastTool, setLastTool] = useState<string | null>(null);
+  const [metrics, setMetrics] = useState<{ total?: number } | null>(null);
 
   const {
     conversationId,
     messages,
     timeline,
     slots,
+    lastDecision,
     status,
     error,
     appendMessage,
@@ -56,9 +63,12 @@ function ChatLayout() {
         if (response.action === "finish") {
           reset();
         }
+        setLastTool(response.action.startsWith("call_") ? response.action : null);
+        setToolStatus(response.tool_success ? "ok" : "degraded");
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error";
         setStatus("error", message);
+        setToolStatus("degraded");
       }
     },
     [appendMessage, conversationId, input, recordPlannerEvent, reset, setStatus]
@@ -70,8 +80,34 @@ function ChatLayout() {
     return "Online";
   }, [status, error]);
 
+  useEffect(() => {
+    const poll = async () => {
+      try {
+        const data = (await fetchMetrics()) as { total_requests?: number };
+        setMetrics({ total: data.total_requests ?? 0 });
+      } catch (err) {
+        console.warn("Failed to fetch metrics", err);
+      }
+    };
+    poll();
+    const interval = setInterval(poll, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleQuickCommand = (command: string) => {
-    setInput((current) => `${command} ${current}`.trim() + " ");
+    if (command === "/reset") {
+      reset();
+      return;
+    }
+    if (command === "/calc") {
+      setInput((current) => `${command} 1 + 2`.trim() + " ");
+    } else if (command === "/products") {
+      setInput((current) => `${command} What tumblers do you have?`.trim() + " ");
+    } else if (command === "/outlets") {
+      setInput((current) => `${command} What are the hours for SS2?`.trim() + " ");
+    } else {
+      setInput((current) => `${command} ${current}`.trim() + " ");
+    }
     textareaRef.current?.focus();
   };
 
@@ -140,9 +176,20 @@ function ChatLayout() {
               Send
             </button>
           </div>
+          <AutocompleteHints input={input} commands={QUICK_COMMANDS} />
           <div className={styles.statusBar}>
-            <span className={status === "error" ? "error" : "loading"}>{statusMessage}</span>
+            <span
+              className={`${styles.statusDot} ${status === "error" ? styles.statusError : status === "loading" ? styles.statusLoading : styles.statusOk}`}
+            ></span>
+            <span className={styles.statusText}>{statusMessage}</span>
+            {lastTool && (
+              <span className={`${styles.toolIndicator} ${toolStatus === "ok" ? "success" : "error"}`}>
+                ⚙️ {lastTool.replace("call_", "")}
+              </span>
+            )}
+            {metrics?.total !== undefined && <span className={styles.statusText}>· {metrics.total} turns</span>}
           </div>
+          {status === "error" && error && <div className={styles.errorBanner}>⚠️ {error}</div>}
         </form>
       </section>
 
@@ -154,21 +201,39 @@ function ChatLayout() {
 
         <div className={styles.timelineList}>
           {timeline.length === 0 && <p>No planner decisions yet.</p>}
-          {timeline.map((event) => (
-            <div
-              key={event.timestamp}
-              className={`${styles.timelineItem} ${event.toolSuccess ? "success" : "error"}`}
-            >
-              <div className={styles.timelineMeta}>
-                {new Date(event.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                &nbsp;· Intent: <strong>{event.intent}</strong>
+          {timeline.map((event) => {
+            const missingSlots = Object.entries(event.requiredSlots)
+              .filter(([, satisfied]) => !satisfied)
+              .map(([slot]) => slot.replace(/_/g, " "));
+            return (
+              <div
+                key={event.timestamp}
+                className={`${styles.timelineItem} ${event.toolSuccess ? "success" : "error"}`}
+              >
+                <div className={styles.timelineMeta}>
+                  {new Date(event.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                  &nbsp;· Intent: <strong>{event.intent}</strong>
+                </div>
+                <div>
+                  <strong>Action:</strong> {event.action}
+                </div>
+                <div>{event.message}</div>
+                {missingSlots.length > 0 && (
+                  <div>
+                    <strong>Missing slots:</strong> {missingSlots.join(", ")}
+                  </div>
+                )}
+                {event.tool && (
+                  <div className={`${styles.toolIndicator} ${event.toolSuccess ? "success" : "error"}`}>
+                    Tool: {event.tool.replace("call_", "")}
+                  </div>
+                )}
               </div>
-              <div>
-                <strong>Action:</strong> {event.action}
-              </div>
-              <div>{event.message}</div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </aside>
     </div>
