@@ -107,6 +107,24 @@ script parameterizes SQL queries based on inferred locations and services.
 > Both scripts expect local JSON exports. Sample files live in `docs/samples/` — duplicate and adjust
 > them as needed, then rerun the scripts when you have updated data or live fetchers.
 
+### Pull latest drinkware catalogue
+
+1. Install scraper dependencies locally: `pip install -r scripts/requirements.txt`
+2. Run the scraper on a machine with internet access:
+
+   ```bash
+   cd scripts
+   python scrape_zus_drinkware.py --output ../db/raw/products.json
+   ```
+
+3. Regenerate the FAISS index:
+
+   ```bash
+   python ingest_products.py --input-file ../db/raw/products.json
+   ```
+
+4. Restart the backend so `ProductsTool` reloads the new embeddings.
+
 The ingestion commands populate:
 
 - `db/faiss/products.index` — FAISS vector store built from drinkware catalogue.
