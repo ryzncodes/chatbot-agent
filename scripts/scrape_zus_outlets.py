@@ -59,6 +59,12 @@ def parse_args() -> argparse.Namespace:
         default=Path("outlets.json"),
         help="Destination JSON file for scraped outlets.",
     )
+    parser.add_argument(
+        "--max-pages",
+        type=int,
+        default=0,
+        help="Maximum paginated pages to crawl (0 = crawl all)",
+    )
     return parser.parse_args()
 
 
@@ -150,16 +156,40 @@ def extract_outlets(soup: BeautifulSoup) -> Iterable[Outlet]:
 
 def main() -> None:
     args = parse_args()
-    try:
-        soup = fetch_rendered_html(args.base_url)
-    except Exception as exc:  # noqa: BLE001
-        print(f"Error rendering {args.base_url}: {exc}", file=sys.stderr)
-        sys.exit(1)
+    current_url = args.base_url
+    visited: set[str] = set()
+    collected: list[Outlet] = []
+    page_counter = 0
 
-    outlets = list(extract_outlets(soup))
-    if not outlets:
+    while current_url and current_url not in visited:
+        if args.max_pages and page_counter >= args.max_pages:
+            break
+
+        try:
+            soup = fetch_rendered_html(current_url)
+        except Exception as exc:  # noqa: BLE001
+            print(f"Error rendering {current_url}: {exc}", file=sys.stderr)
+            break
+
+        visited.add(current_url)
+        page_counter += 1
+        collected.extend(extract_outlets(soup))
+
+        next_link = soup.select_one("nav.elementor-pagination a.next")
+        if next_link and next_link.get("href"):
+            current_url = next_link["href"].strip()
+        else:
+            break
+
+    if not collected:
         print("No outlets scraped. The page structure may have changed — update selectors in scrape_zus_outlets.py.", file=sys.stderr)
         sys.exit(1)
+
+    deduped: dict[tuple[str, str], Outlet] = {}
+    for outlet in collected:
+        key = (outlet.name, outlet.address)
+        deduped[key] = outlet
+    outlets = list(deduped.values())
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as handle:
