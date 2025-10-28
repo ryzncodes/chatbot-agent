@@ -1,9 +1,15 @@
 """FastAPI application entry point for the ZUS AI Assistant backend."""
 
+import logging
+from typing import Any
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.api.tools import create_tools_router
 from backend.core.config import get_settings
+from backend.core.errors import unhandled_exception_handler
+from backend.core.metrics import MetricsCollector
 from backend.memory.models import MessageTurn
 from backend.memory.store import SQLiteMemoryStore
 from backend.planner.simple import RuleBasedPlanner
@@ -16,14 +22,18 @@ from backend.tools.router import ToolRouter
 settings = get_settings()
 memory_store = SQLiteMemoryStore(settings.sqlite_path)
 planner = RuleBasedPlanner()
+calculator_tool = CalculatorTool()
+products_tool = ProductsTool(
+    index_path=settings.faiss_index_path,
+    metadata_path=settings.products_metadata_path,
+)
+outlets_tool = OutletsTool(settings.outlets_db_path)
+metrics = MetricsCollector()
 tool_router = ToolRouter(
     {
-        PlannerAction.CALL_CALCULATOR: CalculatorTool(),
-        PlannerAction.CALL_PRODUCTS: ProductsTool(
-            index_path=settings.faiss_index_path,
-            metadata_path=settings.products_metadata_path,
-        ),
-        PlannerAction.CALL_OUTLETS: OutletsTool(settings.outlets_db_path),
+        PlannerAction.CALL_CALCULATOR: calculator_tool,
+        PlannerAction.CALL_PRODUCTS: products_tool,
+        PlannerAction.CALL_OUTLETS: outlets_tool,
     }
 )
 
@@ -37,6 +47,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(create_tools_router(calculator_tool, products_tool, outlets_tool))
+
 
 @app.get("/health", tags=["health"])
 async def health_check() -> dict[str, str]:
@@ -46,7 +58,7 @@ async def health_check() -> dict[str, str]:
 
 
 def get_memory_store() -> SQLiteMemoryStore:
-    """Dependency injector for the memory store."""
+"""Dependency injector for the memory store."""
 
     return memory_store
 
@@ -109,6 +121,8 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         tool_success = False
         tool_data = {}
 
+    metrics.record_request(decision.intent.value, decision.action.value)
+
     return {
         "conversation_id": conversation_id,
         "intent": decision.intent.value,
@@ -118,4 +132,24 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         "message": response_content,
         "tool_data": tool_data or {},
         "required_slots": decision.required_slots,
+    }
+
+
+@app.on_event("startup")
+async def configure_logging() -> None:
+    level = getattr(logging, str(settings.log_level).upper(), logging.INFO)
+    logging.basicConfig(level=level, format="%(levelname)s %(name)s %(message)s")
+    logging.getLogger("httpx").setLevel(logging.WARNING)
+
+
+app.add_exception_handler(Exception, unhandled_exception_handler)
+
+
+@app.get("/metrics", tags=["metrics"])
+async def metrics_endpoint() -> dict:
+    snapshot = metrics.snapshot()
+    return {
+        "total_requests": snapshot.total_requests,
+        "tool_calls": snapshot.tool_calls,
+        "planner_intents": snapshot.planner_intents,
     }

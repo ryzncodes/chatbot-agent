@@ -22,3 +22,8 @@ def test_chat_responds_with_intent_and_action(tmp_path, monkeypatch):
     assert payload["action"] == "call_calculator"
     assert payload["tool_success"] is True
     assert payload["message"] == "3"
+
+    metrics_response = client.get("/metrics")
+    assert metrics_response.status_code == 200
+    metrics_payload = metrics_response.json()
+    assert metrics_payload["total_requests"] >= 1

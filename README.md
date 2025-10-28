@@ -21,6 +21,7 @@ An end-to-end conversational agent that plans, calls external tools, and retriev
 - Multi-turn memory with slot tracking across threads.
 - Planner/controller loop that selects between calculator, RAG, Text2SQL, or fallback actions.
 - FastAPI backend exposing `/chat`, `/calculator`, `/products`, `/outlets`, and `/metrics` endpoints.
+- Dedicated `/tools/` endpoints for calculator, products, and outlets to enable direct integration tests.
 - React/Vite frontend with chat bubbles, planner timeline, quick commands, and unhappy-flow indicators.
 - FAISS-powered retrieval over ZUS drinkware catalogue; Text2SQL querying of outlet hours/services.
 - Automated coverage for happy-path, interrupted, and malicious interaction flows.
