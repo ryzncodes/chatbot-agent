@@ -56,6 +56,7 @@ EMBEDDING_MODEL=text-embedding-3-large
 SQLITE_PATH=../db/conversations.db
 OUTLETS_DB_PATH=../db/outlets.db
 FAISS_INDEX_PATH=../db/faiss/products.index
+PRODUCTS_METADATA_PATH=../db/faiss/products_metadata.json
 CALCULATOR_TIMEOUT_MS=2000
 LOG_LEVEL=INFO
 FRONTEND_ORIGIN=http://localhost:5173
@@ -94,9 +95,12 @@ pnpm install
 
 ```bash
 cd scripts
-python ingest_products.py --source https://shop.zuscoffee.com/ --category Drinkware
-python sync_outlets.py --source https://zuscoffee.com/category/store/kuala-lumpur-selangor/
+python ingest_products.py --input-file ../docs/samples/products.json
+python sync_outlets.py --input-file ../docs/samples/outlets.json --drop-existing
 ```
+
+> The ingestion scripts currently expect local JSON exports. When network access is enabled,
+> replace the `--input-file` argument with live fetchers.
 
 The ingestion commands populate:
 
