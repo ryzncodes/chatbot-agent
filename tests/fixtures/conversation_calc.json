@@ -1,0 +1,5 @@
+{
+  "conversation_id": "conv-fixture",
+  "role": "user",
+  "content": "Can you calc 1 + 2?"
+}

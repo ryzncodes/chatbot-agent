@@ -6,15 +6,8 @@ from backend.main import app
 client = TestClient(app)
 
 
-def test_chat_responds_with_intent_and_action(tmp_path, monkeypatch):
-    response = client.post(
-        "/chat",
-        json={
-            "conversation_id": "conv-1",
-            "role": "user",
-            "content": "Can you calc 1 + 2?",
-        },
-    )
+def test_chat_responds_with_intent_and_action(conversation_calc_payload):
+    response = client.post("/chat", json=conversation_calc_payload)
 
     assert response.status_code == 200
     payload = response.json()

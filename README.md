@@ -191,8 +191,7 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 | --- | --- | --- |
 | Unit | `pytest tests/unit` | Tool utilities, planner reducers, memory helpers. |
 | Integration | `pytest tests/integration` | `/chat`, `/calculator`, `/products`, `/outlets` API flows. |
-| Unhappy flows | `pytest tests/unhappy` | Missing params, simulated 500s, SQL injection attempts. |
-| Conversation | `pytest tests/conversation` | Sequential memory and interruption handling. |
+| Coverage | `PYTHONPATH=.. poetry run pytest ../tests --cov=backend --cov-report=term-missing` | Aggregated backend coverage (also run in CI). |
 | E2E | `npm run test:e2e` (Cypress) | Frontend chat, planner timeline, error banners, persistence. |
 
 > Tip: Use `CYPRESS_BASE_URL` or `VITE_API_URL` to point Cypress to your running backend when executing E2E tests locally.

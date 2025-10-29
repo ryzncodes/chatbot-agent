@@ -25,8 +25,8 @@ def test_products_tool_route_requires_query():
     assert response.status_code == 400
 
 
-def test_products_tool_route_returns_404_when_unavailable():
-    response = client.get("/tools/products", params={"query": "tumbler"})
+def test_products_tool_route_returns_404_when_unavailable(products_query):
+    response = client.get("/tools/products", params=products_query)
     assert response.status_code in {200, 404}
 
 
@@ -35,8 +35,8 @@ def test_products_alias_requires_query():
     assert response.status_code == 400
 
 
-def test_products_alias_returns_payload():
-    response = client.get("/products", params={"query": "espresso"})
+def test_products_alias_returns_payload(products_query):
+    response = client.get("/products", params=products_query)
     payload = response.json()
     assert response.status_code in {200, 404}
     assert set(payload.keys()) == {"detail"} or set(payload.keys()) == {"message", "results"}
