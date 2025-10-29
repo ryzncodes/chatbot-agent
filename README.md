@@ -131,7 +131,7 @@ script parameterizes SQL queries based on inferred locations and services.
 
    ```bash
    cd scripts
-   python scrape_zus_outlets.py --output ../docs/samples/outlets.sample.json
+    python scrape_zus_outlets.py --output ../docs/samples/outlets.sample.json --max-pages 22
    ```
 
 2. Sync the SQLite store locally:
@@ -141,6 +141,8 @@ script parameterizes SQL queries based on inferred locations and services.
    ```
 
 3. Restart the backend so `OutletsTool` sees the updated database.
+
+> Omit `--max-pages` to crawl until pagination is exhausted, or lower it for quicker smoke tests.
 
 The ingestion commands populate:
 

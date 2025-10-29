@@ -18,14 +18,18 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -68,7 +72,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def fetch_rendered_html(url: str, wait_seconds: int = 5) -> BeautifulSoup:
+def init_driver(wait_seconds: int = 5) -> webdriver.Chrome:
     chrome_options = Options()
     chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--disable-gpu")
@@ -78,14 +82,8 @@ def fetch_rendered_html(url: str, wait_seconds: int = 5) -> BeautifulSoup:
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    try:
-        driver.get(url)
-        driver.implicitly_wait(wait_seconds)
-        page_source = driver.page_source
-    finally:
-        driver.quit()
-
-    return BeautifulSoup(page_source, "html.parser")
+    driver.implicitly_wait(wait_seconds)
+    return driver
 
 
 def extract_outlets(soup: BeautifulSoup) -> Iterable[Outlet]:
@@ -156,39 +154,48 @@ def extract_outlets(soup: BeautifulSoup) -> Iterable[Outlet]:
 
 def main() -> None:
     args = parse_args()
-    current_url = args.base_url
-    visited: set[str] = set()
+    driver = init_driver()
     collected: list[Outlet] = []
     page_counter = 0
 
-    while current_url and current_url not in visited:
-        if args.max_pages and page_counter >= args.max_pages:
-            break
+    try:
+        driver.get(args.base_url)
+        time.sleep(2)
 
-        try:
-            soup = fetch_rendered_html(current_url)
-        except Exception as exc:  # noqa: BLE001
-            print(f"Error rendering {current_url}: {exc}", file=sys.stderr)
-            break
+        while True:
+            page_counter += 1
+            soup = BeautifulSoup(driver.page_source, "html.parser")
+            page_outlets = list(extract_outlets(soup))
+            collected.extend(page_outlets)
+            print(f"[Scraper] Page {page_counter}: {driver.current_url} → {len(page_outlets)} outlets")
 
-        visited.add(current_url)
-        page_counter += 1
-        collected.extend(extract_outlets(soup))
+            if args.max_pages and page_counter >= args.max_pages:
+                break
 
-        next_link = soup.select_one("nav.elementor-pagination a.next")
-        if next_link and next_link.get("href"):
-            current_url = next_link["href"].strip()
-        else:
-            break
+            try:
+                next_button = WebDriverWait(driver, 5).until(
+                    EC.element_to_be_clickable((By.CSS_SELECTOR, "nav.elementor-pagination a.next"))
+                )
+            except Exception:
+                break
+
+            if not next_button:
+                break
+
+            driver.execute_script("arguments[0].click();", next_button)
+            time.sleep(2)
+
+    finally:
+        driver.quit()
 
     if not collected:
-        print("No outlets scraped. The page structure may have changed — update selectors in scrape_zus_outlets.py.", file=sys.stderr)
+        print(
+            "No outlets scraped. The page structure may have changed — update selectors in scrape_zus_outlets.py.",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
-    deduped: dict[tuple[str, str], Outlet] = {}
-    for outlet in collected:
-        key = (outlet.name, outlet.address)
-        deduped[key] = outlet
+    deduped = {(outlet.name, outlet.address): outlet for outlet in collected}
     outlets = list(deduped.values())
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
