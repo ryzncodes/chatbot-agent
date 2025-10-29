@@ -13,6 +13,13 @@ def test_calculator_tool_route():
     assert payload["result"] == 5
 
 
+def test_calculator_tool_invalid_expression_returns_400():
+    response = client.post("/tools/calculator", json={"expression": "2 + bad"})
+    assert response.status_code == 400
+    payload = response.json()
+    assert "Unsupported character" in payload["detail"]
+
+
 def test_products_tool_route_requires_query():
     response = client.get("/tools/products")
     assert response.status_code == 400
@@ -21,6 +28,26 @@ def test_products_tool_route_requires_query():
 def test_products_tool_route_returns_404_when_unavailable():
     response = client.get("/tools/products", params={"query": "tumbler"})
     assert response.status_code in {200, 404}
+
+
+def test_products_alias_requires_query():
+    response = client.get("/products")
+    assert response.status_code == 400
+
+
+def test_products_alias_returns_payload():
+    response = client.get("/products", params={"query": "espresso"})
+    payload = response.json()
+    assert response.status_code in {200, 404}
+    assert set(payload.keys()) == {"detail"} or set(payload.keys()) == {"message", "results"}
+
+
+def test_outlets_route_rejects_injection():
+    response = client.get("/tools/outlets", params={"query": "'; DROP TABLE outlets;"})
+    assert response.status_code in {200, 404}
+    if response.status_code == 200:
+        data = response.json()
+        assert data.get("results") == []
 
 
 def test_request_id_header_propagated():

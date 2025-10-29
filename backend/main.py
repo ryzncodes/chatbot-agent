@@ -11,10 +11,11 @@ from backend.core.config import get_settings
 from backend.core.errors import unhandled_exception_handler
 from backend.core.logging import request_id_middleware
 from backend.core.metrics import MetricsCollector
-from backend.memory.models import MessageTurn
+from backend.memory.models import ConversationSnapshot, MessageTurn
 from backend.memory.store import SQLiteMemoryStore
 from backend.planner.simple import RuleBasedPlanner
 from backend.planner.types import PlannerAction, PlannerContext, PlannerDecision
+from backend.tools.base import ToolContext
 from backend.tools.calculator import CalculatorTool
 from backend.tools.outlets import OutletsTool
 from backend.tools.products import ProductsTool
@@ -37,6 +38,7 @@ tool_router = ToolRouter(
         PlannerAction.CALL_OUTLETS: outlets_tool,
     }
 )
+tool_logger = logging.getLogger("zus.tools")
 
 app = FastAPI(title=settings.app_name, version="0.1.0", docs_url="/docs")
 
@@ -70,6 +72,27 @@ async def list_conversations(store: SQLiteMemoryStore = Depends(get_memory_store
     """List known conversation identifiers (development helper)."""
 
     return list(store.iter_conversations())
+
+
+@app.get("/products", tags=["tools"])
+async def products_alias(query: str | None = None) -> dict[str, Any]:
+    """Alias endpoint matching assessment requirements."""
+
+    if not query:
+        raise HTTPException(status_code=400, detail="query parameter is required")
+
+    snapshot = ConversationSnapshot(conversation_id="alias-products", turns=[], slots={})
+    turn = MessageTurn(conversation_id="alias-products", role="user", content=query)
+    context = ToolContext(turn=turn, conversation=snapshot)
+
+    result = await products_tool.run(context)
+    if not result.success:
+        raise HTTPException(status_code=404, detail=result.content)
+
+    return {
+        "message": result.content,
+        "results": result.data.get("results", []),
+    }
 
 
 @app.post("/chat", tags=["chat"])
@@ -114,10 +137,16 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         tool_success = False
         tool_data = {}
     elif tool_router.supports(decision.action):
-        tool_response = await tool_router.dispatch(decision.action, turn, snapshot)
-        response_content = tool_response.content if tool_response.success else "I'm still learning that."
-        tool_success = tool_response.success
-        tool_data = tool_response.data
+        try:
+            tool_response = await tool_router.dispatch(decision.action, turn, snapshot)
+            response_content = tool_response.content if tool_response.success else "I'm still learning that."
+            tool_success = tool_response.success
+            tool_data = tool_response.data
+        except Exception as exc:  # noqa: BLE001
+            tool_logger.exception("Tool dispatch failed", extra={"action": decision.action.value})
+            response_content = "I ran into an issue calling that tool. Could you try again later?"
+            tool_success = False
+            tool_data = {"error": str(exc)}
     else:
         response_content = "That capability isn't available yet, but I'm taking note."
         tool_success = False
