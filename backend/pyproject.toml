@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "FastAPI backend for the ZUS AI Assistant"
 authors = ["Mindhive Candidate <candidate@example.com>"]
 readme = "README.md"
-packages = [{ include = "backend" }]
+packages = [{ include = "backend", from = "." }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
