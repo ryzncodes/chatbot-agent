@@ -4,6 +4,33 @@ from __future__ import annotations
 
 import os
 import sys
+from collections.abc import Iterable
+
+
+def find_backend_path(candidates: Iterable[str]) -> str | None:
+    """Locate the backend package directory within provided candidates."""
+
+    inspected: set[str] = set()
+    for candidate in candidates:
+        if not candidate or candidate in inspected or not os.path.isdir(candidate):
+            continue
+        inspected.add(candidate)
+
+        direct = os.path.join(candidate, "backend")
+        if os.path.isdir(direct) and os.path.isfile(os.path.join(direct, "main.py")):
+            return direct
+
+        try:
+            for entry in os.listdir(candidate):
+                nested = os.path.join(candidate, entry)
+                if os.path.isdir(nested):
+                    direct = os.path.join(nested, "backend")
+                    if os.path.isdir(direct) and os.path.isfile(os.path.join(direct, "main.py")):
+                        return direct
+        except Exception as exc:  # noqa: BLE001
+            print(f"[serve] failed to inspect {candidate}: {exc}")
+    return None
+
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -13,28 +40,27 @@ if __name__ == "__main__":
         os.path.join(script_dir, "app"),
         os.path.join(os.getcwd(), "app"),
         os.path.dirname(script_dir),
+        "/app",
+        "/workspace",
+        "/",
     ]
 
-    backend_root = None
-    for candidate in candidates:
-        backend_path = os.path.join(candidate, "backend")
-        if os.path.isdir(backend_path):
-            backend_root = candidate
-            break
+    backend_path = find_backend_path(candidates)
+    backend_root = os.path.dirname(backend_path) if backend_path else None
 
     print("[serve] __file__:", __file__)
     print("[serve] cwd:", os.getcwd())
     print("[serve] candidates:", candidates)
     print("[serve] chosen backend_root:", backend_root)
+    print("[serve] chosen backend_path:", backend_path)
 
-    if backend_root:
-        if backend_root not in sys.path:
+    if backend_path:
+        if backend_root and backend_root not in sys.path:
             sys.path.insert(0, backend_root)
-        backend_pkg_path = os.path.join(backend_root, "backend")
-        if backend_pkg_path not in sys.path:
-            sys.path.insert(0, backend_pkg_path)
+        if backend_path not in sys.path:
+            sys.path.insert(0, backend_path)
         try:
-            print("[serve] backend listing:", os.listdir(backend_pkg_path))
+            print("[serve] backend listing:", os.listdir(backend_path))
         except Exception as exc:  # noqa: BLE001
             print("[serve] failed to list backend:", exc)
     else:
