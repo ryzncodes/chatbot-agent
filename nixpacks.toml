@@ -2,13 +2,11 @@
 nixPkgs = ["python311", "poetry", "python311Packages.pip"]
 
 [phases.build]
-# enable virtualenvs and install safely
 cmds = [
-  "export POETRY_VIRTUALENVS_CREATE=true",
-  "export POETRY_VIRTUALENVS_IN_PROJECT=true",
-  "cd backend && poetry env use python3.11 && poetry install --no-interaction --no-ansi"
+  "cd backend && poetry env use python3.11",
+  "cd backend && poetry install --no-interaction --no-ansi"
 ]
-cacheDirectories = ["/app/backend/.venv", "/root/.cache/pypoetry"]
+cacheDirectories = ["/root/.cache/pypoetry", "/app/backend/.venv"]
 
 [start]
 cmd = "cd backend && .venv/bin/python serve.py"
