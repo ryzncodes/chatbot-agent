@@ -1,6 +1,8 @@
 """FastAPI application entry point for the ZUS AI Assistant backend."""
 
 import logging
+import os
+import sys
 from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -22,6 +24,13 @@ from backend.tools.products import ProductsTool
 from backend.tools.router import ToolRouter
 
 settings = get_settings()
+print("[startup] __file__:", __file__)
+print("[startup] cwd:", os.getcwd())
+print("[startup] sys.path:", sys.path)
+try:
+    print("[startup] cwd listing:", os.listdir(os.getcwd()))
+except Exception as exc:  # noqa: BLE001
+    print("[startup] failed to list cwd:", exc)
 memory_store = SQLiteMemoryStore(settings.sqlite_path)
 planner = RuleBasedPlanner()
 calculator_tool = CalculatorTool()
