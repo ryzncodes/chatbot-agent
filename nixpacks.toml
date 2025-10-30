@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["python311", "python311Packages.pip", "python311Packages.poetry"]
+
+[phases.build]
+cmds = ["cd backend && poetry install --no-interaction --no-ansi"]
+
+[start]
+cmd = "cd backend && poetry run python serve.py"
