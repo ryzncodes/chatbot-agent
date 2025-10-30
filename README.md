@@ -58,12 +58,19 @@ SQLITE_PATH=../db/conversations.db
 OUTLETS_DB_PATH=../db/outlets.db
 FAISS_INDEX_PATH=../db/faiss/products.index
 PRODUCTS_METADATA_PATH=../db/faiss/products_metadata.json
+OPENROUTER_API_KEY=sk-or-...
+OPENROUTER_MODEL=minimax/minimax-m2:free
+OPENROUTER_REFERER=http://localhost:5173
+OPENROUTER_TITLE=ZUS AI Assistant
+OPENROUTER_RATE_LIMIT_PER_SEC=1.0
 CALCULATOR_TIMEOUT_MS=2000
 LOG_LEVEL=INFO
 FRONTEND_ORIGIN=http://localhost:5173
 ```
 
 For local-only mode you can omit `OPENAI_API_KEY` and configure `EMBEDDING_MODEL=all-MiniLM-L6-v2` (requires local sentence-transformers).
+
+If `OPENROUTER_API_KEY` is unset the backend falls back to the built-in TF-IDF summary.
 
 ## Setup & Run Instructions
 

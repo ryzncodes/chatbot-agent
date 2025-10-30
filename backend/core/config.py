@@ -43,6 +43,28 @@ class Settings(BaseSettings):
         description="Additional allowed CORS origins for multi-client deployments.",
     )
 
+    openrouter_api_key: str | None = Field(
+        default=None,
+        description="Optional OpenRouter API key for product summarisation.",
+    )
+    openrouter_model: str = Field(
+        default="minimax/minimax-m2:free",
+        description="OpenRouter model identifier.",
+    )
+    openrouter_referer: str | None = Field(
+        default=None,
+        description="Referer header required by OpenRouter (your app URL).",
+    )
+    openrouter_title: str | None = Field(
+        default="ZUS AI Assistant",
+        description="Title header sent to OpenRouter.",
+    )
+    openrouter_rate_limit_per_sec: float = Field(
+        default=1.0,
+        ge=0.1,
+        description="Minimum interval (seconds) between OpenRouter API calls.",
+    )
+
     @property
     def cors_origins(self) -> list[str]:
         """Return the full list of allowed CORS origins."""
@@ -79,6 +101,10 @@ class Settings(BaseSettings):
                 unique.append(origin)
 
         return unique
+
+    @property
+    def openrouter_enabled(self) -> bool:
+        return bool(self.openrouter_api_key)
 
 
 @lru_cache(maxsize=1)

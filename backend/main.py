@@ -28,6 +28,11 @@ calculator_tool = CalculatorTool()
 products_tool = ProductsTool(
     index_path=settings.faiss_index_path,
     metadata_path=settings.products_metadata_path,
+    openrouter_api_key=settings.openrouter_api_key,
+    openrouter_model=settings.openrouter_model,
+    openrouter_referer=settings.openrouter_referer,
+    openrouter_title=settings.openrouter_title,
+    openrouter_rate_limit_per_sec=settings.openrouter_rate_limit_per_sec,
 )
 outlets_tool = OutletsTool(settings.outlets_db_path)
 metrics = MetricsCollector()

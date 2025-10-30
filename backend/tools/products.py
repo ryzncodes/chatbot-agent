@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
+import logging
+import time
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 import faiss  # type: ignore
+import httpx
 import numpy as np
 
 from backend.tools.base import Tool, ToolContext, ToolResponse
@@ -17,14 +21,33 @@ class ProductsTool(Tool):
     """Return drinkware recommendations using cached metadata and FAISS index."""
 
     name = "products"
+    _summarise_semaphore = asyncio.Semaphore(2)
 
-    def __init__(self, index_path: Path, metadata_path: Path) -> None:
+    def __init__(
+        self,
+        index_path: Path,
+        metadata_path: Path,
+        *,
+        openrouter_api_key: str | None = None,
+        openrouter_model: str = "minimax/minimax-m2:free",
+        openrouter_referer: str | None = None,
+        openrouter_title: str | None = None,
+        openrouter_rate_limit_per_sec: float = 1.0,
+    ) -> None:
         self.index_path = Path(index_path)
         self.metadata_path = Path(metadata_path)
         self._catalogue: list[dict[str, Any]] | None = None
         self._vocabulary: list[str] | None = None
         self._idf: np.ndarray | None = None
         self._index: faiss.Index | None = None
+        self._openrouter_api_key = openrouter_api_key
+        self._openrouter_model = openrouter_model
+        self._openrouter_referer = openrouter_referer
+        self._openrouter_title = openrouter_title or "ZUS AI Assistant"
+        self._openrouter_min_interval = max(0.1, openrouter_rate_limit_per_sec)
+        self._last_openrouter_call = 0.0
+        self._rate_lock = asyncio.Lock()
+        self._logger = logging.getLogger("zus.products")
 
     def _load_catalogue(self) -> list[dict[str, Any]]:
         if self._catalogue is not None and self._vocabulary is not None and self._idf is not None:
@@ -99,9 +122,9 @@ class ProductsTool(Tool):
                 success=False,
             )
 
-        summary = "; ".join(f"{item['name']} ({item.get('size', 'N/A')})" for item in matches[:3])
+        summary = await self._summarise_matches(matches)
         return ToolResponse(
-            content=f"Top drinkware picks: {summary}.",
+            content=summary,
             data={"results": matches[:3]},
         )
 
@@ -125,6 +148,87 @@ class ProductsTool(Tool):
         if not vector.any():
             return None
         return vector
+
+    async def _summarise_matches(self, matches: list[dict[str, Any]]) -> str:
+        fallback = "; ".join(
+            f"{item.get('name', 'Unknown')} ({item.get('size', 'N/A')})" for item in matches[:3]
+        )
+        fallback_text = f"Top drinkware picks: {fallback}."
+
+        if not self._openrouter_api_key or not matches:
+            return fallback_text
+
+        snippet_lines = []
+        for idx, item in enumerate(matches[:5]):
+            name = item.get("name", "Unknown")
+            size = item.get("size") or item.get("volume") or "N/A"
+            price = item.get("price") or item.get("price_text") or ""
+            description = item.get("description", "")
+            tags = item.get("tags", [])
+            line = f"{idx + 1}. {name} — size: {size}"
+            if price:
+                line += f", price: {price}"
+            if tags:
+                line += f", tags: {', '.join(tags)}"
+            if description:
+                line += f"\n   Notes: {description[:180]}"
+            snippet_lines.append(line)
+
+        prompt = "\n".join(snippet_lines)
+
+        async with self._summarise_semaphore:
+            async with self._rate_lock:
+                now = time.monotonic()
+                wait_for = self._openrouter_min_interval - (now - self._last_openrouter_call)
+                if wait_for > 0:
+                    await asyncio.sleep(wait_for)
+                self._last_openrouter_call = time.monotonic()
+
+            headers = {
+                "Authorization": f"Bearer {self._openrouter_api_key}",
+                "Content-Type": "application/json",
+            }
+            if self._openrouter_referer:
+                headers["HTTP-Referer"] = self._openrouter_referer
+            if self._openrouter_title:
+                headers["X-Title"] = self._openrouter_title
+
+            payload = {
+                "model": self._openrouter_model,
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You are a friendly ZUS Coffee assistant summarising drinkware recommendations succinctly.",
+                    },
+                    {
+                        "role": "user",
+                        "content": (
+                            "Recommend up to three items from the list below in two sentences, highlighting key features and ending with a gentle suggestion."
+                            "\n\nProducts:\n" + prompt
+                        ),
+                    },
+                ],
+            }
+
+            try:
+                async with httpx.AsyncClient(timeout=15.0) as client:
+                    response = await client.post(
+                        "https://openrouter.ai/api/v1/chat/completions",
+                        headers=headers,
+                        json=payload,
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    content = (
+                        data.get("choices", [{}])[0]
+                        .get("message", {})
+                        .get("content", "")
+                        .strip()
+                    )
+                    return content or fallback_text
+            except Exception as exc:  # noqa: BLE001
+                self._logger.exception("OpenRouter summary failed", extra={"error": str(exc)})
+                return fallback_text
 
 
 import re
