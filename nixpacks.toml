@@ -4,9 +4,10 @@ nixPkgs = ["python311", "poetry", "python311Packages.pip"]
 [phases.build]
 cmds = [
   "cd backend && poetry env use python3.11",
+  "cd backend && poetry config virtualenvs.in-project true",
   "cd backend && poetry install --no-interaction --no-ansi"
 ]
 cacheDirectories = ["/root/.cache/pypoetry", "/app/backend/.venv"]
 
 [start]
-cmd = "cd backend && .venv/bin/python serve.py"
+cmd = "cd backend && ./venv/bin/python serve.py"
