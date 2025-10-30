@@ -15,10 +15,8 @@ dist/
 **/.env
 *.log
 
-# Databases & vector stores
-db/*.db
-db/**/*.index
-db/**/*.bin
+# Databases & vector stores (kept under version control for demo)
+# To exclude locally generated files, add overrides in a personal .git/info/exclude
 
 # Cypress
 cypress/videos/
