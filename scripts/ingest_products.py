@@ -77,9 +77,30 @@ def build_embeddings(products: list[dict]) -> tuple[np.ndarray, list[str], np.nd
         text_segments = [
             str(product.get("name", "")),
             str(product.get("description", "")),
-            str(product.get("size", "")),
+            str(product.get("product_type", "")),
+            str(product.get("vendor", "")),
             " ".join(product.get("tags", []) if isinstance(product.get("tags"), list) else []),
         ]
+
+        option_tokens: list[str] = []
+        for option in product.get("options", []) or []:
+            if isinstance(option, dict):
+                option_tokens.append(str(option.get("name", "")))
+                option_tokens.extend(str(value) for value in option.get("values", []) if value)
+
+        variant_tokens: list[str] = []
+        for variant in product.get("variants", []) or []:
+            if not isinstance(variant, dict):
+                continue
+            variant_tokens.append(str(variant.get("title", "")))
+            price = variant.get("price")
+            if price:
+                variant_tokens.append(str(price))
+
+        text_segments.extend([
+            " ".join(option_tokens),
+            " ".join(variant_tokens),
+        ])
         tokens = tokenize(" ".join(text_segments))
         if not tokens:
             tokens = tokenize(str(product.get("name", "")))

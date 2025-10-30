@@ -1,256 +1,2253 @@
 {
   "products": [
     {
-      "sku": "ZS-TB-OG2-17-ZB-1s",
+      "id": 7392187515017,
       "name": "OG Cup 2.0 | 500ml",
-      "price": "79.00",
+      "handle": "zus-og-cup-2-0-with-screw-on-lid",
       "description": "Sip and savour each and every note. What makes our OG Cup 2.0 so special? It’s leak proof, comes with a screw-on lid for that no mess experience, and a ceramic interior that better preserves flavours so you can savour every note of your drink. Now available in three colours: Thunder Blue, Space Black, and Lucky Pink.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "ZUS Blue",
+            "Space Black",
+            "Lucky Pink"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 41747819790473,
+          "sku": "ZS-TB-OG2-17-ZB-1s",
+          "title": "ZUS Blue",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "ZUS Blue",
+            null,
+            null
+          ],
+          "weight_grams": 400
+        },
+        {
+          "id": 41747821691017,
+          "sku": "ZS-TB-OG2-17-SB-1s",
+          "title": "Space Black",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Space Black",
+            null,
+            null
+          ],
+          "weight_grams": 400
+        },
+        {
+          "id": 41747822248073,
+          "sku": "ZS-TB-ZS-OG2-17-LP-1s",
+          "title": "Lucky Pink",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Lucky Pink",
+            null,
+            null
+          ],
+          "weight_grams": 400
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/68_388ac863-1561-4987-a2e0-7e9cb80b0713.png?v=1753513246",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/68_388ac863-1561-4987-a2e0-7e9cb80b0713.png?v=1753513246",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/69_058cbd07-4479-45d0-929c-152cf3122131.png?v=1753513246",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/70_ce74f178-3ff1-424e-a4a3-8124fcafcb58.png?v=1753513309",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/71_0deff4bf-6132-4914-ad71-e4440d1cf32d.png?v=1753513309",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/12_472e58eb-3b15-4d2f-8ca1-e6e8b9a33eb4.png?v=1753513246",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_5.png?v=1753513246",
+          "alt": null,
+          "position": 6
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/zus-og-cup-2-0-with-screw-on-lid"
     },
     {
-      "sku": "ZS-TB-ZS-AC-20-TB",
+      "id": 7296805109897,
       "name": "All-Can Tumbler | 600ml",
-      "price": "52.50",
+      "handle": "zus-all-can-tumbler-600ml-20oz",
       "description": "Your companion through the day. Need a tumbler that’ll stick with you through a long office day or exhausting gym session? Calling All-Can Tumbler! With interchangeable lids—screw-on for your hot americano, flip-top for your iced sips—and a good 8 hours of perfectly preserved temperatures, this tumbler is perfect to take on-the-go. Whether you’re in the humid jungle or a freezing office, All-Can is with you through it all.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['merdeka deal'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Thunder Blue",
+            "Stainless Steel"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 42569072050313,
+          "sku": "ZS-TB-ZS-AC-20-TB",
+          "title": "Thunder Blue",
+          "price": "52.50",
+          "compare_at_price": "105.00",
+          "available": true,
+          "option_values": [
+            "Thunder Blue",
+            null,
+            null
+          ],
+          "weight_grams": 320
+        },
+        {
+          "id": 42569072083081,
+          "sku": "ZS-TB-ZS-AC-20-SS-1s",
+          "title": "Stainless Steel",
+          "price": "105.00",
+          "compare_at_price": "105.00",
+          "available": false,
+          "option_values": [
+            "Stainless Steel",
+            null,
+            null
+          ],
+          "weight_grams": 320
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/17_edfa40ee-a548-49be-a992-c0dd53de0357.png?v=1753288138",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/17_edfa40ee-a548-49be-a992-c0dd53de0357.png?v=1753288138",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_6.png?v=1753287959",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/18_58813b89-7564-4615-996d-8ef9f129da17.png?v=1753287959",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_7.png?v=1753287959",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/BYZT_8d9579ef-24e5-4a09-a0ff-ffc01ec32b2b.jpg?v=1753287959",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/9_d66b1701-fc23-4643-803f-21dc89e3dcb7.jpg?v=1753287959",
+          "alt": null,
+          "position": 6
+        }
+      ],
+      "price": "52.50",
       "product_url": "https://shop.zuscoffee.com/products/zus-all-can-tumbler-600ml-20oz"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-SESH-1s",
+      "id": 7877169053833,
       "name": "All Day Cup Sundaze | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz-sundaze-collection",
       "description": "Your drinks All Day, everyday. Sunkissed skin, sandy beaches, and breezy shores—our Sundaze collection brings the seaside to you in three shades to inspire the serene beauty of the sea, the sand, and the stretch of space in between.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Seashell",
+            "Sand Castle",
+            "Tideline"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43024505012361,
+          "sku": "ZS-TB-ZS-AD-17-SESH-1s",
+          "title": "Seashell",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Seashell",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 43024495607945,
+          "sku": "ZS-TB-ZS-AD-17-SACA-1s",
+          "title": "Sand Castle",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Sand Castle",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 43024495640713,
+          "sku": "ZS-TB-ZS-AD-17-TILI-1s",
+          "title": "Tideline",
+          "price": "55.30",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Tideline",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/32_1a32d8a2-e8c7-4f0f-a236-dd549f2b71ba.png?v=1730622751",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/32_1a32d8a2-e8c7-4f0f-a236-dd549f2b71ba.png?v=1730622751",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/33_43d10556-035c-4703-b5e3-ceea67fba4c4.png?v=1730622751",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/35_2687a4bd-0e44-47e9-96a4-a543099b6680.png?v=1730622751",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/29_7cfb8dbd-ad3a-4172-910d-44d25101924c.png?v=1730622751",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/30_de263406-2b8c-4e09-9aed-e60ac9d0b3ff.png?v=1730622751",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/31_377d7293-a4d9-4f3e-a038-11cfafe646c5.png?v=1730622751",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/34_6e7aa3d6-cee3-49f7-9c39-b92690cab804.png?v=1730622751",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/36_92a0b7ca-e06e-44b3-84bd-9cda76f2283c.png?v=1730622751",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/37_68187180-1294-476d-a802-c34acd99d355.png?v=1730622751",
+          "alt": null,
+          "position": 9
+        }
+      ],
+      "price": "55.30",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sundaze-collection"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-CB",
+      "id": 7234599551113,
       "name": "All Day Cup | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz",
       "description": "Your drinks All Day, everyday. This tumbler’s more than a way to sip on delicious drinks. With a leak proof, dual-purpose lid, your hot or iced drinks will be kept perfectly preserved for up to 16 hours so you can enjoy each sip like it’s the first. Pair your All Day Cup with gorgeous accessories for a colourful upgrade.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Creamy Beige",
+            "Cherry Blossom",
+            "Fresh Mint",
+            "Fuzz Peach",
+            "Blue Wave"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 42278168887433,
+          "sku": "ZS-TB-ZS-AD-17-CB",
+          "title": "Creamy Beige",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Creamy Beige",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 42278168952969,
+          "sku": "ZS-TB-ZS-AD-17-CHBL-1s",
+          "title": "Cherry Blossom",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Cherry Blossom",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 42278168985737,
+          "sku": "ZS-TB-ZS-AD-17-FRMI-1s",
+          "title": "Fresh Mint",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Fresh Mint",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 42278169018505,
+          "sku": "ZS-TB-ZS-AD-17-FUPE-1s",
+          "title": "Fuzz Peach",
+          "price": "55.30",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Fuzz Peach",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 42278168920201,
+          "sku": "ZS-TB-ZS-AD-17-BLWA-1s",
+          "title": "Blue Wave",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Blue Wave",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/SKU_AllDay_Creamy_01.png?v=1752799532",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/SKU_AllDay_Creamy_01.png?v=1752799532",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/4_0ab4c2bb-e06f-4a2f-9d8e-abd9f03dde2a.png?v=1752799532",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_19.png?v=1752799532",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_20.png?v=1752799532",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/5_29b6b04d-40b8-4439-b158-54636c12f891.png?v=1752799532",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_21.png?v=1752799532",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_22.png?v=1752799532",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/6_530fdc3b-8a26-4c17-a191-b294adbe3a40.png?v=1752799532",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_23.png?v=1752799532",
+          "alt": null,
+          "position": 9
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_24.png?v=1752799532",
+          "alt": null,
+          "position": 10
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/3_f5423c2c-0ba8-41f7-9475-627b7f3ec636.png?v=1752799532",
+          "alt": null,
+          "position": 11
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_25.png?v=1752799532",
+          "alt": null,
+          "position": 12
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/Copy_of_DONE_Shopify_-_Product_Listing_Cover_26.png?v=1752799532",
+          "alt": null,
+          "position": 13
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/BYZT.jpg?v=1752799532",
+          "alt": null,
+          "position": 14
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/2_b7284ad4-1538-4a5d-9bd1-b76bb6c108c5.png?v=1724745300",
+          "alt": null,
+          "position": 15
+        }
+      ],
+      "price": "55.30",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz"
     },
     {
-      "sku": "ZS-TB-ZS-FZ-CC-22-FW",
+      "id": 7255413915785,
       "name": "Frozee Cold Cup | 650ml",
-      "price": "55.00",
+      "handle": "frozee-cold-cup-650ml-22oz",
       "description": "Embrace the chill. Whether you’re a frappe-lover or simply adore iced drinks, our Frozee Cold Cup will keep your drink cold for longer thanks to its double wall insulation. Not to mention, our straws are reusable and our lids are spill-proof—no messes allowed here.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Frost White",
+            "Frost Pink",
+            "Frost Green",
+            "Frost Peach"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 41395917521033,
+          "sku": "ZS-TB-ZS-FZ-CC-22-FW",
+          "title": "Frost White",
+          "price": "55.00",
+          "compare_at_price": "55.00",
+          "available": true,
+          "option_values": [
+            "Frost White",
+            null,
+            null
+          ],
+          "weight_grams": 246
+        },
+        {
+          "id": 41930644979849,
+          "sku": "ZS-TB-ZS-FZ-CC-22-FRPI-1s",
+          "title": "Frost Pink",
+          "price": "55.00",
+          "compare_at_price": "55.00",
+          "available": true,
+          "option_values": [
+            "Frost Pink",
+            null,
+            null
+          ],
+          "weight_grams": 246
+        },
+        {
+          "id": 41930645012617,
+          "sku": "ZS-TB-ZS-FZ-CC-22-FRGR-1s",
+          "title": "Frost Green",
+          "price": "55.00",
+          "compare_at_price": "55.00",
+          "available": true,
+          "option_values": [
+            "Frost Green",
+            null,
+            null
+          ],
+          "weight_grams": 246
+        },
+        {
+          "id": 41930645045385,
+          "sku": "ZS-TB-ZS-FZ-CC-22-FRPE-1s",
+          "title": "Frost Peach",
+          "price": "38.50",
+          "compare_at_price": "55.00",
+          "available": true,
+          "option_values": [
+            "Frost Peach",
+            null,
+            null
+          ],
+          "weight_grams": 246
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/13_cdab3646-e1c7-4856-9ce6-d4f93a5c71d8.png?v=1724746066",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/13_cdab3646-e1c7-4856-9ce6-d4f93a5c71d8.png?v=1724746066",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/40.png?v=1724819999",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/41_b383a155-911e-4128-af8a-caa26da4cce9.png?v=1724820000",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/14_8451dfc1-6818-4bdc-b1f9-4ff59f08c456.png?v=1724746097",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/43_b9525310-add6-4afc-a5e6-6ac8cd3a9a1b.png?v=1724820000",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/44_8e33c280-1e79-48ed-b303-926ba2e9bcce.png?v=1724820000",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/15_c01c8767-fa81-4d31-8c4f-fe63fcceed5d.png?v=1724746111",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/46_71b83c1a-1588-46bf-bbf4-daedaff24395.png?v=1724820000",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/47_27323b81-8029-4480-8e24-e321fddff0e2.png?v=1724820000",
+          "alt": null,
+          "position": 9
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/16_3b2589cc-b965-4954-87f0-ea5d3dcc4fe8.png?v=1724746125",
+          "alt": null,
+          "position": 10
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/49_57382df5-6d22-4c37-b44a-9ebb15a245fe.png?v=1724820000",
+          "alt": null,
+          "position": 11
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/50_5d0b793b-4f39-4e96-99ea-fd4d11787133.png?v=1724820000",
+          "alt": null,
+          "position": 12
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/2_b1db8243-c828-40fa-8a27-3c8ead8720dc.png?v=1711939890",
+          "alt": null,
+          "position": 13
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/ProductListing_1080x1080_FrozeeColdCup_3.png?v=1712569976",
+          "alt": null,
+          "position": 14
+        }
+      ],
+      "price": "38.50",
       "product_url": "https://shop.zuscoffee.com/products/frozee-cold-cup-650ml-22oz"
     },
     {
-      "sku": "ZS-CRM-MUG-OG-TB-16OZ-1s-V2",
+      "id": 7877203361929,
       "name": "OG Ceramic Mug | 470ml",
-      "price": "19.50",
+      "handle": "zus-og-ceramic-mug-470ml",
       "description": "Minimalist mug for delicious sips. Our OG Ceramic Mug makes those small moments all the more comfortable. High-quality ceramic blends effortlessly with an ergonomic handle for an easy grip—ensuring you get the ultimate cosy experience with style and practicality.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Mugs",
       "tags": [
         "['Limited Edition'",
         "'Mug']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Thunder Blue",
+            "Cloud White",
+            "Space Black"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43024581918857,
+          "sku": "ZS-CRM-MUG-OG-TB-16OZ-1s-V2",
+          "title": "Thunder Blue",
+          "price": "19.50",
+          "compare_at_price": "39.00",
+          "available": false,
+          "option_values": [
+            "Thunder Blue",
+            null,
+            null
+          ],
+          "weight_grams": 442
+        },
+        {
+          "id": 43024581951625,
+          "sku": "ZS-CRM-MUG-OG-CW-16OZ-1s",
+          "title": "Cloud White",
+          "price": "19.50",
+          "compare_at_price": "39.00",
+          "available": true,
+          "option_values": [
+            "Cloud White",
+            null,
+            null
+          ],
+          "weight_grams": 442
+        },
+        {
+          "id": 43024581984393,
+          "sku": "ZS-CRM-MUG-OG-SB-16OZ-1s",
+          "title": "Space Black",
+          "price": "19.50",
+          "compare_at_price": "39.00",
+          "available": true,
+          "option_values": [
+            "Space Black",
+            null,
+            null
+          ],
+          "weight_grams": 442
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/2_ade9cdc4-083d-4e9c-bff5-dd6231da2ca1.png?v=1728147514",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/2_ade9cdc4-083d-4e9c-bff5-dd6231da2ca1.png?v=1728147514",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/3_d2cf7da7-344d-4979-a8c4-de462f639803.png?v=1728147514",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/4_1df197db-846e-4282-8a3d-27b329d74f00.png?v=1728147514",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/5_8a28c909-8960-4065-aec1-9fba20cba8c3.png?v=1728147514",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/6_42848880-e54a-473e-b232-45b3bea8ca76.png?v=1728147514",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/7_79270eda-dc79-4d90-9cc6-9baa9e722557.png?v=1728147514",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/8_b3b1ce2e-ddb0-4dff-a11e-257cb473dde9.png?v=1728147514",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/9_bf875239-30cd-489a-acd9-506684153ea5.png?v=1728147514",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/10_6f77efff-b0b6-46e4-ad26-2f75d79a51a7.png?v=1728147514",
+          "alt": null,
+          "position": 9
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/11_9a351dca-5f6d-4135-b5f3-401c6632b69f.png?v=1728147515",
+          "alt": null,
+          "position": 10
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/12_bedb8d3c-8116-46a5-af5c-83c2bc7c1d97.png?v=1728147514",
+          "alt": null,
+          "position": 11
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/13_0c3afb39-6da7-4bbe-b0da-aa4b8a42799a.png?v=1728147514",
+          "alt": null,
+          "position": 12
+        }
+      ],
+      "price": "19.50",
       "product_url": "https://shop.zuscoffee.com/products/zus-og-ceramic-mug-470ml"
     },
     {
-      "sku": "ZS-AD-17-BDY-LID-SF-B2",
+      "id": 8135262109833,
       "name": "All Day Cup Mountain | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz-mountain-collection",
       "description": "Your drinks All Day, everyday. Maybe quietude and constancy are your mottos, or you feel at home amongst the fresh, clean air of higher altitudes. As steadfast as the tall trees, you’ve got a grounded confidence about you that speaks of surety, of someone who knows what they want and moves to achieve it.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Soft Fern",
+            "Pine Green",
+            "Terrain Green",
+            "Forest Green"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44190924472457,
+          "sku": "ZS-AD-17-BDY-LID-SF-B2",
+          "title": "Soft Fern",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Soft Fern",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190937284745,
+          "sku": "ZS-AD-17-BDY-LID-PG-B2",
+          "title": "Pine Green",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Pine Green",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190937317513,
+          "sku": "ZS-AD-17-BDY-LID-TG-B2",
+          "title": "Terrain Green",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Terrain Green",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190937350281,
+          "sku": "ZS-AD-17-BDY-LID-FG-B2",
+          "title": "Forest Green",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Forest Green",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/89_b6e6c807-9a8c-4ab6-b6a7-5f612ef68ae9.png?v=1753429509",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/89_b6e6c807-9a8c-4ab6-b6a7-5f612ef68ae9.png?v=1753429509",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/90_d09d7506-c23f-4f3d-8c1f-3b4f464ff5f6.png?v=1753429509",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/87_81b1c06a-dbbe-4637-9b6b-ab0782620710.png?v=1753429509",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/88_d806e7e2-fe6a-4756-a425-30b5df252cac.png?v=1753429509",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/85_f839f3e1-e50b-4a92-af86-c34ad4a3d45f.png?v=1753429509",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/86_afd09ed9-5af8-403c-b2c7-6f208c6277d8.png?v=1753429509",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/83_4085e3e3-fed9-401f-bb8b-f8b965244d0a.png?v=1753429509",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/84_af181fc6-6f5e-42c8-8848-b5fe14e0221c.png?v=1753429509",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/28_fdfec799-397b-44bf-9011-e6b6057ed6bd.png?v=1749027413",
+          "alt": null,
+          "position": 9
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-mountain-collection"
     },
     {
-      "sku": "ZS-AD-17-BDY-LID-MB-B2",
+      "id": 8135049674889,
       "name": "All Day Cup Aqua | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz-aqua-collection",
       "description": "Your drinks All Day, everyday. When you’re the life of the party, you’ll find yourself gravitating towards experiences that can be shared with others. You’re like the endless water: expansive, an adventure waiting to unfold. You’re never in one place when there’s a whole world out there.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Tumbler",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Misty Blue",
+            "Ocean Breeze",
+            "Blue Lagoon",
+            "Deep Sea"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44190428430473,
+          "sku": "ZS-AD-17-BDY-LID-MB-B2",
+          "title": "Misty Blue",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Misty Blue",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190444159113,
+          "sku": "ZS-AD-17-BDY-LID-OB-B2",
+          "title": "Ocean Breeze",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Ocean Breeze",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190444191881,
+          "sku": "ZS-AD-17-BDY-LID-BL-B2",
+          "title": "Blue Lagoon",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": true,
+          "option_values": [
+            "Blue Lagoon",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        },
+        {
+          "id": 44190444224649,
+          "sku": "ZS-AD-17-BDY-LID-DS-B2",
+          "title": "Deep Sea",
+          "price": "79.00",
+          "compare_at_price": "79.00",
+          "available": false,
+          "option_values": [
+            "Deep Sea",
+            null,
+            null
+          ],
+          "weight_grams": 290
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/95.png?v=1753429577",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/95.png?v=1753429577",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/96.png?v=1753429577",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/97_e1530d78-ff12-468a-af73-f2007df0e097.png?v=1753429577",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/98_5dd32f1a-b7ed-4ef9-a4bf-849e516b044e.png?v=1753429577",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/93_e3f00801-cde4-4db5-afa6-791205141018.png?v=1753429407",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/94_89f5b55e-208c-4253-8672-4e83f831f3fd.png?v=1753429407",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/91_6a51f7de-3742-4f45-8abe-48c7b460d044.png?v=1753429407",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/92_3440c686-ba6e-4d89-9c40-a4ea62d8cd08.png?v=1753429407",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/15_f10d2fb7-c0ff-4478-9789-04f0354efa14.png?v=1749029614",
+          "alt": null,
+          "position": 9
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-aqua-collection"
     },
     {
-      "sku": "ZS-SS-HCM-BLK-1s",
+      "id": 7970522955913,
       "name": "Stainless Steel Mug | 420ml",
-      "price": "59.00",
+      "handle": "zus-stainless-steel-mug-420ml",
       "description": "Coffee smells better outdoors. Does it? I guess it's time to find out! Made for those who cherish the outdoors or simply just prefer sipping their coffee through a mug. Made from durable 304 stainless steel, features double-wall vacuum insulation to keep your drinks hot or cold up to 5 hours.No matter where your journey takes you—whether it’s a roadside coffee break to \"heal\" or a moment in the mountains surrounded by good company—we’re more than just a mug for great coffee. We’re the small comfort you can always count on, wherever the road may lead.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Mugs",
       "tags": [
         "['Mug']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Starry Black",
+            "Pine Beige",
+            "Mossy Green"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43281713660041,
+          "sku": "ZS-SS-HCM-BLK-1s",
+          "title": "Starry Black",
+          "price": "59.00",
+          "compare_at_price": "59.00",
+          "available": true,
+          "option_values": [
+            "Starry Black",
+            null,
+            null
+          ],
+          "weight_grams": 373
+        },
+        {
+          "id": 43281713692809,
+          "sku": "ZS-SS-HCM-BEI-1s",
+          "title": "Pine Beige",
+          "price": "59.00",
+          "compare_at_price": "59.00",
+          "available": true,
+          "option_values": [
+            "Pine Beige",
+            null,
+            null
+          ],
+          "weight_grams": 373
+        },
+        {
+          "id": 43281713725577,
+          "sku": "ZS-SS-HCM-GRN-1s",
+          "title": "Mossy Green",
+          "price": "59.00",
+          "compare_at_price": "59.00",
+          "available": true,
+          "option_values": [
+            "Mossy Green",
+            null,
+            null
+          ],
+          "weight_grams": 373
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/396.png?v=1738069660",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/396.png?v=1738069660",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/397.png?v=1738069660",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/398.png?v=1738069660",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/399.png?v=1738069660",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/400.png?v=1738069660",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/401.png?v=1738069660",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/402.png?v=1738069660",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/403.png?v=1738069660",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/404.png?v=1738069660",
+          "alt": null,
+          "position": 9
+        }
+      ],
+      "price": "59.00",
       "product_url": "https://shop.zuscoffee.com/products/zus-stainless-steel-mug-420ml"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-CS-RSK-BTK-CMB3",
+      "id": 8111051669641,
       "name": "All Day Cup Corak (Tiga Sekawan Bundle) | 500ml",
-      "price": "100.40",
+      "handle": "corak-malaysia-tiga-sekawan-bundle",
       "description": "Your drinks All Day, everyday. Show your appreciation of our local arts with the Tiga Sekawan bundle in three variations, inspired by the vibrant culture and history of our country’s thirteen states. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve Corak Malaysia Reusable Straw Kit",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Bundle (Lifestyle)",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Design",
+          "position": 1,
+          "values": [
+            "Malaysiaku",
+            "Bunga Tabur",
+            "Pua Kumbu"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43972303552649,
+          "sku": "ZS-TB-ZS-AD-17-CS-RSK-BTK-CMB3",
+          "title": "Malaysiaku",
+          "price": "100.40",
+          "compare_at_price": "133.90",
+          "available": true,
+          "option_values": [
+            "Malaysiaku",
+            null,
+            null
+          ],
+          "weight_grams": 494
+        },
+        {
+          "id": 43972303585417,
+          "sku": "ZS-TB-ZS-AD-17-CS-RSK-BT-CMB3",
+          "title": "Bunga Tabur",
+          "price": "100.40",
+          "compare_at_price": "133.90",
+          "available": false,
+          "option_values": [
+            "Bunga Tabur",
+            null,
+            null
+          ],
+          "weight_grams": 494
+        },
+        {
+          "id": 43972303618185,
+          "sku": "ZS-TB-ZS-AD-17-CS-RSK-PK-CMB3",
+          "title": "Pua Kumbu",
+          "price": "100.40",
+          "compare_at_price": "133.90",
+          "available": false,
+          "option_values": [
+            "Pua Kumbu",
+            null,
+            null
+          ],
+          "weight_grams": 494
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/56_c560d111-848b-4440-94af-87da85029dc8.png?v=1746785838",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/56_c560d111-848b-4440-94af-87da85029dc8.png?v=1746785838",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/57_88aad31f-db1c-4bde-a4fb-96e6a1b5a064.png?v=1746785838",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/58_eb6c4c7b-449e-4015-8576-cbc162f88350.png?v=1746785838",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/394_d3dbd4e3-a88c-4c70-a8e1-21873923858e.png?v=1746786126",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/395_3ba03c05-c666-4e61-b5ff-782ce4f19400.png?v=1746786126",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/398_bcee1007-6cbc-4043-a35f-6660ad741757.png?v=1746786126",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/391_3b706740-e51e-4616-814a-d755b60683ba.png?v=1746786126",
+          "alt": null,
+          "position": 7
+        }
+      ],
+      "price": "100.40",
       "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-tiga-sekawan-bundle"
     },
     {
-      "sku": "ZS-BAG-KPH-EMTO-DB-1s",
+      "id": 8083128746121,
       "name": "Denim Tote Bag",
-      "price": "19.40",
+      "handle": "zus-denim-tote-bag",
       "description": "For all your (emotional) baggage needs. Introducing our Denim Tote Bag, made to handle all that drama—and more. Spacious and made of a thick denim material, our tote bag can comfortably hold your daily essentials thanks to its extra secure stitching. It also features a unique embroidered label on the back for a unique touch.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Collectible",
       "tags": [
         "['Accessories']"
       ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43894780199049,
+          "sku": "ZS-BAG-KPH-EMTO-DB-1s",
+          "title": "Default Title",
+          "price": "19.40",
+          "compare_at_price": "29.90",
+          "available": true,
+          "option_values": [
+            "Default Title",
+            null,
+            null
+          ],
+          "weight_grams": 256
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/50_e8950e60-34d8-4bc5-b0fb-498e96a089d3.png?v=1744967889",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/50_e8950e60-34d8-4bc5-b0fb-498e96a089d3.png?v=1744967889",
+          "alt": null,
+          "position": 1
+        }
+      ],
+      "price": "19.40",
       "product_url": "https://shop.zuscoffee.com/products/zus-denim-tote-bag"
     },
     {
-      "sku": "ZS-MAG-CNY-FS-6s",
+      "id": 7949372096649,
       "name": "CNY Fridge Magnet - Full Set - 6's",
-      "price": "48.00",
+      "handle": "zus-cny-fridge-magnet-full-set-6s",
       "description": "Your fridge just got a whole lot more ONG. Get ready to celebrate Chinese New Year with ZUS Coffee! This season, we’re bringing you an exclusive chance to collect limited-edition magnets with a festive twist. ZUS Coin Introducing the ZUS Coin – your symbol of wealth, prosperity, and good fortune! Stick this magnet on your fridge this Chinese New Year and bring good vibes to your kitchen. With six unique designs, it’s more than just a magnet – it’s a festive touch that will remind you to embrace good fortune every day Stay Healthy, No Cap ZUS wishes you a year filled with good health, happiness, and plenty of great coffee! Featuring playful cracker engravings, this fridge magnet is a friendly reminder to keep your kitchen stocked with the essentials. Health is wealth – so let this magnet inspire you to nourish both body and soul! Vibes on Vibes May your year be as sweet as nian gao! This fridge magnet is here to bring all the good vibes. Let the festive energy of this magnet remind you to enjoy life’s little moments and spread happiness. Level Up, Fam Ascension is on the horizon! ZUS wishes you promotions, success, and all the career wins this year. This motivational fridge magnet is here to keep you focused on your goals. Whether you’re brewing your morning coffee or planning your next big move, let it remind you that success is always within reach. Smile On Always Laughter is the best medicine, and this fridge magnet brings it right to your kitchen. With its uplifting message, it’s a constant reminder to find joy in every moment. Every time you open the fridge, smile a little brighter, and let positivity fill your space. Big Wins, No Ls This year is all about winning! Keep this fridge magnet as a reminder that success is yours to claim. With its motivational message, it’s perfect for keeping you focused and energized to take on any challenge. Let it be your go-to source of inspiration in the kitchen – and more.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Collectible",
       "tags": [
         "['Accessories'",
         "'Limited Edition'",
         "'Magnet']"
       ],
+      "options": [
+        {
+          "name": "Title",
+          "position": 1,
+          "values": [
+            "Default Title"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43226757890185,
+          "sku": "ZS-MAG-CNY-FS-6s",
+          "title": "Default Title",
+          "price": "48.00",
+          "compare_at_price": "68.00",
+          "available": true,
+          "option_values": [
+            "Default Title",
+            null,
+            null
+          ],
+          "weight_grams": 200
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/358_46028f70-ac2c-49f3-a9bf-6d90ff884502.png?v=1734945566",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/358_46028f70-ac2c-49f3-a9bf-6d90ff884502.png?v=1734945566",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/360_2d7c69b7-0f3e-4830-938f-416f8282a35e.png?v=1734945566",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/364_20658990-807b-4ea7-b477-5515c1965f52.png?v=1734945566",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/362_87869e8b-f22d-4423-9d7f-72283f612ba7.png?v=1734945566",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/361_9f2111cf-90f7-4579-a306-9c8d9fe98713.png?v=1734945566",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/359_bfd13d3a-f24a-4a2b-a679-6998350fedad.png?v=1734945566",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/363_04a7f3b4-0e80-49f3-ae24-572d5d101118.png?v=1734945566",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/20241221-131012.jpg?v=1734945566",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/20241221-131028.jpg?v=1734945566",
+          "alt": null,
+          "position": 9
+        }
+      ],
+      "price": "48.00",
       "product_url": "https://shop.zuscoffee.com/products/zus-cny-fridge-magnet-full-set-6s"
     },
     {
-      "sku": "ZS-NGP-BKS-500-BLU-1s",
+      "id": 8060637413513,
       "name": "ZUS Ngupi® Glass Food Container",
-      "price": "23.00",
+      "handle": "ngupi-glass-food-container",
       "description": "Bring a dash of nostalgia to your kitchen with this NGUPI® container, dressed in charming kopitiam-inspired prints! Whether you're storing snacks or serving up leftovers, its tight-fitting lid locks in freshness.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "Collectible",
       "tags": [
         "['Accessories'",
         "'Tech Gadget']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "ZUS Blue",
+            "Kopitiam Green"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 43841869807753,
+          "sku": "ZS-NGP-BKS-500-BLU-1s",
+          "title": "ZUS Blue",
+          "price": "23.00",
+          "compare_at_price": null,
+          "available": false,
+          "option_values": [
+            "ZUS Blue",
+            null,
+            null
+          ],
+          "weight_grams": 463
+        },
+        {
+          "id": 43841869840521,
+          "sku": "ZS-NGP-BKS-500-GRN-1s",
+          "title": "Kopitiam Green",
+          "price": "23.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Kopitiam Green",
+            null,
+            null
+          ],
+          "weight_grams": 463
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/29_3bc13eb1-a182-4899-97a9-daf4bec70c3a.png?v=1743658974",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/29_3bc13eb1-a182-4899-97a9-daf4bec70c3a.png?v=1743658974",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/30_77fbf4ea-3921-4b1a-969f-ec28169e874d.png?v=1743658974",
+          "alt": null,
+          "position": 2
+        }
+      ],
+      "price": "23.00",
       "product_url": "https://shop.zuscoffee.com/products/ngupi-glass-food-container"
     },
     {
-      "sku": "ZS-AD-17-BDY-LID-LS-B2",
+      "id": 8179549372553,
       "name": "All Day Cup Sunset | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz-sunset-collection",
       "description": "Your drinks All Day, everyday. Mature, intentional, and always present, you’re the definition of timeless grace and quiet strength. As golden as the rays that close the day, you’re in your element when things are balanced—whether it’s ambition and mental health or rest and results.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Lavender Sky",
+            "Dusky Purple",
+            "Plum Sunset"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44407763206281,
+          "sku": "ZS-AD-17-BDY-LID-LS-B2",
+          "title": "Lavender Sky",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": false,
+          "option_values": [
+            "Lavender Sky",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44407763239049,
+          "sku": "ZS-AD-17-BDY-LID-DP-B2",
+          "title": "Dusky Purple",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Dusky Purple",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44407763271817,
+          "sku": "ZS-AD-17-BDY-LID-PS-B2",
+          "title": "Plum Sunset",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Plum Sunset",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/101_ae3bf749-ffad-455d-8a99-581e0f3676fe.png?v=1753429633",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/101_ae3bf749-ffad-455d-8a99-581e0f3676fe.png?v=1753429633",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/102_d5fdb853-2770-4fc3-896e-8a462bb6188e.png?v=1753429633",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/99_2f292024-78d5-4d13-860a-aa648da12ab5.png?v=1753429633",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/100_9ebd345e-da72-4404-b062-29110cc30bd3.png?v=1753429633",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/103_c8a66c05-5fef-47aa-86e8-e099add2c991.png?v=1753104246",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/104_cf087677-ae66-4608-aef6-71b90bb4d472.png?v=1753104246",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/SKU_Sunset_01.png?v=1753104246",
+          "alt": null,
+          "position": 7
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sunset-collection"
     },
     {
-      "sku": "ZS-AD-17-BDY-LID-SY-B2",
+      "id": 8179548389513,
       "name": "All Day Cup Sunrise | 500ml",
-      "price": "79.00",
+      "handle": "all-day-cup-500ml-17oz-sunrise-collection",
       "description": "Your drinks All Day, everyday. You’re not just the caretaker of your group, you’re the one they turn to when times are tough. Like the soft rise of the sun, your rays of warmth are strong and steady, and you can always be counted on as someone who’s always there.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "Sunshine Yellow",
+            "Fiery Sunrise",
+            "Russet Glow"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44407750033545,
+          "sku": "ZS-AD-17-BDY-LID-SY-B2",
+          "title": "Sunshine Yellow",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Sunshine Yellow",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44407750066313,
+          "sku": "ZS-AD-17-BDY-LID-FS-B2",
+          "title": "Fiery Sunrise",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Fiery Sunrise",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44407750099081,
+          "sku": "ZS-AD-17-BDY-LID-RG-B2",
+          "title": "Russet Glow",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Russet Glow",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/105_d6c41c27-dbcf-4fa9-b643-96e8a6a50686.png?v=1753105046",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/105_d6c41c27-dbcf-4fa9-b643-96e8a6a50686.png?v=1753105046",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/106_042fb11f-a0db-468d-8239-0ba1b29595af.png?v=1753105046",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/107_1446a5ce-4e12-4f85-a525-3c7844c1c071.png?v=1753105046",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/108_82aad4a2-1bef-49a2-bdf8-bc0cc41db3b3.png?v=1753105046",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/109_22c9f34c-c7b5-4179-8fe0-d18b22968ca5.png?v=1753105046",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/110_dc127149-c1a4-4f2a-b3ed-7a38e528f57d.png?v=1753105046",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/28_67554d8d-0d9a-42ea-b663-b0c335087be5.png?v=1753105046",
+          "alt": null,
+          "position": 7
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-500ml-17oz-sunrise-collection"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-RIN-1s",
+      "id": 8230311985289,
       "name": "[Corak Malaysia] All Day Cup",
-      "price": "79.00",
+      "handle": "corak-malaysia-all-day-edisi-kedua",
       "description": "Your drinks All Day, everyday. LAWANGAN Inspired by Lawangan, a traditional motif found on the ceremonial textile known as Siung Papar, this design pays tribute to the rich cultural heritage of the Murut and Lundayeh people. BUNGA RINDU Inspired by rich Peranakan heritage, Bunga Rindu captures the charm of traditional Nyonya pottery—renowned for its vibrant colors, floral motifs, and delicate craftsmanship. LABU SAYONG Labu Sayong is a traditional earthenware vessel used to store drinking water. Often adorned with delicate leaf motifs, Labu Sayong reflects themes of fertility, growth, and harmony with nature.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Design",
+          "position": 1,
+          "values": [
+            "Bunga Rindu",
+            "Lawangan",
+            "Labu Sayong"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44568095391881,
+          "sku": "ZS-TB-ZS-AD-17-RIN-1s",
+          "title": "Bunga Rindu",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": false,
+          "option_values": [
+            "Bunga Rindu",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44568095359113,
+          "sku": "ZS-TB-ZS-AD-17-LAW-1s",
+          "title": "Lawangan",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Lawangan",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44568095424649,
+          "sku": "ZS-TB-ZS-AD-17-SAY-1s",
+          "title": "Labu Sayong",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": false,
+          "option_values": [
+            "Labu Sayong",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/189.png?v=1757264092",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/189.png?v=1757264092",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/191.png?v=1757264092",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/190.png?v=1756980793",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/44_b130d8b7-ffac-45fa-9ff4-8baa9ee1dcf8.png?v=1756980897",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/48_20b29820-e83b-4486-888f-a1b550e74c6d.png?v=1756980898",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/53_8a2a340a-5693-4d82-ae1c-4d9a119e469c.png?v=1756980897",
+          "alt": null,
+          "position": 6
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-all-day-edisi-kedua"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-CS-RIN-DSB2",
+      "id": 8237643432073,
       "name": "[Corak Malaysia] Dwi Sejoli",
-      "price": "112.00",
+      "handle": "corak-malaysia-dwi-sejoli",
       "description": "Make everyday a day to celebrate our heritage. Our Dwi Sejoli comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Design",
+          "position": 1,
+          "values": [
+            "Bunga Rindu",
+            "Lawangan",
+            "Labu Sayong"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44589790298249,
+          "sku": "ZS-TB-ZS-AD-17-CS-RIN-DSB2",
+          "title": "Bunga Rindu",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": false,
+          "option_values": [
+            "Bunga Rindu",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589790331017,
+          "sku": "ZS-TB-ZS-AD-17-CS-LAW-DSB2",
+          "title": "Lawangan",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": true,
+          "option_values": [
+            "Lawangan",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589790363785,
+          "sku": "ZS-TB-ZS-AD-17-CS-SAY-DSB2",
+          "title": "Labu Sayong",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": false,
+          "option_values": [
+            "Labu Sayong",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/201.png?v=1757162947",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/201.png?v=1757162947",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/202_2d3e8158-a839-424b-93df-b43f2e240634.png?v=1757162946",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/203_5e2d583d-85f1-40c2-bd87-fa4a9a132cd9.png?v=1757162947",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/45_81600a2f-87bc-4da0-9807-1e32b7be5f1a.png?v=1757163021",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/51_4a939ce7-3e8d-4dd6-9921-ab7b57f2e36d.png?v=1757163021",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/46_65a02c51-e88d-418b-91df-9465cb7d1070.png?v=1757163022",
+          "alt": null,
+          "position": 6
+        }
+      ],
+      "price": "112.00",
       "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-dwi-sejoli"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-CS-BAN-RIN-TWB3",
+      "id": 8237653262473,
       "name": "[Corak Malaysia] Triloka Warisan",
-      "price": "141.00",
+      "handle": "corak-malaysia-triloka-warisan",
       "description": "Make everyday a day to celebrate our heritage. Our Triloka Warisan comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Cup Sleeve Corak Malaysia Bandana",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Design",
+          "position": 1,
+          "values": [
+            "Bunga Rindu",
+            "Lawangan",
+            "Labu Sayong"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44589838860425,
+          "sku": "ZS-TB-ZS-AD-17-CS-BAN-RIN-TWB3",
+          "title": "Bunga Rindu",
+          "price": "141.00",
+          "compare_at_price": "157.00",
+          "available": false,
+          "option_values": [
+            "Bunga Rindu",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589838893193,
+          "sku": "ZS-TB-ZS-AD-17-CS-BAN-LAW-TWB3",
+          "title": "Lawangan",
+          "price": "141.00",
+          "compare_at_price": "157.00",
+          "available": true,
+          "option_values": [
+            "Lawangan",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589838925961,
+          "sku": "ZS-TB-ZS-AD-17-CS-BAN-SAY-TWB3",
+          "title": "Labu Sayong",
+          "price": "141.00",
+          "compare_at_price": "157.00",
+          "available": false,
+          "option_values": [
+            "Labu Sayong",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/209_464c97a0-a745-419a-8cd0-2a007684dd2d.png?v=1757264365",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/209_464c97a0-a745-419a-8cd0-2a007684dd2d.png?v=1757264365",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/207_43c330ca-e3b7-49c1-a013-1f7ede49afc1.png?v=1757264365",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/208_926b6ba9-30da-4b6b-97f7-8bf7423213a4.png?v=1757264365",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/38_4aaee5d5-aed6-46ae-8a60-4e90c7ad96f5.png?v=1757164650",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/39_06d35c86-bdce-4f1f-95b7-4610144d4d46.png?v=1757164651",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/40_4077fee0-30c3-44b9-94f5-d9668bd02b2d.png?v=1757164651",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/41_0009b60d-aaa8-4af4-88ba-e704fd3318cd.png?v=1757164651",
+          "alt": null,
+          "position": 7
+        }
+      ],
+      "price": "141.00",
       "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-triloka-warisan"
     },
     {
-      "sku": "ZS-TB-ZS-AD-17-BAN-RIN-DLB2",
+      "id": 8237659553929,
       "name": "[Corak Malaysia] Dwi Lestari",
-      "price": "112.00",
+      "handle": "corak-malaysia-dwi-lestari",
       "description": "Make everyday a day to celebrate our heritage. Our Dwi Lestari comes in three new inspired variations of the Corak Malaysia series, perfect for you to show off your love for the vibrancy of our culture and art. This bundle features: Corak Malaysia All Day Cup Corak Malaysia Bandana",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Design",
+          "position": 1,
+          "values": [
+            "Bunga Rindu",
+            "Lawangan",
+            "Labu Sayong"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44589880246409,
+          "sku": "ZS-TB-ZS-AD-17-BAN-RIN-DLB2",
+          "title": "Bunga Rindu",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": false,
+          "option_values": [
+            "Bunga Rindu",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589880279177,
+          "sku": "ZS-TB-ZS-AD-17-BAN-LAW-DLB2",
+          "title": "Lawangan",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": true,
+          "option_values": [
+            "Lawangan",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44589880311945,
+          "sku": "ZS-TB-ZS-AD-17-BAN-SAY-DLB2",
+          "title": "Labu Sayong",
+          "price": "112.00",
+          "compare_at_price": "118.00",
+          "available": false,
+          "option_values": [
+            "Labu Sayong",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/205_4724d3c5-68c3-4f9e-89b1-91655900ac98.png?v=1757264270",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/205_4724d3c5-68c3-4f9e-89b1-91655900ac98.png?v=1757264270",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/204_58919460-4ffc-49e1-a37a-11dde8a81fea.png?v=1757264270",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/206_7e55021b-477b-4bfc-b40c-7aca56107a36.png?v=1757166792",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/31_2bbfe1a7-e956-4ce9-b3fa-cb0a8b8b0537.png?v=1757166828",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/32_f322745f-77bf-4b6c-aaec-5faba3e89355.png?v=1757166828",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/33_271cfda3-2302-411a-8b3d-5d62af6a89b3.png?v=1757166828",
+          "alt": null,
+          "position": 6
+        }
+      ],
+      "price": "112.00",
       "product_url": "https://shop.zuscoffee.com/products/corak-malaysia-dwi-lestari"
     },
     {
-      "sku": "ZS-AD-17-BDY-LID-ZB-B2",
+      "id": 8274783731849,
       "name": "All Day Cup Classic | 500ml",
-      "price": "85.00",
+      "handle": "all-day-cup-classic-500ml",
       "description": "A classic way to enjoy your drinks All Day, everyday. Inspired by the colours that make ZUS® so recognisable. From the silver of our coffee machines, the black of the freshest Americano, and the iconic blue of ZUS®, these are the classic colours every fan needs to show off their love. TrueCoat coating is only available for Space Black and ZUS® Blue.",
-      "size": "",
+      "vendor": "Lifestyle",
+      "product_type": "",
       "tags": [
         "['All Day'",
         "'Tumbler']"
       ],
+      "options": [
+        {
+          "name": "Color",
+          "position": 1,
+          "values": [
+            "ZUS Blue",
+            "Space Black",
+            "Metallic Grey"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": 44735671107721,
+          "sku": "ZS-AD-17-BDY-LID-ZB-B2",
+          "title": "ZUS Blue",
+          "price": "85.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "ZUS Blue",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44735671140489,
+          "sku": "ZS-AD-17-BDY-LID-SB-B2",
+          "title": "Space Black",
+          "price": "85.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Space Black",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        },
+        {
+          "id": 44735695847561,
+          "sku": "ZS-AD-17-BDY-LID-MG-B2",
+          "title": "Metallic Grey",
+          "price": "79.00",
+          "compare_at_price": null,
+          "available": true,
+          "option_values": [
+            "Metallic Grey",
+            null,
+            null
+          ],
+          "weight_grams": 0
+        }
+      ],
+      "primary_image": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/115_b52f3ba0-b2c8-42bd-a711-904c9afd62cc.png?v=1759988657",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/115_b52f3ba0-b2c8-42bd-a711-904c9afd62cc.png?v=1759988657",
+          "alt": null,
+          "position": 1
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/116_c3a652a3-321e-4ceb-89ff-f9353b136e13.png?v=1759988656",
+          "alt": null,
+          "position": 2
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/117_3bf99127-1854-4acd-8c33-ab9ef1f28f3a.png?v=1759988656",
+          "alt": null,
+          "position": 3
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/118_b6f59f2d-365d-47f8-895f-c62194492804.png?v=1759988656",
+          "alt": null,
+          "position": 4
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/119_8ab07fa0-79a2-418b-9116-d1020a1cbf88.png?v=1759988656",
+          "alt": null,
+          "position": 5
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/120_a37a068f-95fd-4ea3-a073-d46727c5e8f5.png?v=1759988657",
+          "alt": null,
+          "position": 6
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/85_5016840f-6240-4942-a329-f99d541f9756.png?v=1760007915",
+          "alt": null,
+          "position": 7
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/86_804137bb-d82c-46f0-82bc-6e7c899a5cb9.png?v=1760007915",
+          "alt": null,
+          "position": 8
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/87_7cb74a65-c2d4-4fb8-a941-7d4338f54273.png?v=1760007916",
+          "alt": null,
+          "position": 9
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/89_1b0a2cb3-d025-4ac3-b783-2c8724096943.png?v=1760007915",
+          "alt": null,
+          "position": 10
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/88_1b2d74f0-36a9-45b4-bbc1-abe5656f306c.png?v=1760007917",
+          "alt": null,
+          "position": 11
+        },
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0589/7053/8121/files/90_ec3c6dff-2f51-4dff-953e-6772d7432155.png?v=1760007917",
+          "alt": null,
+          "position": 12
+        }
+      ],
+      "price": "79.00",
       "product_url": "https://shop.zuscoffee.com/products/all-day-cup-classic-500ml"
     }
   ],
   "vocabulary": [
     "0",
+    "00",
+    "100",
+    "105",
+    "112",
+    "141",
     "16",
+    "19",
     "2",
+    "23",
+    "30",
     "304",
+    "38",
+    "40",
     "420ml",
     "470ml",
+    "48",
     "5",
+    "50",
     "500ml",
+    "52",
+    "55",
+    "59",
     "6",
     "600ml",
     "650ml",
+    "79",
     "8",
+    "85",
     "a",
     "about",
     "accessories",
@@ -287,16 +2284,19 @@
     "be",
     "beaches",
     "beauty",
+    "beige",
     "best",
     "better",
     "between",
     "big",
     "black",
     "blends",
+    "blossom",
     "blue",
     "body",
     "both",
     "break",
+    "breeze",
     "breezy",
     "brewing",
     "brighter",
@@ -312,6 +2312,7 @@
     "captures",
     "career",
     "caretaker",
+    "castle",
     "celebrate",
     "ceramic",
     "ceremonial",
@@ -320,19 +2321,23 @@
     "charm",
     "charming",
     "cherish",
+    "cherry",
     "chill",
     "chinese",
     "claim",
     "classic",
     "clean",
     "close",
+    "cloud",
     "cny",
     "coating",
     "coffee",
     "coin",
     "cold",
     "collect",
+    "collectible",
     "collection",
+    "color",
     "colors",
     "colourful",
     "colours",
@@ -353,6 +2358,7 @@
     "country",
     "cracker",
     "craftsmanship",
+    "creamy",
     "cultural",
     "culture",
     "cup",
@@ -360,6 +2366,8 @@
     "dash",
     "day",
     "deal",
+    "deep",
+    "default",
     "definition",
     "delicate",
     "delicious",
@@ -375,6 +2383,7 @@
     "drinks",
     "dual",
     "durable",
+    "dusky",
     "dwi",
     "each",
     "earthenware",
@@ -406,8 +2415,10 @@
     "features",
     "featuring",
     "feel",
+    "fern",
     "fertility",
     "festive",
+    "fiery",
     "fill",
     "filled",
     "find",
@@ -419,6 +2430,7 @@
     "focused",
     "food",
     "for",
+    "forest",
     "fortune",
     "found",
     "frappe",
@@ -429,12 +2441,15 @@
     "fridge",
     "friendly",
     "from",
+    "frost",
     "frozee",
     "full",
+    "fuzz",
     "gadget",
     "gao",
     "get",
     "glass",
+    "glow",
     "go",
     "goals",
     "golden",
@@ -444,6 +2459,8 @@
     "grace",
     "gravitating",
     "great",
+    "green",
+    "grey",
     "grip",
     "grounded",
     "group",
@@ -494,9 +2511,12 @@
     "known",
     "knows",
     "kopitiam",
+    "kumbu",
     "label",
     "labu",
+    "lagoon",
     "laughter",
+    "lavender",
     "lawangan",
     "lead",
     "leaf",
@@ -508,6 +2528,7 @@
     "lid",
     "lids",
     "life",
+    "lifestyle",
     "like",
     "limited",
     "little",
@@ -529,6 +2550,7 @@
     "make",
     "makes",
     "malaysia",
+    "malaysiaku",
     "material",
     "matter",
     "mature",
@@ -541,11 +2563,15 @@
     "mess",
     "message",
     "messes",
+    "metallic",
     "minimalist",
+    "mint",
+    "misty",
     "moment",
     "moments",
     "more",
     "morning",
+    "mossy",
     "motif",
     "motifs",
     "motivational",
@@ -555,6 +2581,7 @@
     "move",
     "moves",
     "mug",
+    "mugs",
     "murut",
     "nature",
     "need",
@@ -571,6 +2598,7 @@
     "nourish",
     "now",
     "nyonya",
+    "ocean",
     "of",
     "off",
     "office",
@@ -590,15 +2618,18 @@
     "papar",
     "party",
     "pays",
+    "peach",
     "people",
     "peranakan",
     "perfect",
     "perfectly",
+    "pine",
     "pink",
     "place",
     "planning",
     "playful",
     "plenty",
+    "plum",
     "positivity",
     "pottery",
     "practicality",
@@ -610,6 +2641,8 @@
     "promotions",
     "proof",
     "prosperity",
+    "pua",
+    "purple",
     "purpose",
     "quality",
     "quiet",
@@ -632,6 +2665,7 @@
     "rise",
     "road",
     "roadside",
+    "russet",
     "s",
     "sand",
     "sandy",
@@ -639,6 +2673,7 @@
     "sayong",
     "screw",
     "sea",
+    "seashell",
     "seaside",
     "season",
     "secure",
@@ -661,6 +2696,7 @@
     "siung",
     "six",
     "skin",
+    "sky",
     "sleeve",
     "small",
     "smells",
@@ -678,6 +2714,7 @@
     "spill",
     "spread",
     "stainless",
+    "starry",
     "states",
     "stay",
     "steadfast",
@@ -700,15 +2737,18 @@
     "sunkissed",
     "sunrise",
     "sunset",
+    "sunshine",
     "surety",
     "surrounded",
     "sweet",
     "symbol",
+    "tabur",
     "take",
     "takes",
     "tall",
     "tech",
     "temperatures",
+    "terrain",
     "textile",
     "than",
     "thanks",
@@ -727,11 +2767,13 @@
     "three",
     "through",
     "thunder",
+    "tideline",
     "tiga",
     "tight",
     "time",
     "timeless",
     "times",
+    "title",
     "to",
     "top",
     "tote",
@@ -766,6 +2808,7 @@
     "warisan",
     "warmth",
     "water",
+    "wave",
     "way",
     "we",
     "wealth",
@@ -774,6 +2817,7 @@
     "where",
     "wherever",
     "whether",
+    "white",
     "who",
     "whole",
     "will",
@@ -784,6 +2828,7 @@
     "within",
     "world",
     "year",
+    "yellow",
     "you",
     "your",
     "yours",
@@ -792,15 +2837,32 @@
   ],
   "idf": [
     3.3513753414154053,
+    1.1541507244110107,
     3.3513753414154053,
     3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.6582281589508057,
+    1.7419373989105225,
+    3.3513753414154053,
+    2.6582281589508057,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     1.7419373989105225,
-    3.3513753414154053,
-    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     1.271933674812317,
@@ -839,13 +2901,16 @@
     2.435084581375122,
     3.3513753414154053,
     3.3513753414154053,
-    3.3513753414154053,
-    2.9459102153778076,
-    3.3513753414154053,
-    3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.435084581375122,
+    3.3513753414154053,
+    3.3513753414154053,
+    1.9650808572769165,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -856,7 +2921,7 @@
     3.3513753414154053,
     2.9459102153778076,
     2.435084581375122,
-    3.3513753414154053,
+    2.252763032913208,
     2.435084581375122,
     3.3513753414154053,
     1.9650808572769165,
@@ -864,8 +2929,11 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
     2.435084581375122,
     2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -884,7 +2952,9 @@
     3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
+    2.6582281589508057,
     3.3513753414154053,
+    1.4054651260375977,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
@@ -906,6 +2976,7 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
     2.435084581375122,
     1.3364722728729248,
     3.3513753414154053,
@@ -913,10 +2984,12 @@
     1.3364722728729248,
     3.3513753414154053,
     3.3513753414154053,
-    3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
+    2.252763032913208,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
@@ -925,6 +2998,7 @@
     2.9459102153778076,
     3.3513753414154053,
     1.5596157312393188,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
@@ -962,6 +3036,8 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
     2.6582281589508057,
     3.3513753414154053,
     3.3513753414154053,
@@ -976,16 +3052,20 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    2.9459102153778076,
+    3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
@@ -996,6 +3076,8 @@
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
+    2.435084581375122,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1048,8 +3130,11 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    2.435084581375122,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
+    2.435084581375122,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
@@ -1060,6 +3145,7 @@
     2.6582281589508057,
     2.9459102153778076,
     2.9459102153778076,
+    1.0,
     2.6582281589508057,
     2.9459102153778076,
     3.3513753414154053,
@@ -1084,7 +3170,11 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1106,6 +3196,8 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
+    2.9459102153778076,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
@@ -1119,6 +3211,7 @@
     2.435084581375122,
     3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1142,9 +3235,12 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
     2.252763032913208,
+    2.9459102153778076,
+    2.9459102153778076,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
@@ -1161,6 +3257,8 @@
     3.3513753414154053,
     3.3513753414154053,
     2.6582281589508057,
+    3.3513753414154053,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1180,6 +3278,7 @@
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
+    2.435084581375122,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1188,7 +3287,8 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
-    3.3513753414154053,
+    2.435084581375122,
+    2.9459102153778076,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
@@ -1213,23 +3313,18 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
     2.6582281589508057,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     2.435084581375122,
-    3.3513753414154053,
+    2.9459102153778076,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
-    2.435084581375122,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
-    3.3513753414154053,
+    2.252763032913208,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1241,6 +3336,15 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    2.9459102153778076,
+    2.9459102153778076,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1257,6 +3361,7 @@
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
@@ -1278,12 +3383,14 @@
     2.9459102153778076,
     2.0986123085021973,
     2.9459102153778076,
+    2.6582281589508057,
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
     3.3513753414154053,
     3.3513753414154053,
+    2.9459102153778076,
     1.2113090753555298,
     3.3513753414154053,
     3.3513753414154053,
@@ -1318,6 +3425,7 @@
     3.3513753414154053,
     3.3513753414154053,
     2.9459102153778076,
+    3.3513753414154053,
     2.9459102153778076,
     2.9459102153778076,
     3.3513753414154053,
@@ -1326,6 +3434,7 @@
     3.3513753414154053,
     3.3513753414154053,
     2.0986123085021973,
+    2.9459102153778076,
     2.6582281589508057,
     2.9459102153778076,
     2.6582281589508057,
@@ -1336,10 +3445,11 @@
     3.3513753414154053,
     3.3513753414154053,
     3.3513753414154053,
+    3.3513753414154053,
     1.2113090753555298,
     1.0487902164459229,
     3.3513753414154053,
     3.3513753414154053,
-    2.6582281589508057
+    2.435084581375122
   ]
 }

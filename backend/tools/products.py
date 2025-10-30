@@ -159,7 +159,7 @@ class ProductsTool(Tool):
             return fallback_text
 
         snippet_lines = []
-        for idx, item in enumerate(matches[:5]):
+        for idx, item in enumerate(matches[:3]):
             name = item.get("name", "Unknown")
             size = item.get("size") or item.get("volume") or "N/A"
             price = item.get("price") or item.get("price_text") or ""
@@ -203,7 +203,8 @@ class ProductsTool(Tool):
                     {
                         "role": "user",
                         "content": (
-                            "Recommend up to three items from the list below in two sentences, highlighting key features and ending with a gentle suggestion."
+                            "Produce exactly one warm sentence (maximum 25 words) recommending up to two items from the list below."
+                            " Mention a standout size or feature, and end with a gentle call to action."
                             "\n\nProducts:\n" + prompt
                         ),
                     },
@@ -225,7 +226,22 @@ class ProductsTool(Tool):
                         .get("content", "")
                         .strip()
                     )
-                    return content or fallback_text
+                    if not content:
+                        return fallback_text
+
+                    content = " ".join(content.replace("\n", " ").split())
+
+                    # Keep only the first sentence to avoid multi-sentence rambles.
+                    if "." in content:
+                        first_sentence = content.split(".")[0].strip()
+                        if first_sentence:
+                            content = first_sentence + "."
+
+                    words = content.split()
+                    if len(words) > 25:
+                        content = " ".join(words[:25]).rstrip(",;") + "..."
+
+                    return content
             except Exception as exc:  # noqa: BLE001
                 self._logger.exception("OpenRouter summary failed", extra={"error": str(exc)})
                 return fallback_text
