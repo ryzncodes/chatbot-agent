@@ -22,4 +22,4 @@ COPY backend /app/backend
 EXPOSE 8000
 
 # Start the app using the virtualenv’s python
-CMD ["./.venv/bin/python", "serve.py"]
+CMD ["./backend/.venv/bin/python", "backend/serve.py"]
