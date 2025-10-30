@@ -17,6 +17,15 @@ PRODUCT_KEYWORDS = {
     "thermos",
 }
 
+PRODUCT_KEYWORD_ALIASES = {
+    "tumblers": "tumbler",
+    "tumblrs": "tumbler",
+    "cups": "cup",
+    "mugs": "mug",
+    "bottles": "bottle",
+    "thermoses": "thermos",
+}
+
 LOCATION_ALIASES = {
     "ss2": "SS 2",
     "pj": "Petaling Jaya",
@@ -36,7 +45,8 @@ class RuleBasedPlanner(Planner):
     def decide(self, context: PlannerContext) -> PlannerDecision:
         message = context.turn.content.lower()
         intent = self._classify_intent(message)
-        slot_updates = self._extract_slot_updates(intent, context)
+        intent = self._contextual_intent(intent, message, context)
+        slot_updates = self._extract_slot_updates(intent, context, message)
         required_slots = self._derive_slots(intent, context)
 
         # If planner just extracted a slot, treat it as satisfied locally.
@@ -58,7 +68,7 @@ class RuleBasedPlanner(Planner):
     def _classify_intent(self, message: str) -> Intent:
         if any(keyword in message for keyword in ["calc", "sum", "add", "minus", "+", "-"]):
             return Intent.CALCULATE
-        if any(keyword in message for keyword in ["product", "drink", "tumbler", "merch"]):
+        if any(keyword in message for keyword in ["product", "drink", "tumbler", "tumblers", "merch", "mug", "mugs", "cup", "cups", "bottle", "bottles", "thermos"]):
             return Intent.PRODUCT_INFO
         if any(keyword in message for keyword in ["outlet", "store", "open", "closing", "hours"]):
             return Intent.OUTLET_INFO
@@ -80,9 +90,8 @@ class RuleBasedPlanner(Planner):
 
         return slots_required
 
-    def _extract_slot_updates(self, intent: Intent, context: PlannerContext) -> dict[str, str]:
-        message = context.turn.content.lower()
-        tokens = [token.strip(",.!?") for token in message.split()]
+    def _extract_slot_updates(self, intent: Intent, context: PlannerContext, message: str) -> dict[str, str]:
+        tokens = [token.strip(" ,.!?;:\"'()") for token in message.split()]
         updates: dict[str, str] = {}
 
         if intent is Intent.CALCULATE:
@@ -90,8 +99,19 @@ class RuleBasedPlanner(Planner):
 
         if intent is Intent.PRODUCT_INFO:
             for token in tokens:
+                if not token:
+                    continue
+                canonical = None
                 if token in PRODUCT_KEYWORDS:
-                    updates["product_type"] = token
+                    canonical = token
+                elif token in PRODUCT_KEYWORD_ALIASES:
+                    canonical = PRODUCT_KEYWORD_ALIASES[token]
+                else:
+                    stripped = token.rstrip("s")
+                    if stripped in PRODUCT_KEYWORDS:
+                        canonical = stripped
+                if canonical:
+                    updates["product_type"] = canonical
                     break
 
         if intent is Intent.OUTLET_INFO:
@@ -101,6 +121,21 @@ class RuleBasedPlanner(Planner):
                     break
 
         return updates
+
+    def _contextual_intent(self, intent: Intent, message: str, context: PlannerContext) -> Intent:
+        if intent is not Intent.UNKNOWN:
+            return intent
+
+        follow_up_phrases = ["what else", "anything else", "another", "more option", "show me more", "something else"]
+        if context.conversation.slots.get("product_type"):
+            if any(phrase in message for phrase in follow_up_phrases):
+                return Intent.PRODUCT_INFO
+
+        if context.conversation.slots.get("location"):
+            if any(phrase in message for phrase in follow_up_phrases):
+                return Intent.OUTLET_INFO
+
+        return intent
 
     def _select_action(self, intent: Intent, slots: dict[str, bool]) -> PlannerAction:
         if intent is Intent.CALCULATE and slots.get("operation", False):
