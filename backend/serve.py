@@ -1,0 +1,25 @@
+"""Railway-friendly launcher that ensures repo root is importable."""
+
+from __future__ import annotations
+
+import os
+import sys
+
+
+def main() -> None:
+    """Entry point."""
+    backend_dir = os.path.dirname(os.path.abspath(__file__))
+    repo_root = os.path.dirname(backend_dir)
+    if repo_root not in sys.path:
+        sys.path.insert(0, repo_root)
+
+    from backend.main import app  # noqa: WPS433 (import position)
+
+    import uvicorn
+
+    port = int(os.environ.get("PORT", "8000"))
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
+
+if __name__ == "__main__":
+    main()
