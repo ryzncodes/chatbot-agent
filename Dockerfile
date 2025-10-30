@@ -2,24 +2,23 @@
 FROM python:3.11-slim
 
 # Set working directory
-WORKDIR /app
+WORKDIR /app/backend
 
 # Install Poetry
 RUN pip install poetry
 
-# Copy only dependency files first (for build cache)
-COPY backend/pyproject.toml backend/poetry.lock ./backend/
+# Copy dependency files first (for build cache)
+COPY backend/pyproject.toml backend/poetry.lock ./
 
-# Install dependencies
-WORKDIR /app/backend
+# Install dependencies into in-project virtualenv
 RUN poetry config virtualenvs.in-project true \
  && poetry install --no-interaction --no-ansi
 
-# Copy rest of your backend code
+# Copy the rest of the backend code
 COPY backend /app/backend
 
-# Expose default FastAPI port
+# Expose FastAPI default port
 EXPOSE 8000
 
-# Start the app using the virtualenv’s python
-CMD ["./backend/.venv/bin/python", "backend/serve.py"]
+# Run the app
+CMD ["./.venv/bin/python", "serve.py"]
