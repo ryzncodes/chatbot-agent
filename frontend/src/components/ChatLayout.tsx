@@ -16,6 +16,7 @@ function ChatLayout() {
   const messageListRef = useRef<HTMLDivElement | null>(null);
   const scrollAnchorRef = useRef<HTMLDivElement | null>(null);
   const hasAutoScrolledRef = useRef(false);
+  const shouldStickRef = useRef(true);
   const [input, setInput] = useState("");
   const [toolStatus, setToolStatus] = useState<ToolAvailability>("ok");
   const [lastTool, setLastTool] = useState<string | null>(null);
@@ -39,24 +40,30 @@ function ChatLayout() {
     textareaRef.current?.focus();
   }, []);
 
-  const isNearBottom = useCallback(() => {
-    const list = messageListRef.current;
+  const isNearBottom = useCallback((element: HTMLDivElement | null = messageListRef.current) => {
+    const list = element;
     if (!list) return true;
     const threshold = 56;
     return list.scrollHeight - list.scrollTop - list.clientHeight <= threshold;
   }, []);
 
+  const handleScroll = useCallback(() => {
+    shouldStickRef.current = isNearBottom(messageListRef.current);
+  }, [isNearBottom]);
+
   useEffect(() => {
-    if (!messageListRef.current) return;
-    if (!isNearBottom() && hasAutoScrolledRef.current) return;
+    const list = messageListRef.current;
+    if (!list) return;
+    if (!shouldStickRef.current && hasAutoScrolledRef.current) return;
     const behavior = hasAutoScrolledRef.current ? "smooth" : "auto";
     if (scrollAnchorRef.current) {
       scrollAnchorRef.current.scrollIntoView({ behavior, block: "end" });
     } else {
-      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+      list.scrollTop = list.scrollHeight;
     }
     hasAutoScrolledRef.current = true;
-  }, [messages, isTyping, isNearBottom]);
+    shouldStickRef.current = true;
+  }, [messages, isTyping]);
 
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
@@ -184,7 +191,7 @@ function ChatLayout() {
           <h1 className={styles.title}>ZUS AI Assistant</h1>
         </header>
 
-        <div ref={messageListRef} className={styles.messageList}>
+        <div ref={messageListRef} className={styles.messageList} onScroll={handleScroll}>
           {threads.length === 0 && <p>Start the conversation by asking about products, outlets, or calculations.</p>}
           {threads.map((threadMessages, index) => {
             const turnNumber = index + 1;
