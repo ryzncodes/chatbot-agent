@@ -1,3 +1,5 @@
+import types
+
 from fastapi.testclient import TestClient
 
 from backend.main import app
@@ -30,7 +32,26 @@ def test_chat_missing_content_returns_400():
     assert response.status_code == 400
 
 
-def test_chat_handles_missing_product_tool():
+def test_chat_handles_missing_product_tool(monkeypatch):
+    from backend import main as backend_main
+
+    def fake_catalogue(self):
+        return []
+
+    def fake_index(self):
+        return None
+
+    monkeypatch.setattr(
+        backend_main.products_tool,
+        "_load_catalogue",
+        types.MethodType(fake_catalogue, backend_main.products_tool),
+    )
+    monkeypatch.setattr(
+        backend_main.products_tool,
+        "_ensure_index",
+        types.MethodType(fake_index, backend_main.products_tool),
+    )
+
     response = client.post(
         "/chat",
         json={

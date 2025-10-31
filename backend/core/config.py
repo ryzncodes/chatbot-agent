@@ -92,10 +92,12 @@ class Settings(BaseSettings):
         if self.frontend_origin:
             origins.append(str(self.frontend_origin).rstrip("/"))
         else:
-            origins.extend([
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-            ])
+            origins.extend(
+                [
+                    "http://localhost:5173",
+                    "http://127.0.0.1:5173",
+                ]
+            )
 
         for origin in self.additional_origins:
             origins.append(str(origin).rstrip("/"))

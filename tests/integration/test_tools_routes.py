@@ -17,7 +17,10 @@ def test_calculator_tool_invalid_expression_returns_400():
     response = client.post("/tools/calculator", json={"expression": "2 + bad"})
     assert response.status_code == 400
     payload = response.json()
-    assert "Unsupported character" in payload["detail"]
+    assert (
+        payload["detail"]
+        == "I couldn't compute that expression. Please check the syntax."
+    )
 
 
 def test_products_tool_route_requires_query():

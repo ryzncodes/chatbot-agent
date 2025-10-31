@@ -113,9 +113,7 @@ async def readiness_probe() -> dict[str, Any]:
         if outlets_path.exists():
             with sqlite3.connect(outlets_path) as conn:
                 # Check table exists and is queryable
-                conn.execute(
-                    "SELECT 1 FROM sqlite_master WHERE type='table' AND name='outlets'"
-                )
+                conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='outlets'")
                 conn.execute("SELECT 1 FROM outlets LIMIT 1")
                 outlets_ok = True
         else:
@@ -269,9 +267,7 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
                 "Tool dispatch failed",
                 extra={"action": decision.action.value},
             )
-            response_content = (
-                "I ran into an issue calling that tool. Could you try again later?"
-            )
+            response_content = "I ran into an issue calling that tool. Could you try again later?"
             tool_success = False
             tool_data = {"error": str(exc)}
     else:
@@ -290,11 +286,7 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         "message": response_content,
         "tool_data": tool_data or {},
         "required_slots": decision.required_slots,
-        "slots": {
-            key: str(value)
-            for key, value in slot_state.items()
-            if value is not None
-        },
+        "slots": {key: str(value) for key, value in slot_state.items() if value is not None},
     }
 
 

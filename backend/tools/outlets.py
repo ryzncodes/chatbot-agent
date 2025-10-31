@@ -88,7 +88,8 @@ class OutletsTool(Tool):
         location = interpretation.get("location")
         if location:
             where_clauses.append(
-                "(" "LOWER(city) LIKE LOWER(?) OR "
+                "("
+                "LOWER(city) LIKE LOWER(?) OR "
                 "LOWER(state) LIKE LOWER(?) OR "
                 "LOWER(name) LIKE LOWER(?)"
                 ")"

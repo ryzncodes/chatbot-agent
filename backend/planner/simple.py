@@ -64,10 +64,7 @@ class RuleBasedPlanner(Planner):
         )
 
     def _classify_intent(self, message: str) -> Intent:
-        if any(
-            keyword in message
-            for keyword in ["calc", "sum", "add", "minus", "+", "-"]
-        ):
+        if any(keyword in message for keyword in ["calc", "sum", "add", "minus", "+", "-"]):
             return Intent.CALCULATE
         if any(
             keyword in message
@@ -87,10 +84,7 @@ class RuleBasedPlanner(Planner):
             ]
         ):
             return Intent.PRODUCT_INFO
-        if any(
-            keyword in message
-            for keyword in ["outlet", "store", "open", "closing", "hours"]
-        ):
+        if any(keyword in message for keyword in ["outlet", "store", "open", "closing", "hours"]):
             return Intent.OUTLET_INFO
         if "reset" in message:
             return Intent.RESET

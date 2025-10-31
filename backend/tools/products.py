@@ -93,12 +93,7 @@ class ProductsTool(Tool):
     async def run(self, context: ToolContext) -> ToolResponse:
         catalogue = self._load_catalogue()
         index = self._ensure_index()
-        if (
-            not catalogue
-            or index is None
-            or self._vocabulary is None
-            or self._idf is None
-        ):
+        if not catalogue or index is None or self._vocabulary is None or self._idf is None:
             return ToolResponse(
                 content="Product catalogue is not ready yet. Please try again later.",
                 data={
@@ -164,8 +159,7 @@ class ProductsTool(Tool):
 
     async def _summarise_matches(self, matches: list[dict[str, Any]]) -> str:
         fallback = "; ".join(
-            f"{item.get('name', 'Unknown')} ({item.get('size', 'N/A')})"
-            for item in matches[:3]
+            f"{item.get('name', 'Unknown')} ({item.get('size', 'N/A')})" for item in matches[:3]
         )
         fallback_text = f"Top drinkware picks: {fallback}."
 
@@ -193,9 +187,7 @@ class ProductsTool(Tool):
         async with self._summarise_semaphore:
             async with self._rate_lock:
                 now = time.monotonic()
-                wait_for = self._openrouter_min_interval - (
-                    now - self._last_openrouter_call
-                )
+                wait_for = self._openrouter_min_interval - (now - self._last_openrouter_call)
                 if wait_for > 0:
                     await asyncio.sleep(wait_for)
                 self._last_openrouter_call = time.monotonic()
@@ -241,10 +233,7 @@ class ProductsTool(Tool):
                     response.raise_for_status()
                     data = response.json()
                     content = (
-                        data.get("choices", [{}])[0]
-                        .get("message", {})
-                        .get("content", "")
-                        .strip()
+                        data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
                     )
                     if not content:
                         return fallback_text
