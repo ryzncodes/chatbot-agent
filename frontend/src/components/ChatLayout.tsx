@@ -13,6 +13,9 @@ type ToolAvailability = "ok" | "degraded";
 
 function ChatLayout() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const messageListRef = useRef<HTMLDivElement | null>(null);
+  const scrollAnchorRef = useRef<HTMLDivElement | null>(null);
+  const hasAutoScrolledRef = useRef(false);
   const [input, setInput] = useState("");
   const [toolStatus, setToolStatus] = useState<ToolAvailability>("ok");
   const [lastTool, setLastTool] = useState<string | null>(null);
@@ -35,6 +38,17 @@ function ChatLayout() {
   useEffect(() => {
     textareaRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (!messageListRef.current) return;
+    const behavior = hasAutoScrolledRef.current ? "smooth" : "auto";
+    if (scrollAnchorRef.current) {
+      scrollAnchorRef.current.scrollIntoView({ behavior, block: "end" });
+    } else {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+    hasAutoScrolledRef.current = true;
+  }, [messages, isTyping]);
 
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
@@ -162,7 +176,7 @@ function ChatLayout() {
           <h1 className={styles.title}>ZUS AI Assistant</h1>
         </header>
 
-        <div className={styles.messageList}>
+        <div ref={messageListRef} className={styles.messageList}>
           {threads.length === 0 && <p>Start the conversation by asking about products, outlets, or calculations.</p>}
           {threads.map((threadMessages, index) => {
             const turnNumber = index + 1;
@@ -191,6 +205,7 @@ function ChatLayout() {
               <div className={styles.bubbleMeta}>Assistant is typing…</div>
             </div>
           )}
+          <div ref={scrollAnchorRef} aria-hidden="true" />
         </div>
 
         <form className={styles.composer} onSubmit={handleSubmit}>
