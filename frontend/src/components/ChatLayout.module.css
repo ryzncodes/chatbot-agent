@@ -4,9 +4,14 @@
   grid-template-areas: "memory chat timeline";
   gap: 1.5rem;
   height: 100vh;
-  height: 100dvh;
   padding: 2rem clamp(1.5rem, 3vw, 3rem);
   overflow: hidden;
+}
+
+@supports (height: 100dvh) {
+  .layout {
+    height: 100dvh;
+  }
 }
 
 .layout > aside:first-of-type {

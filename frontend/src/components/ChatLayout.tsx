@@ -39,8 +39,16 @@ function ChatLayout() {
     textareaRef.current?.focus();
   }, []);
 
+  const isNearBottom = useCallback(() => {
+    const list = messageListRef.current;
+    if (!list) return true;
+    const threshold = 56;
+    return list.scrollHeight - list.scrollTop - list.clientHeight <= threshold;
+  }, []);
+
   useEffect(() => {
     if (!messageListRef.current) return;
+    if (!isNearBottom() && hasAutoScrolledRef.current) return;
     const behavior = hasAutoScrolledRef.current ? "smooth" : "auto";
     if (scrollAnchorRef.current) {
       scrollAnchorRef.current.scrollIntoView({ behavior, block: "end" });
@@ -48,7 +56,7 @@ function ChatLayout() {
       messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
     }
     hasAutoScrolledRef.current = true;
-  }, [messages, isTyping]);
+  }, [messages, isTyping, isNearBottom]);
 
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
