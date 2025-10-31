@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --color-background: #f8f5f2;
-  --color-bot: #e0d4c1;
-  --color-user: #b38b59;
-  --color-accent: #573c2e;
+  --color-background: #e7ecf8;
+  --color-bot: #f2f5fc;
+  --color-user: #1e3d93;
+  --color-accent: #132d6f;
   --color-error: #d9534f;
   --color-success: #3c9d5f;
-  --color-border: #d7c7b2;
+  --color-border: #c3cce5;
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
