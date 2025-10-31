@@ -13,25 +13,43 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Strongly-typed configuration sourced from environment variables."""
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", case_sensitive=False)
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+    )
 
     app_name: str = Field(default="ZUS AI Assistant", description="Human-readable service name.")
     environment: str = Field(default="local", description="Deployment environment identifier.")
 
     openai_api_key: str | None = Field(default=None, description="Optional OpenAI API key.")
-    embedding_model: str = Field(default="text-embedding-3-large", description="Embedding model name.")
+    embedding_model: str = Field(
+        default="text-embedding-3-large",
+        description="Embedding model name.",
+    )
 
-    sqlite_path: Path = Field(default=Path("../db/conversations.db"), description="Conversation DB path.")
-    outlets_db_path: Path = Field(default=Path("../db/outlets.db"), description="Outlet DB file path.")
+    sqlite_path: Path = Field(
+        default=Path("../db/conversations.db"),
+        description="Conversation DB path.",
+    )
+    outlets_db_path: Path = Field(
+        default=Path("../db/outlets.db"),
+        description="Outlet DB file path.",
+    )
     faiss_index_path: Path = Field(
-        default=Path("../db/faiss/products.index"), description="FAISS index file location."
+        default=Path("../db/faiss/products.index"),
+        description="FAISS index file location.",
     )
     products_metadata_path: Path = Field(
         default=Path("../db/faiss/products_metadata.json"),
         description="Path to cached drinkware metadata for retrieval responses.",
     )
 
-    calculator_timeout_ms: int = Field(default=2000, ge=100, description="Calculator evaluation timeout.")
+    calculator_timeout_ms: int = Field(
+        default=2000,
+        ge=100,
+        description="Calculator evaluation timeout.",
+    )
     log_level: str = Field(default="INFO", description="Application log level.")
 
     frontend_origin: AnyHttpUrl | None = Field(
@@ -74,15 +92,18 @@ class Settings(BaseSettings):
         if self.frontend_origin:
             origins.append(str(self.frontend_origin).rstrip("/"))
         else:
-            origins.extend([
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-            ])
+            origins.extend(
+                [
+                    "http://localhost:5173",
+                    "http://127.0.0.1:5173",
+                ]
+            )
 
         for origin in self.additional_origins:
             origins.append(str(origin).rstrip("/"))
 
-        # Local development often swaps between localhost and 127.0.0.1, so ensure both variants are present
+        # Local development often swaps between localhost and 127.0.0.1,
+        # so ensure both variants are present.
         normalized = []
         for origin in origins:
             base = origin.rstrip("/")

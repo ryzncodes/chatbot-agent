@@ -23,7 +23,6 @@ function ChatLayout() {
     messages,
     timeline,
     slots,
-    lastDecision,
     status,
     error,
     appendMessage,
@@ -123,11 +122,11 @@ function ChatLayout() {
       return;
     }
     if (command === "/calc") {
-      setInput((current) => `${command} 1 + 2`.trim() + " ");
+      setInput(() => `${command} 1 + 2`.trim() + " ");
     } else if (command === "/products") {
-      setInput((current) => `${command} What tumblers do you have?`.trim() + " ");
+      setInput(() => `${command} What tumblers do you have?`.trim() + " ");
     } else if (command === "/outlets") {
-      setInput((current) => `${command} What are the hours for SS2?`.trim() + " ");
+      setInput(() => `${command} What are the hours for SS2?`.trim() + " ");
     } else {
       setInput((current) => `${command} ${current}`.trim() + " ");
     }

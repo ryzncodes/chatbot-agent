@@ -48,7 +48,7 @@ function defaultConversationId() {
 
 export const useChatStore = create<ChatState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       conversationId: defaultConversationId(),
       messages: [],
       slots: {},

@@ -52,4 +52,3 @@ def seed_on_startup() -> None:
     meta_src = seed_dir / "faiss" / "products_metadata.json"
     meta_dst = Path(settings.products_metadata_path)
     _copy_if_missing(meta_src, meta_dst)
-

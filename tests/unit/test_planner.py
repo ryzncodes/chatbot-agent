@@ -28,9 +28,10 @@ def test_planner_respects_existing_product_slot():
     context = PlannerContext(turn=turn, conversation=snapshot({"product_type": "tumbler"}))
     decision = planner.decide(context)
 
-    assert decision.intent.value == "unknown"
+    assert decision.intent.value == "product_info"
+    assert decision.action.value == "call_products"
     assert not decision.slot_updates
-    assert decision.required_slots.get("product_type") is None
+    assert decision.required_slots.get("product_type") is True
 
 
 def test_planner_extracts_operation_for_calculator():
@@ -50,5 +51,5 @@ def test_planner_missing_location_requests_follow_up():
     context = PlannerContext(turn=turn, conversation=snapshot())
     decision = planner.decide(context)
 
-    assert decision.intent.value == "small_talk" or decision.intent.value == "unknown"
-    assert decision.action.value in {"fallback", "ask_follow_up"}
+    assert decision.intent.value == "outlet_info"
+    assert decision.action.value == "ask_follow_up"

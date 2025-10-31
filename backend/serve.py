@@ -2,11 +2,16 @@
 
 from __future__ import annotations
 
+import importlib
 import logging
 import os
 import sys
 from pathlib import Path
 from typing import Iterable
+
+import uvicorn
+
+from backend.init_data import seed_on_startup
 
 logger = logging.getLogger("zus.launcher")
 
@@ -70,15 +75,12 @@ def main() -> None:
     # Attempt to seed data into mounted volume before app import,
     # so readiness passes as soon as the server starts.
     try:
-        from backend.init_data import seed_on_startup  # noqa: WPS433 (import position)
-
         seed_on_startup()
     except Exception as exc:  # noqa: BLE001
         logger.warning("Data seeding step skipped: %s", exc)
 
-    from backend.main import app  # noqa: WPS433 (import position)
-
-    import uvicorn
+    app_module = importlib.import_module("backend.main")
+    app = app_module.app  # type: ignore[attr-defined]
 
     port = int(os.environ.get("PORT", "8000"))
     uvicorn.run(app, host="0.0.0.0", port=port)

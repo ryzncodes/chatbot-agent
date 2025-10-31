@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from backend.planner.base import Planner
 from backend.planner.types import Intent, PlannerAction, PlannerContext, PlannerDecision
 
@@ -68,7 +66,23 @@ class RuleBasedPlanner(Planner):
     def _classify_intent(self, message: str) -> Intent:
         if any(keyword in message for keyword in ["calc", "sum", "add", "minus", "+", "-"]):
             return Intent.CALCULATE
-        if any(keyword in message for keyword in ["product", "drink", "tumbler", "tumblers", "merch", "mug", "mugs", "cup", "cups", "bottle", "bottles", "thermos"]):
+        if any(
+            keyword in message
+            for keyword in [
+                "product",
+                "drink",
+                "tumbler",
+                "tumblers",
+                "merch",
+                "mug",
+                "mugs",
+                "cup",
+                "cups",
+                "bottle",
+                "bottles",
+                "thermos",
+            ]
+        ):
             return Intent.PRODUCT_INFO
         if any(keyword in message for keyword in ["outlet", "store", "open", "closing", "hours"]):
             return Intent.OUTLET_INFO
@@ -90,7 +104,12 @@ class RuleBasedPlanner(Planner):
 
         return slots_required
 
-    def _extract_slot_updates(self, intent: Intent, context: PlannerContext, message: str) -> dict[str, str]:
+    def _extract_slot_updates(
+        self,
+        intent: Intent,
+        context: PlannerContext,
+        message: str,
+    ) -> dict[str, str]:
         tokens = [token.strip(" ,.!?;:\"'()") for token in message.split()]
         updates: dict[str, str] = {}
 
@@ -126,7 +145,14 @@ class RuleBasedPlanner(Planner):
         if intent is not Intent.UNKNOWN:
             return intent
 
-        follow_up_phrases = ["what else", "anything else", "another", "more option", "show me more", "something else"]
+        follow_up_phrases = [
+            "what else",
+            "anything else",
+            "another",
+            "more option",
+            "show me more",
+            "something else",
+        ]
         if context.conversation.slots.get("product_type"):
             if any(phrase in message for phrase in follow_up_phrases):
                 return Intent.PRODUCT_INFO

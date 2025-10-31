@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
+import json
+import sqlite3
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
-
-import json
-import sqlite3
 
 from .models import ConversationSnapshot, MessageTurn, SlotState
 
@@ -158,7 +157,13 @@ class SQLiteMemoryStore(MemoryStore):
 
         slots: SlotState = SlotState()
         if row:
-            slots.update({k: row[k] for k in row.keys() if row[k] is not None and k != "conversation_id"})
+            slots.update(
+                {
+                    key: row[key]
+                    for key in row.keys()
+                    if row[key] is not None and key != "conversation_id"
+                }
+            )
 
         return ConversationSnapshot(conversation_id=conversation_id, turns=list(turns), slots=slots)
 
@@ -170,7 +175,9 @@ class SQLiteMemoryStore(MemoryStore):
 
     def iter_conversations(self) -> Iterable[str]:
         with self._connection() as conn:
-            rows = conn.execute("SELECT conversation_id FROM conversations ORDER BY conversation_id")
+            rows = conn.execute(
+                "SELECT conversation_id FROM conversations ORDER BY conversation_id"
+            )
             return [row["conversation_id"] for row in rows]
 
     def upsert_slots(self, conversation_id: str, slots: SlotState) -> None:
