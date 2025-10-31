@@ -8,7 +8,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:react-refresh/recommended",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -16,7 +15,7 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "react-refresh"],
   settings: {
     react: {
       version: "detect",
