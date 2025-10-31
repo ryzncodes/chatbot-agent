@@ -2,7 +2,14 @@
 
 from .base import Tool, ToolContext, ToolResponse
 from .calculator import CalculatorTool
-from .products import ProductsTool
 from .outlets import OutletsTool
+from .products import ProductsTool
 
-__all__ = ["Tool", "ToolContext", "ToolResponse", "CalculatorTool", "ProductsTool", "OutletsTool"]
+__all__ = [
+    "Tool",
+    "ToolContext",
+    "ToolResponse",
+    "CalculatorTool",
+    "OutletsTool",
+    "ProductsTool",
+]

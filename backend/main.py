@@ -1,12 +1,12 @@
 """FastAPI application entry point for the ZUS AI Assistant backend."""
 
 import logging
+import sqlite3
+from pathlib import Path
 from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import sqlite3
-from pathlib import Path
 
 from backend.api.tools import create_tools_router
 from backend.core.config import get_settings
@@ -90,7 +90,11 @@ async def readiness_probe() -> dict[str, Any]:
         conv_path.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(conv_path) as conn:
             row = conn.execute(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('messages','slots','conversations')"
+                (
+                    "SELECT name FROM sqlite_master "
+                    "WHERE type='table' "
+                    "AND name IN ('messages','slots','conversations')"
+                )
             ).fetchone()
             conv_ok = row is not None
     except Exception as exc:  # noqa: BLE001
@@ -109,7 +113,9 @@ async def readiness_probe() -> dict[str, Any]:
         if outlets_path.exists():
             with sqlite3.connect(outlets_path) as conn:
                 # Check table exists and is queryable
-                conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='outlets'")
+                conn.execute(
+                    "SELECT 1 FROM sqlite_master WHERE type='table' AND name='outlets'"
+                )
                 conn.execute("SELECT 1 FROM outlets LIMIT 1")
                 outlets_ok = True
         else:
@@ -136,7 +142,7 @@ async def readiness_probe() -> dict[str, Any]:
             products_error = "index/metadata present but failed to load"
     except Exception as exc:  # noqa: BLE001
         products_error = str(exc)
-    components["products_store"] = {
+    products_component = {
         "index_path": str(settings.faiss_index_path),
         "metadata_path": str(settings.products_metadata_path),
         "index_exists": index_exists,
@@ -144,14 +150,18 @@ async def readiness_probe() -> dict[str, Any]:
         "ok": products_ok,
         **({"error": products_error} if products_error else {}),
     }
+    components["products_store"] = products_component
 
-    overall = (
-        "ok"
-        if components["conversations_db"]["ok"] and components["outlets_db"]["ok"] and components["products_store"]["ok"]
-        else (
-            "degraded" if components["conversations_db"]["ok"] else "fail"
-        )
-    )
+    conv_ok = components["conversations_db"]["ok"]
+    outlets_ok = components["outlets_db"]["ok"]
+    products_ok_flag = components["products_store"]["ok"]
+
+    if conv_ok and outlets_ok and products_ok_flag:
+        overall = "ok"
+    elif conv_ok:
+        overall = "degraded"
+    else:
+        overall = "fail"
 
     return {
         "status": overall,
@@ -230,9 +240,15 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         tool_success = True
         tool_data = {}
     elif decision.action == PlannerAction.ASK_FOLLOW_UP:
-        missing = [slot.replace("_", " ") for slot, satisfied in decision.required_slots.items() if not satisfied]
+        missing = [
+            slot.replace("_", " ")
+            for slot, satisfied in decision.required_slots.items()
+            if not satisfied
+        ]
         response_content = (
-            f"Could you share the {missing[0]}?" if missing else "Could you provide a bit more detail?"
+            f"Could you share the {missing[0]}?"
+            if missing
+            else "Could you provide a bit more detail?"
         )
         tool_success = True
         tool_data = {"missing_slots": missing}
@@ -243,12 +259,19 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
     elif tool_router.supports(decision.action):
         try:
             tool_response = await tool_router.dispatch(decision.action, turn, snapshot)
-            response_content = tool_response.content if tool_response.success else "I'm still learning that."
+            response_content = (
+                tool_response.content if tool_response.success else "I'm still learning that."
+            )
             tool_success = tool_response.success
             tool_data = tool_response.data
         except Exception as exc:  # noqa: BLE001
-            tool_logger.exception("Tool dispatch failed", extra={"action": decision.action.value})
-            response_content = "I ran into an issue calling that tool. Could you try again later?"
+            tool_logger.exception(
+                "Tool dispatch failed",
+                extra={"action": decision.action.value},
+            )
+            response_content = (
+                "I ran into an issue calling that tool. Could you try again later?"
+            )
             tool_success = False
             tool_data = {"error": str(exc)}
     else:
@@ -267,7 +290,11 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         "message": response_content,
         "tool_data": tool_data or {},
         "required_slots": decision.required_slots,
-        "slots": {key: str(value) for key, value in slot_state.items() if value is not None},
+        "slots": {
+            key: str(value)
+            for key, value in slot_state.items()
+            if value is not None
+        },
     }
 
 
@@ -276,7 +303,11 @@ async def configure_logging() -> None:
     level = getattr(logging, str(settings.log_level).upper(), logging.INFO)
     logging.basicConfig(level=level, format="%(levelname)s %(name)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
-    logger.info("Logging configured at %s level for %s environment", logging.getLevelName(level), settings.environment)
+    logger.info(
+        "Logging configured at %s level for %s environment",
+        logging.getLevelName(level),
+        settings.environment,
+    )
 
 
 app.add_exception_handler(Exception, unhandled_exception_handler)

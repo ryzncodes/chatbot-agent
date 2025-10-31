@@ -4,11 +4,11 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
+from backend.memory.models import ConversationSnapshot, MessageTurn
+from backend.tools.base import ToolContext
 from backend.tools.calculator import CalculatorTool
 from backend.tools.outlets import OutletsTool
 from backend.tools.products import ProductsTool
-from backend.tools.base import ToolContext
-from backend.memory.models import ConversationSnapshot, MessageTurn
 
 
 def create_tools_router(

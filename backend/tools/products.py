@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import logging
+import re
 import time
 from collections import Counter
 from pathlib import Path
@@ -66,7 +67,11 @@ class ProductsTool(Tool):
         vocabulary = data.get("vocabulary")
         idf = data.get("idf")
 
-        if not isinstance(products, list) or not isinstance(vocabulary, list) or not isinstance(idf, list):
+        if (
+            not isinstance(products, list)
+            or not isinstance(vocabulary, list)
+            or not isinstance(idf, list)
+        ):
             self._catalogue = []
             self._vocabulary = []
             self._idf = np.array([], dtype=np.float32)
@@ -88,7 +93,12 @@ class ProductsTool(Tool):
     async def run(self, context: ToolContext) -> ToolResponse:
         catalogue = self._load_catalogue()
         index = self._ensure_index()
-        if not catalogue or index is None or self._vocabulary is None or self._idf is None:
+        if (
+            not catalogue
+            or index is None
+            or self._vocabulary is None
+            or self._idf is None
+        ):
             return ToolResponse(
                 content="Product catalogue is not ready yet. Please try again later.",
                 data={
@@ -101,7 +111,10 @@ class ProductsTool(Tool):
         query_vector = self._vectorize_query(context.turn.content)
         if query_vector is None:
             return ToolResponse(
-                content="I couldn't understand that request. Could you rephrase the product you're looking for?",
+                content=(
+                    "I couldn't understand that request. Could you rephrase the product "
+                    "you're looking for?"
+                ),
                 data={"results": []},
                 success=False,
             )
@@ -109,7 +122,7 @@ class ProductsTool(Tool):
         faiss.normalize_L2(query_vector)
         scores, indices = index.search(query_vector, k=min(5, len(catalogue)))
         matches: list[dict[str, Any]] = []
-        for idx, score in zip(indices[0], scores[0]):
+        for idx, score in zip(indices[0], scores[0], strict=True):
             if idx < 0 or idx >= len(catalogue) or score <= 0:
                 continue
             item = catalogue[idx]
@@ -151,7 +164,8 @@ class ProductsTool(Tool):
 
     async def _summarise_matches(self, matches: list[dict[str, Any]]) -> str:
         fallback = "; ".join(
-            f"{item.get('name', 'Unknown')} ({item.get('size', 'N/A')})" for item in matches[:3]
+            f"{item.get('name', 'Unknown')} ({item.get('size', 'N/A')})"
+            for item in matches[:3]
         )
         fallback_text = f"Top drinkware picks: {fallback}."
 
@@ -179,7 +193,9 @@ class ProductsTool(Tool):
         async with self._summarise_semaphore:
             async with self._rate_lock:
                 now = time.monotonic()
-                wait_for = self._openrouter_min_interval - (now - self._last_openrouter_call)
+                wait_for = self._openrouter_min_interval - (
+                    now - self._last_openrouter_call
+                )
                 if wait_for > 0:
                     await asyncio.sleep(wait_for)
                 self._last_openrouter_call = time.monotonic()
@@ -198,14 +214,18 @@ class ProductsTool(Tool):
                 "messages": [
                     {
                         "role": "system",
-                        "content": "You are a friendly ZUS Coffee assistant summarising drinkware recommendations succinctly.",
+                        "content": (
+                            "You are a friendly ZUS Coffee assistant "
+                            "summarising drinkware recommendations succinctly."
+                        ),
                     },
                     {
                         "role": "user",
                         "content": (
-                            "Produce exactly one warm sentence (maximum 25 words) recommending up to two items from the list below."
-                            " Mention a standout size or feature, and end with a gentle call to action."
-                            "\n\nProducts:\n" + prompt
+                            "Produce exactly one warm sentence (maximum 25 words) "
+                            "recommending up to two items from the list below. "
+                            "Mention a standout size or feature, and end with a "
+                            "gentle call to action.\n\nProducts:\n" + prompt
                         ),
                     },
                 ],
@@ -243,11 +263,11 @@ class ProductsTool(Tool):
 
                     return content
             except Exception as exc:  # noqa: BLE001
-                self._logger.exception("OpenRouter summary failed", extra={"error": str(exc)})
+                self._logger.exception(
+                    "OpenRouter summary failed",
+                    extra={"error": str(exc)},
+                )
                 return fallback_text
-
-
-import re
 
 
 def _tokenize(text: str) -> list[str]:
