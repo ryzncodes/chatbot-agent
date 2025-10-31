@@ -1,6 +1,6 @@
 # ZUS AI Assistant
 
-An end-to-end conversational agent that plans, calls external tools, and retrieves domain knowledge for ZUS Coffee. This README summarizes setup, architecture, testing, and deployment guidance required by the Mindhive AI Software Engineer assessment. For detailed requirements, see [`prd.md`](prd.md).
+An end-to-end conversational agent that plans, calls external tools, and retrieves domain knowledge for ZUS Coffee. This README covers setup, architecture, testing, and deployment guidance for local development and production rollouts. For detailed product requirements, see [`prd.md`](prd.md).
 
 ## Table of Contents
 
@@ -14,7 +14,6 @@ An end-to-end conversational agent that plans, calls external tools, and retriev
 8. [Testing Strategy](#testing-strategy)
 9. [Deployment Notes](#deployment-notes)
 10. [Documentation Bundle](#documentation-bundle)
-11. [Submission Checklist](#submission-checklist)
 
 ## Features
 
@@ -37,7 +36,6 @@ An end-to-end conversational agent that plans, calls external tools, and retriev
 | `tests/` | Unit, integration, unhappy-flow, and Cypress E2E suites. |
 | `docs/` | Diagrams, transcripts, planner write-up, and auxiliary documentation. |
 | `prd.md` | Comprehensive product requirements document. |
-| `assessment.md` | Original Mindhive assessment brief (Markdown transcription). |
 
 ## Prerequisites
 
@@ -187,7 +185,7 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 
 ## Key Trade-Offs
 
-- **SQLite + FAISS (local)** keep deployment simple and self-contained for the assessment. For production scale you would migrate to managed SQL (e.g., Postgres) and a hosted vector DB (Pinecone, Weaviate, Qdrant).
+- **SQLite + FAISS (local)** keep deployment simple and self-contained for local-first workflows. For production scale you would migrate to managed SQL (e.g., Postgres) and a hosted vector DB (Pinecone, Weaviate, Qdrant).
 - **Embeddings provider** defaults to OpenAI for accuracy but supports local sentence-transformer models for offline demos.
 - **Planner policy** can run rule-based for deterministic grading or swap to LLM-guided heuristics in production; tests cover both modes.
 - **Front-end stack** uses Vite/React over heavier app builders to satisfy the “no Streamlit/Gradio” constraint while remaining deployable on Vercel.
@@ -228,14 +226,6 @@ CI (GitHub Actions) runs all suites on pull requests and nightly schedules, publ
 
 - [`backend/openapi.yaml`](backend/openapi.yaml) — REST API specification for calculator, products, outlets, chat, and metrics endpoints.
 - [`docs/planner_decisions.md`](docs/planner_decisions.md) — Planner decision rationale and fallback logic.
-- [`docs/transcripts/`](docs/transcripts) — Success and failure transcripts for each part of the assessment.
+- [`docs/transcripts/`](docs/transcripts) — Success and failure transcripts for representative conversation flows.
 - [`docs/diagrams/`](docs/diagrams) — Mermaid sources for architecture visuals.
-- [`prd.md`](prd.md) — Product requirements covering Parts 1–6, testing, and submission deliverables.
-
-## Submission Checklist
-
-- [ ] Public GitHub repository with secrets removed.
-- [ ] Hosted backend demo (Railway/Render) and frontend demo (Vercel/Netlify).
-- [ ] README updated with setup, architecture, trade-offs, and testing commands.
-- [ ] Documentation bundle (OpenAPI spec, planner write-up, flow diagrams/screenshots, transcripts).
-- [ ] Email GitHub repository and demo URLs to `jermaine@mindhive.asia`, cc `johnson@mindhive.asia` and `ivan@mindhive.asia`.
+- [`prd.md`](prd.md) — Product requirements covering core capabilities, testing, and documentation deliverables.
