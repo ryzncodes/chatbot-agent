@@ -5,6 +5,8 @@ from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import sqlite3
+from pathlib import Path
 
 from backend.api.tools import create_tools_router
 from backend.core.config import get_settings
@@ -66,6 +68,96 @@ async def health_check() -> dict[str, str]:
     """Return basic service status for monitoring."""
 
     return {"status": "ok"}
+
+
+@app.get("/ready", tags=["health"])
+async def readiness_probe() -> dict[str, Any]:
+    """Readiness endpoint that verifies critical dependencies.
+
+    Checks:
+    - Conversations SQLite DB reachable and has expected tables.
+    - Outlets SQLite DB exists and is queryable.
+    - Products FAISS index and metadata present and loadable.
+    """
+
+    components: dict[str, dict[str, Any]] = {}
+
+    # Conversations DB check
+    conv_ok = False
+    conv_error: str | None = None
+    try:
+        conv_path = Path(settings.sqlite_path)
+        conv_path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(conv_path) as conn:
+            row = conn.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('messages','slots','conversations')"
+            ).fetchone()
+            conv_ok = row is not None
+    except Exception as exc:  # noqa: BLE001
+        conv_error = str(exc)
+    components["conversations_db"] = {
+        "path": str(settings.sqlite_path),
+        "ok": conv_ok,
+        **({"error": conv_error} if conv_error else {}),
+    }
+
+    # Outlets DB check
+    outlets_ok = False
+    outlets_error: str | None = None
+    try:
+        outlets_path = Path(settings.outlets_db_path)
+        if outlets_path.exists():
+            with sqlite3.connect(outlets_path) as conn:
+                # Check table exists and is queryable
+                conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='outlets'")
+                conn.execute("SELECT 1 FROM outlets LIMIT 1")
+                outlets_ok = True
+        else:
+            outlets_error = "database file not found"
+    except Exception as exc:  # noqa: BLE001
+        outlets_error = str(exc)
+    components["outlets_db"] = {
+        "path": str(settings.outlets_db_path),
+        "ok": outlets_ok,
+        **({"error": outlets_error} if outlets_error else {}),
+    }
+
+    # Products FAISS + metadata check
+    products_ok = False
+    products_error: str | None = None
+    index_exists = Path(settings.faiss_index_path).exists()
+    metadata_exists = Path(settings.products_metadata_path).exists()
+    try:
+        # Reuse tool internals to validate load
+        index = products_tool._ensure_index()  # noqa: SLF001
+        catalogue = products_tool._load_catalogue()  # noqa: SLF001
+        products_ok = bool(index) and bool(catalogue)
+        if not products_ok and index_exists and metadata_exists:
+            products_error = "index/metadata present but failed to load"
+    except Exception as exc:  # noqa: BLE001
+        products_error = str(exc)
+    components["products_store"] = {
+        "index_path": str(settings.faiss_index_path),
+        "metadata_path": str(settings.products_metadata_path),
+        "index_exists": index_exists,
+        "metadata_exists": metadata_exists,
+        "ok": products_ok,
+        **({"error": products_error} if products_error else {}),
+    }
+
+    overall = (
+        "ok"
+        if components["conversations_db"]["ok"] and components["outlets_db"]["ok"] and components["products_store"]["ok"]
+        else (
+            "degraded" if components["conversations_db"]["ok"] else "fail"
+        )
+    )
+
+    return {
+        "status": overall,
+        "environment": settings.environment,
+        "components": components,
+    }
 
 
 def get_memory_store() -> SQLiteMemoryStore:

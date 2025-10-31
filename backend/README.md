@@ -9,7 +9,7 @@ poetry install
 poetry run uvicorn backend.main:app --reload --port 8000
 ```
 
-The OpenAPI docs are exposed at `http://localhost:8000/docs`. Metrics and health checks live at `/metrics` and `/health`.
+The OpenAPI docs are exposed at `http://localhost:8000/docs`. Health checks live at `/health`, readiness at `/ready` (verifies SQLite + FAISS + outlets), and metrics at `/metrics`.
 
 ## Key Modules
 

@@ -17,6 +17,9 @@ RUN poetry config virtualenvs.in-project true \
 # Copy the rest of the backend code
 COPY backend /app/backend
 
+# Bundle seed data so the app can populate an empty mounted volume at /app/db
+COPY db /app/db-seed
+
 # Expose FastAPI default port
 EXPOSE 8000
 

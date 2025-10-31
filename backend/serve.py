@@ -67,6 +67,15 @@ def main() -> None:
     _bootstrap_paths(backend_dir)
     logger.debug("Backend directory resolved to %s", backend_dir)
 
+    # Attempt to seed data into mounted volume before app import,
+    # so readiness passes as soon as the server starts.
+    try:
+        from backend.init_data import seed_on_startup  # noqa: WPS433 (import position)
+
+        seed_on_startup()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Data seeding step skipped: %s", exc)
+
     from backend.main import app  # noqa: WPS433 (import position)
 
     import uvicorn
