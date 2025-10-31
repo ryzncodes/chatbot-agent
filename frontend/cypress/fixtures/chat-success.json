@@ -11,5 +11,8 @@
   },
   "required_slots": {
     "operation": true
+  },
+  "slots": {
+    "operation": "1 + 2"
   }
 }

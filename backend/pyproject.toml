@@ -2,7 +2,7 @@
 name = "zus-backend"
 version = "0.1.0"
 description = "FastAPI backend for the ZUS AI Assistant"
-authors = ["Mindhive Candidate <candidate@example.com>"]
+authors = ["ZUS Engineering <engineering@example.com>"]
 readme = "README.md"
 package-mode = false
 

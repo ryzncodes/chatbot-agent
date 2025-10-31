@@ -14,6 +14,7 @@ export type ChatResponse = {
   message: string;
   tool_data: Record<string, unknown>;
   required_slots: Record<string, boolean>;
+  slots: Record<string, string>;
 };
 
 export type ToolRoute = "/tools/calculator" | "/tools/products" | "/tools/outlets";

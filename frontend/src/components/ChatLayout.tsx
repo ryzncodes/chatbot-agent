@@ -134,7 +134,10 @@ function ChatLayout() {
     textareaRef.current?.focus();
   };
 
-  const sortedSlots = Object.entries(slots);
+  const sortedSlots = useMemo(
+    () => Object.entries(slots).sort(([a], [b]) => a.localeCompare(b)),
+    [slots]
+  );
 
   return (
     <div className={styles.layout}>

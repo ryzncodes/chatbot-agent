@@ -28,6 +28,20 @@ type ChatState = {
   reset: () => void;
 };
 
+function createTimelineEvent(response: ChatResponse): PlannerTimelineEvent {
+  const timestamp = new Date().toISOString();
+  const tool = response.action.startsWith("call_") ? response.action : null;
+  return {
+    timestamp,
+    intent: response.intent,
+    action: response.action,
+    message: response.message,
+    toolSuccess: response.tool_success,
+    tool,
+    requiredSlots: response.required_slots,
+  };
+}
+
 function defaultConversationId() {
   return `conv-${crypto.randomUUID()}`;
 }
@@ -50,35 +64,14 @@ export const useChatStore = create<ChatState>()(
           return { messages: [...state.messages, timestamped] };
         }),
       recordPlannerEvent: (response) =>
-        set((state) => ({
-          timeline: [
-            ...state.timeline,
-            {
-              timestamp: new Date().toISOString(),
-              intent: response.intent,
-              action: response.action,
-              message: response.message,
-              toolSuccess: response.tool_success,
-              tool: response.action.startsWith("call_") ? response.action : null,
-              requiredSlots: response.required_slots,
-            },
-          ],
-          slots: {
-            ...state.slots,
-            ...Object.fromEntries(
-              Object.entries(response.required_slots).filter(([, satisfied]) => satisfied)
-            ),
-          },
-          lastDecision: {
-            timestamp: new Date().toISOString(),
-            intent: response.intent,
-            action: response.action,
-            message: response.message,
-            toolSuccess: response.tool_success,
-            tool: response.action.startsWith("call_") ? response.action : null,
-            requiredSlots: response.required_slots,
-          },
-        })),
+        set((state) => {
+          const event = createTimelineEvent(response);
+          return {
+            timeline: [...state.timeline, event],
+            slots: response.slots,
+            lastDecision: event,
+          };
+        }),
       setStatus: (status, error) => set({ status, error }),
       reset: () =>
         set({

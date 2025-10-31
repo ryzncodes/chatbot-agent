@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from contextlib import contextmanager
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Sequence
 
+import json
 import sqlite3
 
 from .models import ConversationSnapshot, MessageTurn, SlotState
@@ -196,18 +198,12 @@ class SQLiteMemoryStore(MemoryStore):
 
 
 def json_dumps(payload: dict[str, Any]) -> str:
-    import json
-
     return json.dumps(payload, separators=(",", ":"))
 
 
 def json_loads(value: str) -> dict[str, Any]:
-    import json
-
     return json.loads(value)
 
 
-def datetime_from_iso(value: str):
-    from datetime import datetime
-
+def datetime_from_iso(value: str) -> datetime:
     return datetime.fromisoformat(value)

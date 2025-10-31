@@ -1,8 +1,6 @@
 """FastAPI application entry point for the ZUS AI Assistant backend."""
 
 import logging
-import os
-import sys
 from typing import Any
 
 from fastapi import Depends, FastAPI, HTTPException
@@ -24,13 +22,8 @@ from backend.tools.products import ProductsTool
 from backend.tools.router import ToolRouter
 
 settings = get_settings()
-print("[startup] __file__:", __file__)
-print("[startup] cwd:", os.getcwd())
-print("[startup] sys.path:", sys.path)
-try:
-    print("[startup] cwd listing:", os.listdir(os.getcwd()))
-except Exception as exc:  # noqa: BLE001
-    print("[startup] failed to list cwd:", exc)
+logger = logging.getLogger("zus.app")
+
 memory_store = SQLiteMemoryStore(settings.sqlite_path)
 planner = RuleBasedPlanner()
 calculator_tool = CalculatorTool()
@@ -90,7 +83,7 @@ async def list_conversations(store: SQLiteMemoryStore = Depends(get_memory_store
 
 @app.get("/products", tags=["tools"])
 async def products_alias(query: str | None = None) -> dict[str, Any]:
-    """Alias endpoint matching assessment requirements."""
+    """Alias endpoint providing product results for compatibility with legacy clients."""
 
     if not query:
         raise HTTPException(status_code=400, detail="query parameter is required")
@@ -127,15 +120,20 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
     planner_context = PlannerContext(turn=turn, conversation=snapshot)
     decision: PlannerDecision = planner.decide(planner_context)
 
-    if decision.slot_updates:
+    slot_state = dict(snapshot.slots)
+
+    if decision.action == PlannerAction.FINISH:
+        store.reset(conversation_id)
+        slot_state.clear()
+    elif decision.slot_updates:
         store.upsert_slots(conversation_id, decision.slot_updates)
+        slot_state.update(decision.slot_updates)
 
     response_content: str
     tool_success = False
     tool_data: dict | None = None
 
     if decision.action == PlannerAction.FINISH:
-        store.reset(conversation_id)
         response_content = "Conversation reset. How else can I assist you?"
         tool_success = True
         tool_data = {}
@@ -177,6 +175,7 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         "message": response_content,
         "tool_data": tool_data or {},
         "required_slots": decision.required_slots,
+        "slots": {key: str(value) for key, value in slot_state.items() if value is not None},
     }
 
 
@@ -185,6 +184,7 @@ async def configure_logging() -> None:
     level = getattr(logging, str(settings.log_level).upper(), logging.INFO)
     logging.basicConfig(level=level, format="%(levelname)s %(name)s %(message)s")
     logging.getLogger("httpx").setLevel(logging.WARNING)
+    logger.info("Logging configured at %s level for %s environment", logging.getLevelName(level), settings.environment)
 
 
 app.add_exception_handler(Exception, unhandled_exception_handler)
