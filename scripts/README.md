@@ -38,6 +38,19 @@ Data ingestion and maintenance scripts live here.
    ```
    - Resolves Google Maps URLs and updates `latitude` / `longitude` fields where missing.
    - Use `--output` instead of `--overwrite` to write to a separate file.
+   
+   _(Optional)_ Also enrich address parts + hours/services:
+   ```bash
+   # Fill city/state/postcode inferred from the address
+   python scripts/enrich_outlets_details.py --input db/raw/outlets.json --overwrite
+
+   # And, if you have a Google Places API key, enrich opening hours + services
+   export GOOGLE_MAPS_API_KEY=your_api_key
+   python scripts/enrich_outlets_details.py --input db/raw/outlets.json --overwrite --use-places --delay 0.5
+   ```
+   - Parses `city`, `state`, `postcode` from `address` using Malaysian conventions.
+   - With `--use-places`, calls Places Details to populate `opening_hours` and `services`.
+   - Uses `--only-missing` to avoid overwriting fields that are already populated.
 3. Sync the scraped (and optionally enriched) JSON into the SQLite database used by the API:
    ```bash
    python scripts/sync_outlets.py --input-file db/raw/outlets.json --database db/outlets.db --drop-existing
