@@ -313,3 +313,52 @@ async def metrics_endpoint() -> dict:
         "tool_calls": snapshot.tool_calls,
         "planner_intents": snapshot.planner_intents,
     }
+
+
+# -- Optional read-only debug endpoint -------------------------------------
+@app.get("/debug/outlets_stats", tags=["debug"])
+async def outlets_stats(token: str | None = None, sample: str | None = None) -> dict:
+    """Return basic counts + a sample row from the outlets DB.
+
+    This endpoint is disabled unless `DEBUG_TOKEN` (settings.debug_token) is set.
+    Access requires providing `?token=...` with the exact value.
+    """
+
+    if not settings.debug_token:
+        raise HTTPException(status_code=404, detail="Not found")
+    if token != settings.debug_token:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    path = Path(settings.outlets_db_path)
+    if not path.exists():
+        return {"ok": False, "path": str(path), "error": "database file not found"}
+
+    import sqlite3  # local import to avoid import at module init
+
+    try:
+        with sqlite3.connect(path) as conn:
+            total = conn.execute("SELECT COUNT(*) FROM outlets").fetchone()[0]
+            with_hours = conn.execute(
+                "SELECT COUNT(*) FROM outlets WHERE opening_hours IS NOT NULL AND TRIM(opening_hours) != ''"
+            ).fetchone()[0]
+
+            row = None
+            if sample:
+                conn.row_factory = sqlite3.Row
+                row = conn.execute(
+                    "SELECT name, city, state, opening_hours FROM outlets "
+                    "WHERE LOWER(name) LIKE LOWER(?) OR LOWER(city) LIKE LOWER(?) OR LOWER(state) LIKE LOWER(?) "
+                    "LIMIT 1",
+                    (f"%{sample}%", f"%{sample}%", f"%{sample}%"),
+                ).fetchone()
+                row = dict(row) if row else None
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    return {
+        "ok": True,
+        "path": str(path),
+        "total": total,
+        "with_hours": with_hours,
+        **({"sample": row} if row else {}),
+    }

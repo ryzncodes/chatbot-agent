@@ -83,6 +83,15 @@ class Settings(BaseSettings):
         description="Minimum interval (seconds) between OpenRouter API calls.",
     )
 
+    # Optional debug token to enable read-only debug endpoints in production.
+    debug_token: str | None = Field(
+        default=None,
+        description=(
+            "If set, enables protected /debug endpoints when a matching token is"
+            " presented via query param 'token'. Leave unset to disable."
+        ),
+    )
+
     @property
     def cors_origins(self) -> list[str]:
         """Return the full list of allowed CORS origins."""

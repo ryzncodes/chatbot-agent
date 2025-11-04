@@ -74,9 +74,9 @@ class OutletsTool(Tool):
         }
 
     def _search_outlets(self, interpretation: Dict[str, Any]):
-        base_fields = ["name", "city", "state"]
-        if interpretation["needs_hours"]:
-            base_fields.append("opening_hours")
+        # Always select opening_hours so formatted responses work even
+        # when the user's query didn't explicitly ask about hours.
+        base_fields = ["name", "city", "state", "opening_hours"]
         if interpretation["needs_services"]:
             base_fields.append("services")
 
