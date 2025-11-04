@@ -339,16 +339,24 @@ async def outlets_stats(token: str | None = None, sample: str | None = None) -> 
         with sqlite3.connect(path) as conn:
             total = conn.execute("SELECT COUNT(*) FROM outlets").fetchone()[0]
             with_hours = conn.execute(
-                "SELECT COUNT(*) FROM outlets WHERE opening_hours IS NOT NULL AND TRIM(opening_hours) != ''"
+                (
+                    "SELECT COUNT(*) FROM outlets "
+                    "WHERE opening_hours IS NOT NULL "
+                    "AND TRIM(opening_hours) != ''"
+                )
             ).fetchone()[0]
 
             row = None
             if sample:
                 conn.row_factory = sqlite3.Row
                 row = conn.execute(
-                    "SELECT name, city, state, opening_hours FROM outlets "
-                    "WHERE LOWER(name) LIKE LOWER(?) OR LOWER(city) LIKE LOWER(?) OR LOWER(state) LIKE LOWER(?) "
-                    "LIMIT 1",
+                    (
+                        "SELECT name, city, state, opening_hours FROM outlets "
+                        "WHERE LOWER(name) LIKE LOWER(?) "
+                        "OR LOWER(city) LIKE LOWER(?) "
+                        "OR LOWER(state) LIKE LOWER(?) "
+                        "LIMIT 1"
+                    ),
                     (f"%{sample}%", f"%{sample}%", f"%{sample}%"),
                 ).fetchone()
                 row = dict(row) if row else None
