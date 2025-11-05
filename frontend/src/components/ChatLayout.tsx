@@ -70,6 +70,10 @@ function ChatLayout() {
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
+      // Guard against submissions during active rate-limit cooldown
+      if (rateLimitRemaining !== null) {
+        return;
+      }
       const trimmed = input.trim();
       if (!trimmed) return;
 
@@ -119,7 +123,7 @@ function ChatLayout() {
         setIsTyping(false);
       }
     },
-    [appendMessage, conversationId, input, recordPlannerEvent, reset, setStatus]
+    [appendMessage, conversationId, input, rateLimitRemaining, recordPlannerEvent, reset, setStatus]
   );
 
   const statusMessage = useMemo(() => {

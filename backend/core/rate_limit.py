@@ -85,13 +85,27 @@ class InMemoryRateLimiter:
 
 
 def _extract_client_ip(request: Request) -> str:
-    # Use X-Forwarded-For if present (first IP), else request.client.host
-    xff = request.headers.get("x-forwarded-for")
-    if xff:
-        # take the first non-empty trimmed value
-        ip = xff.split(",")[0].strip()
-        if ip:
-            return ip
+    """Return the client IP for rate limiting purposes.
+
+    Security note: Trusting the `X-Forwarded-For` header is only safe when the app
+    is deployed behind a trusted reverse proxy or load balancer that strips or
+    overwrites this header. Otherwise, a malicious client could spoof their IP and
+    bypass limits. This function consults the `trust_x_forwarded_for` setting; when
+    false (the default, safe for direct deployments), the header is ignored and the
+    connection's peer address is used instead.
+    """
+
+    settings = get_settings()
+
+    if settings.trust_x_forwarded_for:
+        # Use X-Forwarded-For if present (first IP), else request.client.host
+        xff = request.headers.get("x-forwarded-for")
+        if xff:
+            # take the first non-empty trimmed value
+            ip = xff.split(",")[0].strip()
+            if ip:
+                return ip
+
     if request.client and request.client.host:
         return request.client.host
     return "unknown"
@@ -116,15 +130,27 @@ async def rate_limit_middleware(request: Request, call_next: Callable) -> Respon
     if not settings.rate_limit_enabled:
         return await call_next(request)
 
-    # Exempt paths (supports suffix wildcard '/*')
+    # Path matching helpers (suffix wildcard '/*')
+    def _matches(patterns: list[str], value: str) -> bool:
+        for pattern in patterns:
+            if pattern.endswith("/*"):
+                prefix = pattern[:-1]
+                if value.startswith(prefix):
+                    return True
+            elif value == pattern:
+                return True
+        return False
+
     path = request.url.path
-    for pattern in settings.rate_limit_exempt_paths:
-        if pattern.endswith("/*"):
-            prefix = pattern[:-1]  # keep trailing slash
-            if path.startswith(prefix):
-                return await call_next(request)
-        elif path == pattern:
+
+    # If include list is non-empty, only enforce for those paths
+    if settings.rate_limit_include_paths:
+        if not _matches(settings.rate_limit_include_paths, path):
             return await call_next(request)
+
+    # Exempt paths regardless (e.g., health, metrics, tools)
+    if _matches(settings.rate_limit_exempt_paths, path):
+        return await call_next(request)
 
     key, is_auth = _extract_identity(request)
     if is_auth:

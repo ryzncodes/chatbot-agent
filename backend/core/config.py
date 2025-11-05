@@ -120,6 +120,22 @@ class Settings(BaseSettings):
             " any path prefix (e.g., '/tools/*')."
         ),
     )
+    rate_limit_include_paths: list[str] = Field(
+        default_factory=lambda: ["/chat"],
+        description=(
+            "If non-empty, only apply rate limiting to these paths. Supports suffix"
+            " wildcard '/*' for prefix matches. Leave empty to apply globally."
+        ),
+    )
+    # Safe-by-default: do not trust X-Forwarded-For unless explicitly enabled
+    trust_x_forwarded_for: bool = Field(
+        default=False,
+        description=(
+            "If true, use X-Forwarded-For to determine client IP for rate limiting."
+            " Only enable when behind a trusted reverse proxy that strips/re-writes"
+            " this header."
+        ),
+    )
 
     @property
     def cors_origins(self) -> list[str]:
