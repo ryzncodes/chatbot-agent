@@ -19,7 +19,7 @@ An end-to-end conversational agent that plans, calls external tools, and retriev
 
 - Multi-turn memory with slot tracking across threads.
 - Planner/controller loop that selects between calculator, RAG, Text2SQL, or fallback actions.
-- FastAPI backend exposing `/chat`, `/calculator`, `/products`, `/outlets`, and `/metrics` endpoints.
+- FastAPI backend exposing `/chat` and `/metrics`, with tool routes under `/tools` (`/tools/calculator`, `/tools/products`, `/tools/outlets`) and top-level aliases (`/products`, `/outlets`).
 - Dedicated `/tools/` endpoints for calculator, products, and outlets to enable direct integration tests.
 - React/Vite frontend with chat bubbles, planner timeline, quick commands, and unhappy-flow indicators.
 - FAISS-powered retrieval over ZUS drinkware catalogue; Text2SQL querying of outlet hours/services.
@@ -83,9 +83,8 @@ cd mindhive-zus-assistant
 
 ```bash
 cd backend
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+poetry install
+poetry run uvicorn backend.main:app --reload --port 8000
 ```
 
 #### Frontend

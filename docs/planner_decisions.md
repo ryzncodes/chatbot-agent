@@ -40,8 +40,9 @@ Before calling a tool the planner ensures required slots are satisfied:
 - `/outlets` requires `location`.
 
 If a required slot is missing, the action downgrades to `ask_follow_up` and the
-assistant clarifies (“Could you share the location?”). When intent confidence is
-low (<0.6) or the utterance is small talk, the planner emits `fallback` instead.
+assistant clarifies (“Could you share the location?”). For utterances that don't
+match any supported intent the planner emits `fallback`. Small talk is handled
+via a dedicated `small_talk` action.
 
 ## Actions & Fallbacks
 
@@ -52,7 +53,8 @@ low (<0.6) or the utterance is small talk, the planner emits `fallback` instead.
 | `call_outlets` | Intent `outlet_info` **and** `location` slot present. |
 | `ask_follow_up` | Intent is tool-related but required slot missing. |
 | `finish` | Intent `reset`; conversation state is cleared. |
-| `fallback` | Intent `unknown` or `small_talk`; assistant guides user to clarify. |
+| `fallback` | Intent `unknown`; assistant guides user to clarify. |
+| `small_talk` | Intent `small_talk`; friendly greeting/closing. |
 
 When a tool raises an exception (network issue, bad payload, etc.) the controller
 logs the failure and returns a safe recovery message (“I ran into an issue calling

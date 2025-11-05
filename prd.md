@@ -6,7 +6,6 @@ ZUS AI Assistant is an intelligent, multi-tool conversational system designed to
 
 ## Linked Artifacts
 
-- `flows/sequential_conversation.json` — exported happy and interrupted flow traces for Part 1.
 - `docs/planner_decisions.md` — planner decision write-up aligned with Part 2 requirements.
 - `tests/README.md` — testing strategy covering happy-path and unhappy-path suites.
 - `docs/diagrams/system-architecture.mmd` — high-level component map.
@@ -22,7 +21,7 @@ ZUS AI Assistant is an intelligent, multi-tool conversational system designed to
 | 📚 Knowledge retrieval | Retrieve factual info using a FAISS vector store (RAG). |
 | 🧮 Database querying | Use Text2SQL for outlet-related questions. |
 | 🚧 Error recovery | Gracefully handle failed tool calls and invalid inputs. |
-| 📊 Observability | Provide metrics on latency, accuracy, and feedback. |
+| 📊 Observability | Provide lightweight intent/action counters via `/metrics`. |
 | 💬 Frontend UI | Real chat interface (React/Vue/HTML) — no Streamlit or Gradio. |
 
 ## System Architecture
@@ -54,11 +53,11 @@ ZUS AI Assistant is an intelligent, multi-tool conversational system designed to
 
 ### Implementation Highlights
 
-- **Memory & Conversation State**: `backend/memory/`, replay flows in `flows/sequential_conversation.json`, unit coverage under `tests/conversation/`.
+- **Memory & Conversation State**: `backend/memory/`, unit and integration coverage under `tests/unit` and `tests/integration`.
 - **Planner & Controller**: `backend/planner/` rule sets and helper types paired with the narrative in `docs/planner_decisions.md`.
 - **Tool Integrations**: `backend/tools/` modules wired through `backend/api/tools.py`, with transcripts captured in `docs/transcripts/*/`.
-- **Retrieval & Text2SQL**: `scripts/ingest_products.py`, `backend/tools/products.py`, `backend/tools/outlets.py`, plus supporting prompts in `prompts/text2sql/`.
-- **Error Handling & Resilience**: middleware in `backend/core/errors.py`, unhappy-flow specs in `tests/unhappy/`, and metrics collected via `backend/core/metrics.py`.
+- **Retrieval & Text2SQL**: `scripts/ingest_products.py`, `backend/tools/products.py`, `backend/tools/outlets.py`.
+- **Error Handling & Resilience**: middleware in `backend/core/errors.py`, unhappy-flow specs covered in `tests/integration`, and counters collected via `backend/core/metrics.py`.
 - **Frontend Experience**: React app under `frontend/` with planner timeline widgets, Zustand store, and Vite build setup.
 
 ## Architecture Diagrams
@@ -117,25 +116,28 @@ sequenceDiagram
 | Conversation memory | SQLite | Per-user message context and slots. |
 | Vector store | FAISS (local) | Stores product embeddings for RAG. |
 | Outlet info | SQLite | Queried via Text2SQL endpoints. |
-| Logs & feedback | SQLite | Captures metrics, latency, and user feedback. |
+| Observability | In-memory | Tracks intent/action counters exposed via `/metrics`. |
 
 ## Data Ingestion & Sources
 
 - `drinkware_products.json` generated from [ZUS Drinkware](https://shop.zuscoffee.com/) collection.
 - Embeddings built through `scripts/ingest_products.py` using FAISS with OpenAI or `sentence-transformers` models.
-- Outlet catalogue scraped from [ZUS Outlets (Kuala Lumpur & Selangor)](https://zuscoffee.com/category/store/kuala-lumpur-selangor/) into `outlets.db` via `scripts/sync_outlets.py` with schema `schema/outlets.sql`.
-- Nightly GitHub Action refreshes both data stores, logs diffs, and records rebuild timestamps.
+- Outlet catalogue scraped from [ZUS Outlets (Kuala Lumpur & Selangor)](https://zuscoffee.com/category/store/kuala-lumpur-selangor/) into `outlets.db` via `scripts/sync_outlets.py` (the script creates the table if missing).
+- CI runs linters and tests; data refresh can be run locally via scripts as needed.
 - `backend/openapi.yaml` documents `/products` and `/outlets` contracts, including error responses.
 
 ## Tool APIs
 
 | Endpoint | Input | Output | Description |
 | --- | --- | --- | --- |
-| `/calculator` | Expression | Result | Evaluates math expressions safely. |
-| `/products` | Query string | Product data | Uses FAISS to retrieve top-k results and summaries. |
-| `/outlets` | Natural-language query | SQL result set | Text2SQL pipeline executes validated SQL. |
-| `/chat` | `{ user_id, message }` | Bot reply | Orchestrates planner, memory, and tool routing. |
-| `/metrics` | — | System metrics | Returns latency, success rate, feedback ratios. |
+| Endpoint | Input | Output | Description |
+| `/tools/calculator` | JSON `{ expression }` | `{ result }` | Evaluates math expressions safely. |
+| `/tools/products` | `?query=...` | summary + top-k | Uses FAISS to retrieve top-k results and summaries. |
+| `/tools/outlets` | `?query=...` | rows | Text2SQL-style query over outlets DB. |
+| `/products` | `?query=...` | alias | Alias for products tool. |
+| `/outlets` | `?query=...` | alias | Alias for outlets tool. |
+| `/chat` | `{ conversation_id, role, content }` | Bot reply | Orchestrates planner, memory, and tool routing. |
+| `/metrics` | — | Intent/action counts | Returns basic counters for observability. |
 
 ## Core Flow (Planner Logic)
 
@@ -159,7 +161,7 @@ sequenceDiagram
 
 - **Tracked slots**: `topic`, `operation`, `location`, `time_range`, `product_type`, `loyalty_status`.
 - **Decision loop**: classify intent → verify slots → choose tool (`/calculator`, `/products`, `/outlets`, or fallback).
-- **Confidence guardrails**: request clarification when confidence < 0.6 or mandatory slots missing.
+- **Decision guardrails**: request clarification when required slots are missing; fallback when the utterance doesn't match any supported intent; small talk handled via a dedicated action.
 - **Post-action review**: validate tool output, append planner timeline event, update memory, record latency.
 - **Interruption handling**: detect context switches, archive prior thread, spawn new thread while preserving history.
 
@@ -196,29 +198,27 @@ sequenceDiagram
 
 ## Testing & QA
 
-- `tests/conversation/` covers sequential happy paths, slot interruptions, and memory regression cases.
-- `tests/tools/` validates calculator success/failure, `/products` retrieval quality, `/outlets` Text2SQL execution, and stores transcripts under `docs/transcripts/`.
-- `tests/unhappy/` simulates missing parameters, forced HTTP 500 responses, and SQL injection attempts.
-- Cypress end-to-end suite verifies planner timeline, tool indicators, unhappy-flow banners, and frontend persistence.
-- GitHub Actions CI runs linting, unit, integration, and E2E suites on each push and nightly schedules, publishing artifacts with logs and coverage.
+- `tests/unit` covers planner decisions and memory store behaviour.
+- `tests/integration` validates `/chat` and tool endpoints, including unhappy flows (missing params, downtime, injection attempts).
+- Cypress E2E (smoke) verifies chat rendering and planner indicators; more scenarios can be added over time.
+- GitHub Actions CI runs linting and all backend tests on each push, publishing coverage artifacts.
 
 ## Error Handling & Security Strategy
 
-- Global FastAPI exception middleware maps errors to structured logs and friendly user messages.
-- Calculator sanitizes expressions (operation whitelist, digit limits) and enforces short execution timeouts.
-- `/products` enforces query rate limits, validates embedding inputs, and falls back to cached FAQs when the vector store is unavailable.
-- `/outlets` parameterizes SQL, rejects malicious patterns, and replies with safe guidance.
-- Circuit breaker retries tool calls with exponential backoff and surfaces “service unavailable” states to the UI.
-- Frontend displays degraded-mode badges and prompts alternative phrasing when planner confidence drops.
+- Global FastAPI exception handler returns consistent JSON with friendly messages on unhandled errors.
+- Calculator sanitizes expressions (allowed characters, banned sequences) to avoid unsafe evaluation.
+- Products retrieval uses FAISS; summarisation via OpenRouter is rate-limited client-side and falls back to a static summary on failure.
+- Outlets queries are parameterised LIKE statements; malicious patterns are treated as empty results, never raw SQL execution.
+- The frontend surfaces degraded-mode badges when a tool call fails and keeps the conversation responsive.
 
 ## Transcripts & Replay Evidence
 
-- `docs/transcripts/sequential/` — Part 1 happy and interrupted dialogue replays.
-- `docs/transcripts/calculator/` — Part 3 success and graceful error flows.
-- `docs/transcripts/products/` — RAG responses with top-k evidence and fallback handling.
-- `docs/transcripts/outlets/` — Text2SQL executions, including SQL injection defense transcripts.
-- `docs/transcripts/unhappy/` — Missing-parameter and downtime recovery scenarios across tools.
-- Each transcript tags planner decisions, tool latency, and outcome codes for QA review.
+- `docs/transcripts/calculator_failure.md` — Part 3 graceful error flow and recovery.
+- `docs/transcripts/products_success.md` — RAG responses with top-k evidence.
+- `docs/transcripts/products_unhappy.md` — Downtime/unavailable scenario and safe messaging.
+- `docs/transcripts/outlets_unhappy.md` — Missing location follow-up and SQL translation.
+- `docs/transcripts/outlets_success.md` — Multi-turn outlet flow with slot reuse.
+- `docs/transcripts/reset_flow.md` — `/reset` flow clearing memory and continuing.
 
 ## Deliverables
 

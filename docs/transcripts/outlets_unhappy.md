@@ -14,9 +14,9 @@ ZUS Coffee – SS 2, opens 09:00 - 20:00” | `tool_success=True`, query transla
 
 ```json
 {
-  "sql": "SELECT name, opening_hours, services FROM outlets WHERE LOWER(city) LIKE LOWER('%SS 2%') OR LOWER(state) LIKE LOWER('%SS 2%') OR LOWER(name) LIKE LOWER('%SS 2%') ORDER BY name ASC LIMIT 5",
+  "sql": "SELECT name, city, state, opening_hours FROM outlets WHERE (LOWER(city) LIKE LOWER('%SS 2%') OR LOWER(state) LIKE LOWER('%SS 2%') OR LOWER(name) LIKE LOWER('%SS 2%') OR LOWER(REPLACE(name, ' ', '')) LIKE LOWER('%SS2%')) ORDER BY name ASC LIMIT 5",
   "results": [
-    {"name": "ZUS Coffee – SS 2", "opening_hours": "09:00 - 20:00", "services": "dine-in, pickup"}
+    {"name": "ZUS Coffee – SS 2", "city": "Petaling Jaya", "state": "Selangor", "opening_hours": "09:00 - 20:00"}
   ]
 }
 ```
