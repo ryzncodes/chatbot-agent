@@ -183,6 +183,12 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 1. **Component Map** — User → Frontend → FastAPI gateway → Planner → Tool services (Calculator, Products RAG, Outlets Text2SQL) with FAISS and SQLite backing stores.
 2. **Planner Sequence** — Request flow from user message through planner decisioning, tool invocation, memory update, and frontend telemetry.
 
+### Text2SQL Strategy
+
+- The outlets tool (`backend/tools/outlets.py`) interprets natural language with keyword heuristics, normalises aliases (e.g., `ss2` → `SS 2`, `pj` → `Petaling Jaya`), and builds parameterised `LIKE` clauses; no raw SQL concatenation is performed.
+- Outlet metadata lives in `db/outlets.db` with columns: `name`, `address`, `city`, `state`, `postcode`, `latitude`, `longitude`, `opening_hours`, `services`, and `map_url`. The sync script will recreate the table if the schema changes.
+- When users request services (delivery/pickup/drive-thru) the tool filters on the `services` column; follow-up turns reuse the stored `location` slot, enabling multi-step Text2SQL flows.
+
 ## Key Trade-Offs
 
 - **SQLite + FAISS (local)** keep deployment simple and self-contained for local-first workflows. For production scale you would migrate to managed SQL (e.g., Postgres) and a hosted vector DB (Pinecone, Weaviate, Qdrant).
@@ -224,8 +230,8 @@ CI (GitHub Actions) runs all suites on pull requests and nightly schedules, publ
 
 ## Documentation Bundle
 
-- [`backend/openapi.yaml`](backend/openapi.yaml) — REST API specification for calculator, products, outlets, chat, and metrics endpoints.
+- [`backend/openapi.yaml`](backend/openapi.yaml) — REST API specification for calculator, products, outlets, chat, and metrics endpoints. Regenerate from a running backend with `curl http://localhost:8000/openapi.json | yq -p json -o yaml > backend/openapi.yaml` (requires [yq](https://github.com/mikefarah/yq); alternatively pipe the JSON through `python -c "import json,yaml,sys; print(yaml.safe_dump(json.load(sys.stdin)))"`).
 - [`docs/planner_decisions.md`](docs/planner_decisions.md) — Planner decision rationale and fallback logic.
-- [`docs/transcripts/`](docs/transcripts) — Success and failure transcripts for representative conversation flows.
+- [`docs/transcripts/`](docs/transcripts) — Success and failure transcripts for representative conversation flows (see new additions: `products_unhappy.md`, `outlets_success.md`, `reset_flow.md`).
 - [`docs/diagrams/`](docs/diagrams) — Mermaid sources for architecture visuals.
 - [`prd.md`](prd.md) — Product requirements covering core capabilities, testing, and documentation deliverables.
