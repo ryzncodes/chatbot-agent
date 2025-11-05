@@ -130,7 +130,6 @@ sequenceDiagram
 
 | Endpoint | Input | Output | Description |
 | --- | --- | --- | --- |
-| Endpoint | Input | Output | Description |
 | `/tools/calculator` | JSON `{ expression }` | `{ result }` | Evaluates math expressions safely. |
 | `/tools/products` | `?query=...` | summary + top-k | Uses FAISS to retrieve top-k results and summaries. |
 | `/tools/outlets` | `?query=...` | rows | Text2SQL-style query over outlets DB. |
