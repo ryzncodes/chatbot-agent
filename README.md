@@ -23,6 +23,7 @@ An end-to-end conversational agent that plans, calls external tools, and retriev
 - Dedicated `/tools/` endpoints for calculator, products, and outlets to enable direct integration tests.
 - React/Vite frontend with chat bubbles, planner timeline, quick commands, and unhappy-flow indicators.
 - FAISS-powered retrieval over ZUS drinkware catalogue; Text2SQL querying of outlet hours/services.
+- Products tool optionally calls OpenRouter for a concise one‑sentence summary when an API key is provided; otherwise it falls back to a local summary.
 - Automated coverage for happy-path, interrupted, and malicious interaction flows.
 
 ## Repository Layout
@@ -182,6 +183,14 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 1. **Component Map** — User → Frontend → FastAPI gateway → Planner → Tool services (Calculator, Products RAG, Outlets Text2SQL) with FAISS and SQLite backing stores.
 2. **Planner Sequence** — Request flow from user message through planner decisioning, tool invocation, memory update, and frontend telemetry.
 
+![System Architecture](docs/diagrams/system-architecture.png)
+
+![Planner Sequence](docs/diagrams/planner-sequence.png)
+
+Exported diagrams (generate PNG/SVG locally if desired):
+- `docs/diagrams/system-architecture.mmd` → `docs/diagrams/system-architecture.svg`
+- `docs/diagrams/planner-sequence.mmd` → `docs/diagrams/planner-sequence.svg`
+
 ### Text2SQL Strategy
 
 - The outlets tool (`backend/tools/outlets.py`) interprets natural language with keyword heuristics, normalises aliases (e.g., `ss2` → `SS 2`, `pj` → `Petaling Jaya`), and builds parameterised `LIKE` clauses; no raw SQL concatenation is performed.
@@ -208,12 +217,30 @@ High-level diagrams are located in [`docs/diagrams`](docs/diagrams) and rendered
 
 CI (GitHub Actions) runs all suites on pull requests and nightly schedules, publishing coverage and transcript artifacts.
 
+## Screenshots & Gallery
+
+The following screenshots and a short GIF demonstrate the end‑to‑end experience. Place your captures under `docs/screenshots/` using the suggested filenames below; the links will render automatically once the files exist:
+
+- Chat: Outlets multi‑turn flow with planner timeline (GIF)
+  - `![Outlets Flow](docs/screenshots/chat_outlets_flow.gif)`
+- Chat: Calculator error handling (invalid input → friendly error)
+  - `![Calculator Error](docs/screenshots/chat_calc_error.png)`
+- Chat: Products RAG success (summary + top‑k)
+  - `![Products Success](docs/screenshots/chat_products_success.png)`
+- API Docs: OpenAPI UI at `/docs`
+  - `![OpenAPI Docs](docs/screenshots/openapi_docs.png)`
+- Readiness and Metrics endpoints
+  - `![Readiness OK](docs/screenshots/ready_ok.png)`
+  - `![Metrics Snapshot](docs/screenshots/metrics_snapshot.png)`
+
+Tip: Keep the planner timeline visible in captures to illustrate intent/action decisions and missing‑slot prompts.
+
 ## Deployment Notes
 
 ### Backend (Railway / Render)
 
 1. Set environment variables from `.env` (exclude local file-based paths if using mounted volumes).
-2. Provision persistent storage for SQLite databases and FAISS index (e.g., Railway volume mounted at `/data`).
+2. Provision persistent storage for SQLite databases and FAISS index (e.g., Railway volume mounted at `/app/db`).
 3. Use `uvicorn backend.main:app --host 0.0.0.0 --port ${PORT}` as the start command.
 
 ### Frontend (Vercel / Netlify)
