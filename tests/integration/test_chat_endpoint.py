@@ -141,4 +141,3 @@ def test_chat_outlet_flow_tracks_location_slot():
     assert third_payload["action"] == "call_outlets"
     assert third_payload["slots"].get("location") == "SS 2"
     assert third_payload["required_slots"].get("location") is True
-    assert third_payload["required_slots"].get("location") is True
