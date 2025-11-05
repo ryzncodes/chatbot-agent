@@ -249,7 +249,9 @@ class RuleBasedPlanner(Planner):
             return PlannerAction.CALL_OUTLETS
         if intent is Intent.RESET:
             return PlannerAction.FINISH
-        if intent in {Intent.UNKNOWN, Intent.SMALL_TALK}:
+        if intent is Intent.SMALL_TALK:
+            return PlannerAction.SMALL_TALK
+        if intent is Intent.UNKNOWN:
             return PlannerAction.FALLBACK
         return PlannerAction.ASK_FOLLOW_UP
 

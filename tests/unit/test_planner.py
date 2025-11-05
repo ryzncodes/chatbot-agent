@@ -53,3 +53,13 @@ def test_planner_missing_location_requests_follow_up():
 
     assert decision.intent.value == "outlet_info"
     assert decision.action.value == "ask_follow_up"
+
+
+def test_planner_handles_small_talk():
+    planner = RuleBasedPlanner()
+    turn = MessageTurn(conversation_id="conv-1", role="user", content="hello there")
+    context = PlannerContext(turn=turn, conversation=snapshot())
+    decision = planner.decide(context)
+
+    assert decision.intent.value == "small_talk"
+    assert decision.action.value == "small_talk"

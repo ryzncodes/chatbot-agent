@@ -29,6 +29,7 @@ class PlannerAction(str, Enum):
     CALL_OUTLETS = "call_outlets"
     FALLBACK = "fallback"
     FINISH = "finish"
+    SMALL_TALK = "small_talk"
 
 
 @dataclass(slots=True)

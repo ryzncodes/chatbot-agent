@@ -48,17 +48,20 @@ class OutletsTool(Tool):
         tokens = lowered.split()
 
         location: Optional[str] = None
+        location_alias: Optional[str] = None
         location_keywords = self._get_location_keywords()
         for token in tokens:
             token = token.strip(",.!?")
             if token in location_keywords:
                 location = location_keywords[token]
+                location_alias = token
                 break
         if location is None:
             for alias, canonical in location_keywords.items():
                 pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
                 if re.search(pattern, lowered):
                     location = canonical
+                    location_alias = alias
                     break
 
         needs_hours = any(word in lowered for word in ("open", "close", "hour", "time"))
@@ -71,6 +74,7 @@ class OutletsTool(Tool):
 
         return {
             "location": location,
+            "location_alias": location_alias,
             "needs_hours": needs_hours,
             "needs_services": needs_services,
             "service_filters": service_filters,
@@ -91,15 +95,23 @@ class OutletsTool(Tool):
 
         location = interpretation.get("location")
         if location:
-            where_clauses.append(
-                "("
-                "LOWER(city) LIKE LOWER(?) OR "
-                "LOWER(state) LIKE LOWER(?) OR "
-                "LOWER(name) LIKE LOWER(?)"
-                ")"
+            location_terms = self._expand_location_terms(
+                location,
+                interpretation.get("location_alias"),
             )
-            like_value = f"%{location}%"
-            params.extend([like_value, like_value, like_value])
+            clause_parts: List[str] = []
+            for term in location_terms:
+                clause_parts.append(
+                    "("
+                    "LOWER(city) LIKE LOWER(?) OR "
+                    "LOWER(state) LIKE LOWER(?) OR "
+                    "LOWER(name) LIKE LOWER(?) OR "
+                    "LOWER(REPLACE(name, ' ', '')) LIKE LOWER(?)"
+                    ")"
+                )
+                like_value = f"%{term}%"
+                params.extend([like_value, like_value, like_value, like_value.replace(' ', '')])
+            where_clauses.append(f"({' OR '.join(clause_parts)})")
 
         services = interpretation.get("service_filters", [])
         for service in services:
@@ -122,6 +134,28 @@ class OutletsTool(Tool):
         finally:
             conn.close()
         return rows, sql
+
+    @staticmethod
+    def _expand_location_terms(location: str, alias: Optional[str]) -> List[str]:
+        """Return location variations to improve fuzzy matching."""
+
+        terms: Dict[str, None] = {}
+
+        def _add(term: Optional[str]) -> None:
+            if not term:
+                return
+            key = term.strip()
+            if not key:
+                return
+            terms.setdefault(key, None)
+            compact = key.replace(" ", "")
+            if compact and compact not in terms:
+                terms.setdefault(compact, None)
+
+        _add(location)
+        _add(alias)
+
+        return list(terms.keys())
 
     def _get_location_keywords(self) -> Dict[str, str]:
         if self._location_keywords is not None:

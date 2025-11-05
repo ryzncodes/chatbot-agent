@@ -250,6 +250,10 @@ async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_stor
         )
         tool_success = True
         tool_data = {"missing_slots": missing}
+    elif decision.action == PlannerAction.SMALL_TALK:
+        response_content = "Hi there! I'm here to help with outlet info, products, or quick math."
+        tool_success = True
+        tool_data = {}
     elif decision.action == PlannerAction.FALLBACK:
         response_content = "I didn't quite catch that. Could you rephrase or give more details?"
         tool_success = False
