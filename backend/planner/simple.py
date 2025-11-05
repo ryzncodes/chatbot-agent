@@ -77,6 +77,8 @@ LOCATION_STOPWORDS = {
     "another",
     "anywhere",
     "else",
+    "are",
+    "is",
 }
 
 
