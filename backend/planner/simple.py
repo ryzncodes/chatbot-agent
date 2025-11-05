@@ -104,7 +104,6 @@ LOCATION_STOPWORDS = {
     "when",
     "during",
     "while",
-    "please",
     "thanks",
     "thank",
     "hi",
