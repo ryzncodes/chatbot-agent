@@ -72,6 +72,18 @@ LOCATION_STOPWORDS = {
     "closing",
     "hours",
     "opening",
+    "opened",
+    "closed",
+    "close",
+    "time",
+    "times",
+    "today",
+    "tonight",
+    "tomorrow",
+    "yesterday",
+    "near",
+    "nearby",
+    "around",
     "give",
     "more",
     "info",
@@ -80,6 +92,24 @@ LOCATION_STOPWORDS = {
     "else",
     "are",
     "is",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "still",
+    "yet",
+    "already",
+    "ever",
+    "when",
+    "during",
+    "while",
+    "please",
+    "thanks",
+    "thank",
+    "hi",
+    "hello",
+    "hey",
 }
 
 
@@ -226,7 +256,8 @@ class RuleBasedPlanner(Planner):
 
     def _infer_location(self, lowered_message: str) -> str | None:
         for alias, location in STATIC_LOCATION_ALIASES.items():
-            if alias in lowered_message:
+            pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
+            if re.search(pattern, lowered_message):
                 return location
 
         for pattern in LOCATION_PATTERNS:

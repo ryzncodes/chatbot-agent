@@ -56,7 +56,8 @@ class OutletsTool(Tool):
                 break
         if location is None:
             for alias, canonical in location_keywords.items():
-                if alias in lowered:
+                pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
+                if re.search(pattern, lowered):
                     location = canonical
                     break
 
