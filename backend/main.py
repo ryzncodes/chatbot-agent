@@ -13,6 +13,7 @@ from backend.core.config import get_settings
 from backend.core.errors import unhandled_exception_handler
 from backend.core.logging import request_id_middleware
 from backend.core.metrics import MetricsCollector
+from backend.core.rate_limit import rate_limit_middleware
 from backend.memory.models import ConversationSnapshot, MessageTurn
 from backend.memory.store import SQLiteMemoryStore
 from backend.planner.simple import RuleBasedPlanner
@@ -59,6 +60,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.middleware("http")(request_id_middleware)
+app.middleware("http")(rate_limit_middleware)
 
 app.include_router(create_tools_router(calculator_tool, products_tool, outlets_tool))
 

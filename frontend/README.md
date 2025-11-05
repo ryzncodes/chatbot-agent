@@ -11,6 +11,10 @@ npm run dev
 
 The development server runs at `http://localhost:5173`. Set `VITE_API_URL` in a `.env` file to point at your backend (defaults to `http://localhost:8000`).
 
+## Rate Limits UX
+
+The client detects HTTP 429 responses and shows a friendly banner with a live countdown based on the server’s `Retry-After`/`retry_after_seconds`. While the countdown is active, the Send button is disabled and a tooltip indicates remaining seconds.
+
 ## Project Structure
 
 - `src/components/` — chat layout, quick command chips, and autocomplete hints.

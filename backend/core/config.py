@@ -93,6 +93,34 @@ class Settings(BaseSettings):
         ),
     )
 
+    # API rate limiting (in-app, in-memory by default)
+    rate_limit_enabled: bool = Field(
+        default=True,
+        description="Enable simple in-memory API rate limiting.",
+    )
+    rate_limit_unauth_per_minute: int = Field(
+        default=60,
+        ge=1,
+        description="Requests per minute per IP for unauthenticated users.",
+    )
+    rate_limit_auth_per_minute: int = Field(
+        default=300,
+        ge=1,
+        description="Requests per minute per user when a user ID is provided.",
+    )
+    rate_limit_burst_per_second: int = Field(
+        default=10,
+        ge=1,
+        description="Short burst allowance per second to smooth traffic.",
+    )
+    rate_limit_exempt_paths: list[str] = Field(
+        default_factory=lambda: ["/health", "/metrics", "/tools/*"],
+        description=(
+            "Paths to exempt from rate limiting. Supports suffix wildcard '/*' to match"
+            " any path prefix (e.g., '/tools/*')."
+        ),
+    )
+
     @property
     def cors_origins(self) -> list[str]:
         """Return the full list of allowed CORS origins."""
