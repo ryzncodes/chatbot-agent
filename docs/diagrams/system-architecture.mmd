@@ -8,6 +8,7 @@ graph TD
     ToolsRouter --> Products[/Products RAG Service/]
     ToolsRouter --> Outlets[/Outlets Text2SQL Service/]
     Products --> Faiss[(FAISS Vector Store)]
+    Products -.-> OpenRouter[(OpenRouter Summarization)]
     Outlets --> OutletsDB[(Outlets SQLite DB)]
     Gateway --> Metrics[/Metrics API/]
     Metrics --> Observability[(Logs & Metrics DB)]

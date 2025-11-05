@@ -61,3 +61,13 @@ Data ingestion and maintenance scripts live here.
 
 - Commit the regenerated assets (`db/outlets.db`, `db/faiss/products.index`, `db/faiss/products_metadata.json`) if you want them baked into deployments.
 - When deploying to Railway, the backend seeds `/app/db` with these files on first start and exposes their readiness via `/ready`.
+
+## Exporting Diagrams (Mermaid → SVG/PNG)
+
+If you want static images of the Mermaid diagrams for the README or documentation, use the helper script:
+
+```bash
+bash scripts/export_diagrams.sh
+```
+
+This uses mermaid-cli (`mmdc`) via `npx` if it isn't installed globally. Internet access is required for the first run to fetch the CLI. Outputs are written to `docs/diagrams/*.svg` and `*.png`.

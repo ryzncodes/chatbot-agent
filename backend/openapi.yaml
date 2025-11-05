@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: ZUS AI Assistant
+  version: 0.1.0
+paths:
+  /tools/calculator:
+    post:
+      tags:
+      - tools
+      summary: Calculator Endpoint
+      operationId: calculator_endpoint_tools_calculator_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Calculator Endpoint Tools Calculator Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tools/products:
+    get:
+      tags:
+      - tools
+      summary: Products Endpoint
+      operationId: products_endpoint_tools_products_get
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Products Endpoint Tools Products Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /tools/outlets:
+    get:
+      tags:
+      - tools
+      summary: Outlets Endpoint
+      operationId: outlets_endpoint_tools_outlets_get
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Outlets Endpoint Tools Outlets Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /health:
+    get:
+      tags:
+      - health
+      summary: Health Check
+      description: Return basic service status for monitoring.
+      operationId: health_check_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+                title: Response Health Check Health Get
+  /ready:
+    get:
+      tags:
+      - health
+      summary: Readiness Probe
+      description: 'Readiness endpoint that verifies critical dependencies.
+
+
+        Checks:
+
+        - Conversations SQLite DB reachable and has expected tables.
+
+        - Outlets SQLite DB exists and is queryable.
+
+        - Products FAISS index and metadata present and loadable.'
+      operationId: readiness_probe_ready_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Readiness Probe Ready Get
+  /conversations:
+    get:
+      tags:
+      - conversations
+      summary: List Conversations
+      description: List known conversation identifiers (development helper).
+      operationId: list_conversations_conversations_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                title: Response List Conversations Conversations Get
+  /products:
+    get:
+      tags:
+      - tools
+      summary: Products Alias
+      description: Alias endpoint providing product results for compatibility with
+        legacy clients.
+      operationId: products_alias_products_get
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Products Alias Products Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /outlets:
+    get:
+      tags:
+      - tools
+      summary: Outlets Alias
+      description: Alias endpoint exposing outlet results without the /tools prefix.
+      operationId: outlets_alias_outlets_get
+      parameters:
+      - name: query
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Outlets Alias Outlets Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chat:
+    post:
+      tags:
+      - chat
+      summary: Chat
+      description: Primary chat endpoint orchestrating planner and tools.
+      operationId: chat_chat_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: true
+              type: object
+              title: Message
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Chat Chat Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /metrics:
+    get:
+      tags:
+      - metrics
+      summary: Metrics Endpoint
+      operationId: metrics_endpoint_metrics_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                additionalProperties: true
+                type: object
+                title: Response Metrics Endpoint Metrics Get
+  /debug/outlets_stats:
+    get:
+      tags:
+      - debug
+      summary: Outlets Stats
+      description: 'Return basic counts + a sample row from the outlets DB.
+
+
+        This endpoint is disabled unless `DEBUG_TOKEN` (settings.debug_token) is set.
+
+        Access requires providing `?token=...` with the exact value.'
+      operationId: outlets_stats_debug_outlets_stats_get
+      parameters:
+      - name: token
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token
+      - name: sample
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sample
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                title: Response Outlets Stats Debug Outlets Stats Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError

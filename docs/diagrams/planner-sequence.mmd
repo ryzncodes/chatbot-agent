@@ -14,9 +14,15 @@ sequenceDiagram
     MEM-->>PL: Context snapshot
     PL->>TR: Select tool (calculator/products/outlets)
     TR->>TL: Invoke tool
-    TL-->>TR: Tool response or error
-    TR-->>PL: Result + status
-    PL->>MEM: Update memory state
-    PL->>API: Build reply payload
+    alt Tool error
+        TL-->>TR: Error raised
+        TR-->>PL: Failure status
+        PL->>API: Safe error message
+    else Success
+        TL-->>TR: Tool response
+        TR-->>PL: Result + status
+        PL->>MEM: Update memory state
+        PL->>API: Build reply payload
+    end
     API-->>FE: Response + planner timeline
     FE-->>U: Render message and indicators

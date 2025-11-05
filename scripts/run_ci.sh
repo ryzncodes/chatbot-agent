@@ -11,6 +11,7 @@ poetry install
 poetry run ruff check .
 poetry run black --check .
 PYTHONPATH="${ROOT_DIR}" poetry run pytest ../tests --cov=backend --cov-report=term --cov-report=xml
+poetry run python ../scripts/export_openapi.py
 
 popd >/dev/null
 
