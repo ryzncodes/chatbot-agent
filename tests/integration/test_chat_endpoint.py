@@ -91,3 +91,53 @@ def test_chat_handles_tool_failure(monkeypatch):
     assert payload["tool_success"] is False
     assert "issue calling that tool" in payload["message"].lower()
     assert "error" in payload["tool_data"]
+
+
+def test_chat_outlet_flow_tracks_location_slot():
+    import uuid
+
+    conversation_id = f"conv-outlet-flow-{uuid.uuid4()}"
+
+    first = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "Outlet info please.",
+        },
+    )
+    assert first.status_code == 200
+    first_payload = first.json()
+    assert first_payload["intent"] == "outlet_info"
+    assert first_payload["action"] == "ask_follow_up"
+    assert "location" not in first_payload["slots"]
+
+    second = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "SS2 branch please.",
+        },
+    )
+    assert second.status_code == 200
+    second_payload = second.json()
+    assert second_payload["intent"] == "outlet_info"
+    assert second_payload["action"] == "call_outlets"
+    assert second_payload["slots"].get("location") == "SS 2"
+    assert second_payload["required_slots"].get("location") is True
+
+    third = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "Show me more outlets.",
+        },
+    )
+    assert third.status_code == 200
+    third_payload = third.json()
+    assert third_payload["intent"] == "outlet_info"
+    assert third_payload["action"] == "call_outlets"
+    assert third_payload["slots"].get("location") == "SS 2"
+    assert third_payload["required_slots"].get("location") is True
