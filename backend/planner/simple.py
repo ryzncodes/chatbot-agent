@@ -162,8 +162,16 @@ class RuleBasedPlanner(Planner):
             ]
         ):
             return Intent.PRODUCT_INFO
+        # Primary outlet keywords
         if any(keyword in message for keyword in ["outlet", "store", "open", "closing", "hours"]):
             return Intent.OUTLET_INFO
+        # Fallback: treat common location phrases or known aliases as outlet queries
+        for pattern in LOCATION_PATTERNS:
+            if pattern.search(message):
+                return Intent.OUTLET_INFO
+        for alias in STATIC_LOCATION_ALIASES.keys():
+            if re.search(rf"(?<!\\w){re.escape(alias)}(?!\\w)", message):
+                return Intent.OUTLET_INFO
         if "reset" in message:
             return Intent.RESET
         if any(keyword in message for keyword in ["hello", "hi", "thanks", "help"]):

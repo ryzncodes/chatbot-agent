@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { ChatMessage } from "../services/api";
-import { fetchMetrics, sendChatMessage } from "../services/api";
+import { sendChatMessage } from "../services/api";
 import { useChatStore } from "../state/chatStore";
 
 import styles from "./ChatLayout.module.css";
@@ -20,7 +20,7 @@ function ChatLayout() {
   const [input, setInput] = useState("");
   const [toolStatus, setToolStatus] = useState<ToolAvailability>("ok");
   const [lastTool, setLastTool] = useState<string | null>(null);
-  const [metrics, setMetrics] = useState<{ total?: number } | null>(null);
+  // Local conversation stats; global metrics are still available via /metrics if needed.
 
   const {
     conversationId,
@@ -130,19 +130,7 @@ function ChatLayout() {
     return grouped;
   }, [messages]);
 
-  useEffect(() => {
-    const poll = async () => {
-      try {
-        const data = (await fetchMetrics()) as { total_requests?: number };
-        setMetrics({ total: data.total_requests ?? 0 });
-      } catch (err) {
-        console.warn("Failed to fetch metrics", err);
-      }
-    };
-    poll();
-    const interval = setInterval(poll, 15000);
-    return () => clearInterval(interval);
-  }, []);
+  // No-op: previously polled global /metrics; we now display per-conversation turns below.
 
   const handleQuickCommand = (command: string) => {
     if (command === "/reset") {
@@ -270,7 +258,7 @@ function ChatLayout() {
                 ⚙️ {lastTool.replace("call_", "")}
               </span>
             )}
-            {metrics?.total !== undefined && <span className={styles.statusText}>· {metrics.total} turns</span>}
+            <span className={styles.statusText}>· {threads.length} turns</span>
           </div>
           {status === "error" && error && <div className={styles.errorBanner}>⚠️ {error}</div>}
         </form>
