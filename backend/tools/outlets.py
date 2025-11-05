@@ -28,6 +28,13 @@ class OutletsTool(Tool):
             )
 
         interpretation = self._interpret_query(context.turn.content)
+        # Use stored conversation slot as a fallback location so
+        # follow-ups like "show me more" still retrieve outlets.
+        if not interpretation.get("location"):
+            slot_loc = context.conversation.slots.get("location")
+            if isinstance(slot_loc, str) and slot_loc.strip():
+                interpretation["location"] = slot_loc.strip()
+
         rows, sql = self._search_outlets(interpretation)
 
         if not rows:
