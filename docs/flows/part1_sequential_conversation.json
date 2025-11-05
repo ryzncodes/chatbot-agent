@@ -1,0 +1,43 @@
+{
+  "title": "Part 1 Sequential Conversation – Outlet Hours Example",
+  "description": "Demonstrates slot tracking across three related turns covering the Petaling Jaya → SS 2 outlet scenario.",
+  "conversation_id": "demo-part1-sequential",
+  "turns": [
+    {
+      "role": "user",
+      "content": "Is there an outlet in Petaling Jaya?",
+      "planner": {
+        "intent": "outlet_info",
+        "action": "ask_follow_up",
+        "required_slots": {
+          "location": false
+        },
+        "slot_updates": {}
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Yes, which outlet are you referring to?",
+      "notes": "Assistant asks for missing `location` slot."
+    },
+    {
+      "role": "user",
+      "content": "SS 2, what's the opening time?",
+      "planner": {
+        "intent": "outlet_info",
+        "action": "call_outlets",
+        "required_slots": {
+          "location": true
+        },
+        "slot_updates": {
+          "location": "SS 2"
+        }
+      }
+    },
+    {
+      "role": "assistant",
+      "content": "Ah yes, the SS 2 outlet opens at 9:00AM.",
+      "notes": "Tool response summarizing outlet hours from Text2SQL result."
+    }
+  ]
+}

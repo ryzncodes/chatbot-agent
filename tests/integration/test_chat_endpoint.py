@@ -1,4 +1,5 @@
 import types
+import uuid
 
 from fastapi.testclient import TestClient
 
@@ -91,3 +92,99 @@ def test_chat_handles_tool_failure(monkeypatch):
     assert payload["tool_success"] is False
     assert "issue calling that tool" in payload["message"].lower()
     assert "error" in payload["tool_data"]
+
+
+def test_chat_sequential_outlet_flow_tracks_slots():
+    conversation_id = f"conv-sequential-happy-{uuid.uuid4().hex}"
+
+    first = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "What time do you open?",
+        },
+    )
+
+    assert first.status_code == 200
+    first_payload = first.json()
+    assert first_payload["action"] == "ask_follow_up"
+    assert first_payload["required_slots"]["location"] is False
+    assert "location" not in first_payload["slots"]
+
+    second = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "Damansara outlet please.",
+        },
+    )
+
+    assert second.status_code == 200
+    second_payload = second.json()
+    assert second_payload["action"] == "call_outlets"
+    assert second_payload["required_slots"]["location"] is True
+    assert second_payload["slots"]["location"] == "Damansara"
+
+    third = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "What services are available at the Damansara outlet?",
+        },
+    )
+
+    assert third.status_code == 200
+    third_payload = third.json()
+    assert third_payload["action"] == "call_outlets"
+    assert third_payload["required_slots"]["location"] is True
+    assert third_payload["slots"]["location"] == "Damansara"
+
+
+def test_chat_interrupted_outlet_flow_recovers_after_fallback():
+    conversation_id = f"conv-sequential-interrupted-{uuid.uuid4().hex}"
+
+    first = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "Could you tell me the outlet hours?",
+        },
+    )
+
+    assert first.status_code == 200
+    first_payload = first.json()
+    assert first_payload["action"] == "ask_follow_up"
+    assert first_payload["required_slots"]["location"] is False
+
+    second = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "I don't know the location.",
+        },
+    )
+
+    assert second.status_code == 200
+    second_payload = second.json()
+    assert second_payload["action"] == "fallback"
+    assert "rephrase" in second_payload["message"].lower()
+
+    third = client.post(
+        "/chat",
+        json={
+            "conversation_id": conversation_id,
+            "role": "user",
+            "content": "Damansara outlet please.",
+        },
+    )
+
+    assert third.status_code == 200
+    third_payload = third.json()
+    assert third_payload["action"] == "call_outlets"
+    assert third_payload["required_slots"]["location"] is True
+    assert third_payload["slots"]["location"] == "Damansara"
