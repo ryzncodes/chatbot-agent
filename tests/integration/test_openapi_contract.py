@@ -18,6 +18,7 @@ def test_openapi_contains_expected_paths():
         "/tools/products",
         "/tools/outlets",
         "/products",
+        "/outlets",
         "/health",
     ]
 

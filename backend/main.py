@@ -202,6 +202,27 @@ async def products_alias(query: str | None = None) -> dict[str, Any]:
     }
 
 
+@app.get("/outlets", tags=["tools"])
+async def outlets_alias(query: str | None = None) -> dict[str, Any]:
+    """Alias endpoint exposing outlet results without the /tools prefix."""
+
+    if not query:
+        raise HTTPException(status_code=400, detail="query parameter is required")
+
+    snapshot = ConversationSnapshot(conversation_id="alias-outlets", turns=[], slots={})
+    turn = MessageTurn(conversation_id="alias-outlets", role="user", content=query)
+    context = ToolContext(turn=turn, conversation=snapshot)
+
+    result = await outlets_tool.run(context)
+    if not result.success:
+        raise HTTPException(status_code=404, detail=result.content)
+
+    return {
+        "message": result.content,
+        "results": result.data.get("results", []),
+    }
+
+
 @app.post("/chat", tags=["chat"])
 async def chat(message: dict, store: SQLiteMemoryStore = Depends(get_memory_store)) -> dict:
     """Primary chat endpoint orchestrating planner and tools."""

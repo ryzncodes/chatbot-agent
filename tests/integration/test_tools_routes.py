@@ -45,6 +45,18 @@ def test_products_alias_returns_payload(products_query):
     assert set(payload.keys()) == {"detail"} or set(payload.keys()) == {"message", "results"}
 
 
+def test_outlets_alias_requires_query():
+    response = client.get("/outlets")
+    assert response.status_code == 400
+
+
+def test_outlets_alias_returns_payload():
+    response = client.get("/outlets", params={"query": "SS2"})
+    payload = response.json()
+    assert response.status_code in {200, 404}
+    assert set(payload.keys()) == {"detail"} or set(payload.keys()) == {"message", "results"}
+
+
 def test_outlets_route_rejects_injection():
     response = client.get("/tools/outlets", params={"query": "'; DROP TABLE outlets;"})
     assert response.status_code in {200, 404}
