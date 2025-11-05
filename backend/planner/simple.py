@@ -71,6 +71,7 @@ LOCATION_STOPWORDS = {
     "open",
     "closing",
     "hours",
+    "opening",
     "give",
     "more",
     "info",
