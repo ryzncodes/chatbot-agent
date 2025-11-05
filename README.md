@@ -219,21 +219,32 @@ CI (GitHub Actions) runs all suites on pull requests and nightly schedules, publ
 
 ## Screenshots & Gallery
 
-The following screenshots and a short GIF demonstrate the end‑to‑end experience. Place your captures under `docs/screenshots/` using the suggested filenames below; the links will render automatically once the files exist:
+The following screenshots and a short GIF demonstrate the end‑to‑end experience.
 
 - Chat: Outlets multi‑turn flow with planner timeline (GIF)
-  - `![Outlets Flow](docs/screenshots/chat_outlets_flow.gif)`
-- Chat: Calculator error handling (invalid input → friendly error)
-  - `![Calculator Error](docs/screenshots/chat_calc_error.png)`
-- Chat: Products RAG success (summary + top‑k)
-  - `![Products Success](docs/screenshots/chat_products_success.png)`
-- API Docs: OpenAPI UI at `/docs`
-  - `![OpenAPI Docs](docs/screenshots/openapi_docs.png)`
-- Readiness and Metrics endpoints
-  - `![Readiness OK](docs/screenshots/ready_ok.png)`
-  - `![Metrics Snapshot](docs/screenshots/metrics_snapshot.png)`
+  
+  - ![Outlets Flow](docs/screenshots/chat_outlets_flow.gif)
 
-Tip: Keep the planner timeline visible in captures to illustrate intent/action decisions and missing‑slot prompts.
+ 
+- Chat: Calculator error handling (invalid input → friendly error)
+  
+  - ![Calculator Error](docs/screenshots/chat_calc_error.png)
+
+    
+- Chat: Products RAG success (summary + top‑k)
+  
+  - ![Products Success](docs/screenshots/chat_products_success.png)
+
+    
+- API Docs: OpenAPI UI at `/docs`
+  
+  - ![OpenAPI Docs](docs/screenshots/openapi_docs.png)
+
+    
+- Readiness and Metrics endpoints
+  
+  - ![Readiness OK](docs/screenshots/ready_ok.png)
+  - ![Metrics Snapshot](docs/screenshots/metrics_snapshot.png)
 
 ## Deployment Notes
 
