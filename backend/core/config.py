@@ -93,6 +93,50 @@ class Settings(BaseSettings):
         ),
     )
 
+    # API rate limiting (in-app, in-memory by default)
+    rate_limit_enabled: bool = Field(
+        default=True,
+        description="Enable simple in-memory API rate limiting.",
+    )
+    rate_limit_unauth_per_minute: int = Field(
+        default=60,
+        ge=1,
+        description="Requests per minute per IP for unauthenticated users.",
+    )
+    rate_limit_auth_per_minute: int = Field(
+        default=300,
+        ge=1,
+        description="Requests per minute per user when a user ID is provided.",
+    )
+    rate_limit_burst_per_second: int = Field(
+        default=10,
+        ge=1,
+        description="Short burst allowance per second to smooth traffic.",
+    )
+    rate_limit_exempt_paths: list[str] = Field(
+        default_factory=lambda: ["/health", "/metrics", "/tools/*"],
+        description=(
+            "Paths to exempt from rate limiting. Supports suffix wildcard '/*' to match"
+            " any path prefix (e.g., '/tools/*')."
+        ),
+    )
+    rate_limit_include_paths: list[str] = Field(
+        default_factory=lambda: ["/chat"],
+        description=(
+            "If non-empty, only apply rate limiting to these paths. Supports suffix"
+            " wildcard '/*' for prefix matches. Leave empty to apply globally."
+        ),
+    )
+    # Safe-by-default: do not trust X-Forwarded-For unless explicitly enabled
+    trust_x_forwarded_for: bool = Field(
+        default=False,
+        description=(
+            "If true, use X-Forwarded-For to determine client IP for rate limiting."
+            " Only enable when behind a trusted reverse proxy that strips/re-writes"
+            " this header."
+        ),
+    )
+
     @property
     def cors_origins(self) -> list[str]:
         """Return the full list of allowed CORS origins."""

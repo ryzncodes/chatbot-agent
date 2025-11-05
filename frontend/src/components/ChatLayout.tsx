@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { ChatMessage } from "../services/api";
-import { sendChatMessage } from "../services/api";
+import { RateLimitError, sendChatMessage } from "../services/api";
 import { useChatStore } from "../state/chatStore";
 
 import styles from "./ChatLayout.module.css";
@@ -35,6 +35,8 @@ function ChatLayout() {
     reset,
   } = useChatStore();
   const [isTyping, setIsTyping] = useState(false);
+  const [rateLimitUntil, setRateLimitUntil] = useState<number | null>(null);
+  const [rateLimitRemaining, setRateLimitRemaining] = useState<number | null>(null);
 
   useEffect(() => {
     textareaRef.current?.focus();
@@ -68,6 +70,10 @@ function ChatLayout() {
   const handleSubmit = useCallback(
     async (event: FormEvent) => {
       event.preventDefault();
+      // Guard against submissions during active rate-limit cooldown
+      if (rateLimitRemaining !== null) {
+        return;
+      }
       const trimmed = input.trim();
       if (!trimmed) return;
 
@@ -99,13 +105,25 @@ function ChatLayout() {
         setLastTool(response.action.startsWith("call_") ? response.action : null);
         setToolStatus(response.tool_success ? "ok" : "degraded");
       } catch (err) {
-        const message = err instanceof Error ? err.message : "Unknown error";
-        setStatus("error", message);
+        if (err instanceof RateLimitError) {
+          const now = Date.now();
+          const until = now + Math.max(0, err.retryAfterSeconds) * 1000;
+          setRateLimitUntil(until);
+          setRateLimitRemaining(Math.max(0, err.retryAfterSeconds));
+          const seconds = Math.max(0, err.retryAfterSeconds);
+          const msg = seconds > 0
+            ? `Too many requests. Please wait ${seconds}s and try again.`
+            : "Too many requests. Please retry shortly.";
+          setStatus("error", msg);
+        } else {
+          const message = err instanceof Error ? err.message : "Unknown error";
+          setStatus("error", message);
+        }
         setToolStatus("degraded");
         setIsTyping(false);
       }
     },
-    [appendMessage, conversationId, input, recordPlannerEvent, reset, setStatus]
+    [appendMessage, conversationId, input, rateLimitRemaining, recordPlannerEvent, reset, setStatus]
   );
 
   const statusMessage = useMemo(() => {
@@ -113,6 +131,30 @@ function ChatLayout() {
     if (status === "error") return error ?? "Something went wrong";
     return "Online";
   }, [status, error]);
+
+  // Update rate limit countdown
+  useEffect(() => {
+    if (!rateLimitUntil) return;
+    const tick = () => {
+      const now = Date.now();
+      const remaining = Math.ceil((rateLimitUntil - now) / 1000);
+      if (remaining <= 0) {
+        setRateLimitRemaining(null);
+        setRateLimitUntil(null);
+        // Clear error banner once window passes
+        if (status === "error") {
+          setStatus("idle");
+        }
+        return;
+      }
+      setRateLimitRemaining(remaining);
+      // Keep the error message updated for the banner
+      setStatus("error", `Too many requests. Please wait ${remaining}s and try again.`);
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, [rateLimitUntil, setStatus, status]);
 
   const threads = useMemo<ChatMessage[][]>(() => {
     const grouped: ChatMessage[][] = [];
@@ -239,7 +281,12 @@ function ChatLayout() {
                 </button>
               ))}
             </div>
-            <button className={styles.sendButton} type="submit" disabled={status === "loading"}>
+            <button
+              className={styles.sendButton}
+              type="submit"
+              disabled={status === "loading" || rateLimitRemaining !== null}
+              title={rateLimitRemaining !== null ? `Wait ${rateLimitRemaining}s to retry` : undefined}
+            >
               Send
             </button>
           </div>
