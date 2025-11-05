@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import sqlite3
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -16,6 +17,7 @@ class OutletsTool(Tool):
 
     def __init__(self, database_path: Path) -> None:
         self.database_path = Path(database_path)
+        self._location_keywords: Dict[str, str] | None = None
 
     async def run(self, context: ToolContext) -> ToolResponse:
         if not self.database_path.exists():
@@ -46,15 +48,16 @@ class OutletsTool(Tool):
         tokens = lowered.split()
 
         location: Optional[str] = None
+        location_keywords = self._get_location_keywords()
         for token in tokens:
             token = token.strip(",.!?")
-            if token in LOCATION_KEYWORDS:
-                location = LOCATION_KEYWORDS[token]
+            if token in location_keywords:
+                location = location_keywords[token]
                 break
         if location is None:
-            for keyword in LOCATION_KEYWORDS.values():
-                if keyword.lower() in lowered:
-                    location = keyword
+            for alias, canonical in location_keywords.items():
+                if alias in lowered:
+                    location = canonical
                     break
 
         needs_hours = any(word in lowered for word in ("open", "close", "hour", "time"))
@@ -119,8 +122,67 @@ class OutletsTool(Tool):
             conn.close()
         return rows, sql
 
+    def _get_location_keywords(self) -> Dict[str, str]:
+        if self._location_keywords is not None:
+            return self._location_keywords
 
-LOCATION_KEYWORDS = {
+        keywords: Dict[str, str] = dict(STATIC_LOCATION_ALIASES)
+
+        if not self.database_path.exists():
+            self._location_keywords = keywords
+            return keywords
+
+        conn = sqlite3.connect(self.database_path)
+        conn.row_factory = sqlite3.Row
+        try:
+            rows = conn.execute("SELECT DISTINCT city, state FROM outlets").fetchall()
+        except sqlite3.Error:
+            self._location_keywords = keywords
+            return keywords
+        finally:
+            conn.close()
+
+        for row in rows:
+            for field in ("city", "state"):
+                raw_value = row[field] or ""
+                canonical = raw_value.strip()
+                if not canonical:
+                    continue
+                for alias in self._aliases_for_value(canonical):
+                    keywords.setdefault(alias, canonical)
+
+        self._location_keywords = keywords
+        return keywords
+
+    @staticmethod
+    def _aliases_for_value(value: str) -> List[str]:
+        value = value.strip()
+        if not value:
+            return []
+
+        lowered = value.lower()
+        sanitized = re.sub(r"[^a-z0-9\s]", " ", lowered)
+        sanitized = re.sub(r"\s+", " ", sanitized).strip()
+
+        aliases: set[str] = {lowered, sanitized}
+
+        if sanitized.startswith("bandar "):
+            remainder = sanitized[len("bandar ") :].strip()
+            if remainder:
+                aliases.add(remainder)
+
+        parts = sanitized.split()
+        if len(parts) >= 2:
+            aliases.add(" ".join(parts[-2:]))
+        if parts:
+            last = parts[-1]
+            if len(parts) == 1 or len(last) > 3:
+                aliases.add(last)
+
+        return [alias for alias in aliases if alias]
+
+
+STATIC_LOCATION_ALIASES = {
     "ss2": "SS 2",
     "pj": "Petaling Jaya",
     "petaling": "Petaling Jaya",

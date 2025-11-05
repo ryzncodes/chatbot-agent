@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from backend.planner.base import Planner
 from backend.planner.types import Intent, PlannerAction, PlannerContext, PlannerDecision
 
@@ -24,13 +26,57 @@ PRODUCT_KEYWORD_ALIASES = {
     "thermoses": "thermos",
 }
 
-LOCATION_ALIASES = {
+STATIC_LOCATION_ALIASES = {
     "ss2": "SS 2",
     "pj": "Petaling Jaya",
     "petaling": "Petaling Jaya",
     "kl": "Kuala Lumpur",
     "kuala lumpur": "Kuala Lumpur",
     "damansara": "Damansara",
+}
+
+LOCATION_PATTERNS = [
+    re.compile(r"\bwhat about (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
+    re.compile(r"\bhow about (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
+    re.compile(r"\banywhere (?:else )?(?:in|around) (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
+    re.compile(r"\b(?:in|at|near) (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
+]
+
+LOCATION_STOPWORDS = {
+    "outlet",
+    "outlets",
+    "store",
+    "stores",
+    "where",
+    "find",
+    "locate",
+    "can",
+    "could",
+    "you",
+    "me",
+    "the",
+    "a",
+    "an",
+    "please",
+    "show",
+    "tell",
+    "about",
+    "what",
+    "how",
+    "any",
+    "some",
+    "location",
+    "branch",
+    "branches",
+    "open",
+    "closing",
+    "hours",
+    "give",
+    "more",
+    "info",
+    "another",
+    "anywhere",
+    "else",
 }
 
 
@@ -134,10 +180,9 @@ class RuleBasedPlanner(Planner):
                     break
 
         if intent is Intent.OUTLET_INFO:
-            for alias, location in LOCATION_ALIASES.items():
-                if alias in message:
-                    updates["location"] = location
-                    break
+            inferred_location = self._infer_location(message)
+            if inferred_location:
+                updates["location"] = inferred_location
 
         return updates
 
@@ -175,3 +220,55 @@ class RuleBasedPlanner(Planner):
         if intent in {Intent.UNKNOWN, Intent.SMALL_TALK}:
             return PlannerAction.FALLBACK
         return PlannerAction.ASK_FOLLOW_UP
+
+    def _infer_location(self, lowered_message: str) -> str | None:
+        for alias, location in STATIC_LOCATION_ALIASES.items():
+            if alias in lowered_message:
+                return location
+
+        for pattern in LOCATION_PATTERNS:
+            match = pattern.search(lowered_message)
+            if match:
+                candidate = match.group("loc").strip()
+                normalized = self._normalize_location(candidate)
+                if normalized:
+                    return normalized
+
+        tokens = [token for token in lowered_message.split() if token]
+        filtered: list[str] = []
+        for token in tokens:
+            stripped = token.strip(" ,.!?;:\"'()")
+            if not stripped or stripped in LOCATION_STOPWORDS:
+                continue
+            filtered.append(stripped)
+
+        if not filtered:
+            return None
+
+        candidate = " ".join(filtered[-3:]).strip()
+        return self._normalize_location(candidate)
+
+    @staticmethod
+    def _normalize_location(candidate: str) -> str | None:
+        candidate = candidate.strip(" ,.!?;:\"'")
+        if not candidate:
+            return None
+
+        sanitized = re.sub(r"\s+", " ", candidate)
+        parts = sanitized.split()
+        while parts and parts[-1] in LOCATION_STOPWORDS:
+            parts.pop()
+        while parts and parts[0] in LOCATION_STOPWORDS:
+            parts.pop(0)
+        sanitized = " ".join(parts)
+
+        if not sanitized:
+            return None
+
+        if sanitized.isalpha() and len(sanitized) <= 3:
+            return sanitized.upper()
+
+        if any(char.isdigit() for char in sanitized):
+            return sanitized.upper()
+
+        return sanitized.title()
