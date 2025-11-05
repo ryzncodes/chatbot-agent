@@ -38,7 +38,9 @@ STATIC_LOCATION_ALIASES = {
 LOCATION_PATTERNS = [
     re.compile(r"\bwhat about (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
     re.compile(r"\bhow about (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
-    re.compile(r"\banywhere (?:else )?(?:in|around) (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
+    re.compile(
+        r"\banywhere (?:else )?(?:in|around) (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"
+    ),
     re.compile(r"\b(?:in|at|near) (?P<loc>[a-z0-9' -]{2,80})(?:[?.!,]|$)"),
 ]
 
@@ -142,7 +144,9 @@ class RuleBasedPlanner(Planner):
         )
 
     def _classify_intent(self, message: str) -> Intent:
-        if any(keyword in message for keyword in ["calc", "sum", "add", "minus", "+", "-"]):
+        if any(
+            keyword in message for keyword in ["calc", "sum", "add", "minus", "+", "-"]
+        ):
             return Intent.CALCULATE
         if any(
             keyword in message
@@ -162,7 +166,10 @@ class RuleBasedPlanner(Planner):
             ]
         ):
             return Intent.PRODUCT_INFO
-        if any(keyword in message for keyword in ["outlet", "store", "open", "closing", "hours"]):
+        if any(
+            keyword in message
+            for keyword in ["outlet", "store", "open", "closing", "hours"]
+        ):
             return Intent.OUTLET_INFO
         if "reset" in message:
             return Intent.RESET
@@ -176,7 +183,9 @@ class RuleBasedPlanner(Planner):
         if intent is Intent.CALCULATE:
             slots_required["operation"] = "operation" in context.conversation.slots
         if intent is Intent.PRODUCT_INFO:
-            slots_required["product_type"] = "product_type" in context.conversation.slots
+            slots_required["product_type"] = (
+                "product_type" in context.conversation.slots
+            )
         if intent is Intent.OUTLET_INFO:
             slots_required["location"] = "location" in context.conversation.slots
 
@@ -218,7 +227,9 @@ class RuleBasedPlanner(Planner):
 
         return updates
 
-    def _contextual_intent(self, intent: Intent, message: str, context: PlannerContext) -> Intent:
+    def _contextual_intent(
+        self, intent: Intent, message: str, context: PlannerContext
+    ) -> Intent:
         if intent is not Intent.UNKNOWN:
             return intent
 

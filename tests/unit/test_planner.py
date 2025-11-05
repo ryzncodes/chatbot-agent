@@ -13,7 +13,11 @@ def snapshot(slots=None):
 
 def test_planner_extracts_product_slot_when_missing():
     planner = RuleBasedPlanner()
-    turn = MessageTurn(conversation_id="conv-1", role="user", content="Do you have a stainless tumbler?")
+    turn = MessageTurn(
+        conversation_id="conv-1",
+        role="user",
+        content="Do you have a stainless tumbler?",
+    )
     context = PlannerContext(turn=turn, conversation=snapshot())
     decision = planner.decide(context)
 
@@ -24,8 +28,12 @@ def test_planner_extracts_product_slot_when_missing():
 
 def test_planner_respects_existing_product_slot():
     planner = RuleBasedPlanner()
-    turn = MessageTurn(conversation_id="conv-1", role="user", content="Show me more options please")
-    context = PlannerContext(turn=turn, conversation=snapshot({"product_type": "tumbler"}))
+    turn = MessageTurn(
+        conversation_id="conv-1", role="user", content="Show me more options please"
+    )
+    context = PlannerContext(
+        turn=turn, conversation=snapshot({"product_type": "tumbler"})
+    )
     decision = planner.decide(context)
 
     assert decision.intent.value == "product_info"
@@ -47,7 +55,9 @@ def test_planner_extracts_operation_for_calculator():
 
 def test_planner_missing_location_requests_follow_up():
     planner = RuleBasedPlanner()
-    turn = MessageTurn(conversation_id="conv-1", role="user", content="What are the opening hours?")
+    turn = MessageTurn(
+        conversation_id="conv-1", role="user", content="What are the opening hours?"
+    )
     context = PlannerContext(turn=turn, conversation=snapshot())
     decision = planner.decide(context)
 

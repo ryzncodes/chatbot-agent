@@ -37,7 +37,9 @@ class OutletsTool(Tool):
                 success=False,
             )
 
-        formatted = [f"{row['name']} — opens {row['opening_hours'] or 'TBD'}" for row in rows[:3]]
+        formatted = [
+            f"{row['name']} — opens {row['opening_hours'] or 'TBD'}" for row in rows[:3]
+        ]
         return ToolResponse(
             content="Here are the closest matches:\n" + "\n".join(formatted),
             data={"results": [dict(row) for row in rows[:3]], "sql": sql},
@@ -65,7 +67,9 @@ class OutletsTool(Tool):
                     break
 
         needs_hours = any(word in lowered for word in ("open", "close", "hour", "time"))
-        needs_services = any(word in lowered for word in ("delivery", "pickup", "drive", "service"))
+        needs_services = any(
+            word in lowered for word in ("delivery", "pickup", "drive", "service")
+        )
 
         service_filters: List[str] = []
         for service_keyword, service_value in SERVICE_KEYWORDS.items():
@@ -110,7 +114,9 @@ class OutletsTool(Tool):
                     ")"
                 )
                 like_value = f"%{term}%"
-                params.extend([like_value, like_value, like_value, like_value.replace(' ', '')])
+                params.extend(
+                    [like_value, like_value, like_value, like_value.replace(" ", "")]
+                )
             where_clauses.append(f"({' OR '.join(clause_parts)})")
 
         services = interpretation.get("service_filters", [])
